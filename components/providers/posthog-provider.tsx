@@ -8,10 +8,23 @@ import { Suspense, useEffect } from 'react'
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-      api_host: '/ingest',
-      ui_host: 'https://us.posthog.com',
-      capture_pageview: false, // We capture pageviews manually
-      capture_pageleave: true, // Enable pageleave capture
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      capture_pageview: true, // Enable automatic pageview capture
+      capture_pageleave: true,
+      persistence: 'localStorage',
+      bootstrap: {
+        distinctID: posthog.get_distinct_id(),
+        isIdentifiedID: posthog.has_opted_in_capturing(),
+        featureFlags: {},
+      },
+      loaded: (posthog) => {
+        // Add default properties for all events
+        posthog.register({
+          app_version: '1.0.0',
+          platform: 'web',
+          screen_size: `${window.innerWidth}x${window.innerHeight}`,
+        })
+      },
       debug: process.env.NODE_ENV === 'development',
     })
   }, [])
@@ -36,7 +49,18 @@ function PostHogPageView() {
       if (search) {
         url += '?' + search
       }
-      posthogClient.capture('$pageview', { '$current_url': url })
+
+      // Capture enhanced pageview with more properties
+      posthogClient.capture('$pageview', {
+        '$current_url': url,
+        path: pathname,
+        referrer: document.referrer,
+        search_params: search || null,
+        viewport_width: window.innerWidth,
+        viewport_height: window.innerHeight,
+        user_agent: navigator.userAgent,
+        language: navigator.language,
+      })
     }
   }, [pathname, searchParams, posthogClient])
 
