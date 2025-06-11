@@ -20,8 +20,8 @@ const config = {
     },
     extend: {
       fontFamily: {
-        sora: ["var(--font-sora)"],
         outfit: ["var(--font-outfit)"],
+        mattone: ['Mattone', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

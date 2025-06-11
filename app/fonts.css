@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'Mattone';
+  src: url('/Mattone-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+} 

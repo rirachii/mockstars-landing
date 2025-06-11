@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Mic } from "lucide-react"
+import { ArrowRight, Mic, Star, Check } from "lucide-react"
 import Image from "next/image"
 import {
   Dialog,
@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dialog"
 import { useState } from "react"
 import posthog from 'posthog-js'
+import './fonts.css'
+import Footer from '../components/Footer'
 
 export default function Home() {
   const [showComingSoon, setShowComingSoon] = useState(false)
@@ -39,7 +41,7 @@ export default function Home() {
       <Dialog open={showComingSoon} onOpenChange={setShowComingSoon}>
         <DialogContent className="bg-black border border-white/10">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold font-sora">Coming Soon!</DialogTitle>
+            <DialogTitle className="text-2xl font-bold font-mattone text-white">Coming Soon!</DialogTitle>
             <DialogDescription className="text-zinc-400 font-outfit">
               We're working hard to bring Mockstars to mobile devices. Sign up for our waitlist to be notified when we launch!
             </DialogDescription>
@@ -53,7 +55,7 @@ export default function Home() {
               className="bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-purple"
             />
             <Button 
-              className="bg-purple hover:bg-purple/90 text-white rounded-lg font-sora"
+              className="bg-purple hover:bg-purple/90 text-white rounded-lg font-mattone"
               onClick={handleWaitlistSignup}
             >
               Join Waitlist
@@ -62,21 +64,62 @@ export default function Home() {
         </DialogContent>
       </Dialog>
 
-      {/* Minimal Header */}
-      <header className="container mx-auto py-6 px-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8">
-            <Image
-              src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/u6185661394_create_logo_for_mockstars.app_--ar_11_--profile_w_2ee08930-ac9c-4bcd-98bb-4b7e40072786_3-CNGsXgNBZQO2Ahpv4wcqLHKYOOFlUu.png"
-              alt="Mockstars Logo"
-              width={32}
-              height={32}
-              className="w-full h-full"
-            />
+      {/* Enhanced Header with Navigation */}
+      <header className="container mx-auto py-6 px-4">
+        <div className="flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-8 h-8">
+              <Image
+                src="/mockstars.png"
+                alt="Mockstars Logo"
+                width={32}
+                height={32}
+                className="w-full h-full"
+              />
+            </div>
+            <span className="text-base font-bold font-mattone">Mockstars</span>
+          </Link>
+
+          {/* Navigation Links */}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link href="/about" className="text-zinc-400 hover:text-white transition-colors font-outfit">
+              About
+            </Link>
+            <Link href="/features" className="text-zinc-400 hover:text-white transition-colors font-outfit">
+              Features
+            </Link>
+            <Link href="/pricing" className="text-zinc-400 hover:text-white transition-colors font-outfit">
+              Pricing
+            </Link>
+            <Link href="mailto:michelle@veloraai.com" className="text-zinc-400 hover:text-white transition-colors font-outfit">
+              Contact
+            </Link>
           </div>
-          <span className="text-lg font-bold font-sora">Mockstars.app</span>
+
+          {/* CTA Button */}
+          <div className="flex items-center gap-4">
+            
+            <Button className="bg-purple hover:bg-purple/90 text-white rounded-full px-6 font-mattone">
+              Start Free
+            </Button>
+          </div>
         </div>
-        <Button className="bg-purple hover:bg-purple/90 text-white rounded-full px-6 font-sora">Start</Button>
+
+        {/* Mobile Navigation Menu - Shown on small screens */}
+        <div className="md:hidden mt-4 flex flex-wrap gap-4 justify-center">
+          <Link href="/about" className="text-sm text-zinc-400 hover:text-white transition-colors font-outfit">
+            About
+          </Link>
+          <Link href="/features" className="text-sm text-zinc-400 hover:text-white transition-colors font-outfit">
+            Features
+          </Link>
+          <Link href="/pricing" className="text-sm text-zinc-400 hover:text-white transition-colors font-outfit">
+            Pricing
+          </Link>
+          <Link href="mailto:michelle@veloraai.com" className="text-sm text-zinc-400 hover:text-white transition-colors font-outfit">
+            Contact
+          </Link>
+        </div>
       </header>
 
       <main className="flex-1">
@@ -85,8 +128,8 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-6xl mx-auto">
               <div className="max-w-2xl">
-                <div className="text-xs uppercase tracking-widest text-teal mb-2 font-sora">INTERVIEW PRACTICE</div>
-                <h1 className="text-6xl md:text-8xl font-bold tracking-tight mb-8 font-sora">
+                <div className="text-2xs uppercase tracking-widest text-teal mb-2 font-mattone">INTERVIEW PRACTICE</div>
+                <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 font-mattone">
                   Practice
                   <br />
                   Makes
@@ -95,7 +138,7 @@ export default function Home() {
                 </h1>
 
                 <div className="mb-8">
-                  <p className="text-xl mb-4 font-outfit">First interview coming up? Don't sweat it.</p>
+                  <p className="text-lg mb-4 font-outfit">First interview coming up? Don't sweat it.</p>
                   <p className="text-zinc-400 font-outfit">
                     Practice answering real questions out loud, get voice-based feedback from AI, and walk in feeling
                     ready.
@@ -104,7 +147,7 @@ export default function Home() {
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button 
-                    className="bg-black hover:bg-black/90 text-white text-lg py-6 px-8 rounded-full w-full font-sora border border-white/10 flex items-center justify-center"
+                    className="bg-black hover:bg-black/90 text-white text-base py-6 px-8 rounded-full w-full font-mattone border border-white/10 flex items-center justify-center"
                     onClick={() => handleStoreClick('apple')}
                   >
                     <svg width="24" height="24" viewBox="0 0 24 24" className="mr-3" fill="currentColor">
@@ -113,7 +156,7 @@ export default function Home() {
                     App Store
                   </Button>
                   <Button 
-                    className="bg-black hover:bg-black/90 text-white text-lg py-6 px-8 rounded-full w-full font-sora border border-white/10 flex items-center justify-center"
+                    className="bg-black hover:bg-black/90 text-white text-base py-6 px-8 rounded-full w-full font-mattone border border-white/10 flex items-center justify-center"
                     onClick={() => handleStoreClick('google')}
                   >
                     <svg width="24" height="24" viewBox="0 0 24 24" className="mr-3" fill="currentColor">
@@ -133,7 +176,7 @@ export default function Home() {
                     <div className="absolute top-0 left-0 w-40 h-40 bg-purple/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
                     <div className="relative">
                       <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-xl font-semibold font-sora">Interview Practice</h3>
+                        <h3 className="text-xl font-semibold font-mattone">Interview Practice</h3>
                         <span className="bg-pink/20 text-pink text-xs font-medium px-3 py-1.5 rounded-full font-outfit">
                           Recording
                         </span>
@@ -156,9 +199,9 @@ export default function Home() {
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="text-sm text-white/60 font-outfit">Confidence Score</div>
-                            <div className="text-2xl font-bold text-cream font-sora">87%</div>
+                            <div className="text-2xl font-bold text-cream font-mattone">87%</div>
                           </div>
-                          <Button size="sm" className="bg-orange text-black hover:bg-orange/90 font-sora px-6 py-2">
+                          <Button size="sm" className="bg-orange text-black hover:bg-orange/90 font-mattone px-6 py-2">
                             Get Feedback
                           </Button>
                         </div>
@@ -174,14 +217,109 @@ export default function Home() {
         {/* Features Section */}
         <section className="py-16 bg-white/5">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-xs uppercase tracking-widest text-teal mb-6 font-sora">HIGHLIGHTS</div>
+            <div className="max-w-6xl mx-auto">
+              <div className="text-2xs uppercase tracking-widest text-teal mb-6 font-mattone">MASTERY METHODOLOGY</div>
+              
+              <div className="mb-12">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">Master Interviewing Through Deliberate Practice</h2>
+                <p className="text-lg text-zinc-400 font-outfit max-w-3xl">
+                  True interview confidence comes from systematic learning with repeated attempts, timely feedback, and consistent practice in your weak areas. Our 3-stage methodology ensures deep mastery, not just surface preparation.
+                </p>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <FeatureCard number="01" title="Record your answers" isHighlighted={false} />
-                <FeatureCard number="02" title="Get AI tips on tone, content, and delivery" isHighlighted={true} />
-                <FeatureCard number="03" title="Build confidence over time" isHighlighted={false} />
-                <FeatureCard number="04" title="Track progress and stay consistent" isHighlighted={false} />
+              {/* Learning Stages */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div className="bg-black border border-zinc-800 p-6 rounded-2xl">
+                  <div className="text-2xs uppercase tracking-widest text-pink mb-3 font-mattone">STAGE 01</div>
+                  <h3 className="text-xl font-bold mb-4 font-mattone">Foundation Building</h3>
+                  <p className="text-sm text-zinc-400 mb-4 font-outfit">
+                    <strong>Recollection & Memorization:</strong> Watch step-by-step tutorials and take quizzes to quickly recall what you've learned. Build your foundational knowledge before moving to application.
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-pink font-outfit">
+                    <div className="w-2 h-2 bg-pink rounded-full"></div>
+                    Tutorials + Quizzes
+                  </div>
+                </div>
+
+                <div className="bg-purple text-white border border-purple p-6 rounded-2xl">
+                  <div className="text-2xs uppercase tracking-widest text-cream mb-3 font-mattone">STAGE 02</div>
+                  <h3 className="text-xl font-bold mb-4 font-mattone">Personal Application</h3>
+                  <p className="text-sm text-white/80 mb-4 font-outfit">
+                    <strong>Connect & Contextualize:</strong> Apply interview concepts using your own stories from workplace or college projects. Transform theory into personal, compelling narratives.
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-cream font-outfit">
+                    <div className="w-2 h-2 bg-cream rounded-full"></div>
+                    Your Stories + Framework
+                  </div>
+                </div>
+
+                <div className="bg-black border border-zinc-800 p-6 rounded-2xl">
+                  <div className="text-2xs uppercase tracking-widest text-orange mb-3 font-mattone">STAGE 03</div>
+                  <h3 className="text-xl font-bold mb-4 font-mattone">Real-World Practice</h3>
+                  <p className="text-sm text-zinc-400 mb-4 font-outfit">
+                    <strong>Record & Simulate:</strong> Practice out loud with voice recording and mock interview sessions. Overcome nervousness through realistic simulation and immediate feedback.
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-orange font-outfit">
+                    <div className="w-2 h-2 bg-orange rounded-full"></div>
+                    Recording + Mock Interviews
+                  </div>
+                </div>
+              </div>
+
+              {/* Key Principles */}
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold mb-8 font-mattone">Built on Proven Learning Principles</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="bg-black border border-zinc-800 p-4 rounded-xl">
+                    <div className="text-2xs uppercase tracking-widest text-teal mb-2 font-mattone">01</div>
+                    <h4 className="text-sm font-bold mb-2 font-mattone">Repeated Attempts</h4>
+                    <p className="text-xs text-zinc-400 font-outfit">Continuous practice with feedback to correct mistakes and guide improvements</p>
+                  </div>
+                  
+                  <div className="bg-black border border-zinc-800 p-4 rounded-xl">
+                    <div className="text-2xs uppercase tracking-widest text-pink mb-2 font-mattone">02</div>
+                    <h4 className="text-sm font-bold mb-2 font-mattone">Consistent Environment</h4>
+                    <p className="text-xs text-zinc-400 font-outfit">Predictable learning space that builds confidence through familiarity</p>
+                  </div>
+                  
+                  <div className="bg-black border border-zinc-800 p-4 rounded-xl">
+                    <div className="text-2xs uppercase tracking-widest text-orange mb-2 font-mattone">03</div>
+                    <h4 className="text-sm font-bold mb-2 font-mattone">Timely Feedback</h4>
+                    <p className="text-xs text-zinc-400 font-outfit">Immediate insights to quickly adjust and accelerate learning</p>
+                  </div>
+                  
+                  <div className="bg-black border border-zinc-800 p-4 rounded-xl">
+                    <div className="text-2xs uppercase tracking-widest text-teal mb-2 font-mattone">04</div>
+                    <h4 className="text-sm font-bold mb-2 font-mattone">Deliberate Practice</h4>
+                    <p className="text-xs text-zinc-400 font-outfit">Focused practice on your specific weak areas for targeted improvement</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step-by-Step Plan */}
+              <div className="bg-black border border-zinc-800 p-8 rounded-2xl">
+                <div className="text-2xs uppercase tracking-widest text-teal mb-4 font-mattone">YOUR JOURNEY</div>
+                <h3 className="text-2xl font-bold mb-6 font-mattone">Step-by-Step Tutorial System</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="text-lg font-bold mb-4 font-mattone text-pink">Learn</h4>
+                    <ul className="space-y-2 text-sm text-zinc-400 font-outfit">
+                      <li>• Watch interactive tutorials for each interview type</li>
+                      <li>• Complete knowledge-check quizzes</li>
+                      <li>• Master frameworks like STAR method</li>
+                      <li>• Build your response templates</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-bold mb-4 font-mattone text-orange">Practice</h4>
+                    <ul className="space-y-2 text-sm text-zinc-400 font-outfit">
+                      <li>• Apply concepts with your personal stories</li>
+                      <li>• Record practice answers with voice feedback</li>
+                      <li>• Join mock interview sessions (coming soon)</li>
+                      <li>• Track progress and focus on weak spots</li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -190,56 +328,169 @@ export default function Home() {
         {/* CTA Section */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-white/5 p-8 rounded-3xl multi-color-border">
-                <div className="text-xs uppercase tracking-widest text-teal mb-4 font-sora">OUR BEST OFFER</div>
-                <h2 className="text-4xl font-bold mb-6 font-sora">Ready in</h2>
+            <div className="max-w-5xl mx-auto">
+              <div className="bg-white/5 p-8 md:p-12 rounded-3xl multi-color-border">
+                {/* Free Trial Highlight */}
+                <div className="bg-purple/10 border border-purple/20 rounded-2xl p-8 mb-12">
+                  <div className="flex items-center gap-3 mb-4">
+                    <Star className="h-6 w-6 text-purple" />
+                    <h2 className="text-2xl font-bold font-mattone text-purple">3-Day Free Trial</h2>
+                  </div>
+                  <p className="text-zinc-300 font-outfit mb-6">
+                    Try Mockstars Pro Risk-Free with no credit card required. Get full feature access and cancel anytime before your trial ends.
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-purple" />
+                      <span className="font-outfit">No Credit Card Required</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-purple" />
+                      <span className="font-outfit">Full Feature Access</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-purple" />
+                      <span className="font-outfit">Cancel Anytime</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-purple" />
+                      <span className="font-outfit">Instant Access</span>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Pricing Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                  {/* Monthly Plan */}
+                  <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+                    <div>
+                      <h3 className="text-2xl font-bold font-mattone mb-2">Monthly Pro</h3>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-4xl font-bold text-purple font-mattone">$13.99</span>
+                        <span className="text-zinc-400 font-outfit">/ month</span>
+                      </div>
+                      <p className="text-sm text-zinc-400 font-outfit mt-2">
+                        In App Purchase: $19.99/month
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-3 mt-6">
+                      <div className="flex items-center gap-3">
+                        <Check className="h-5 w-5 text-purple" />
+                        <span className="font-outfit">Full access to all Pro features</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Check className="h-5 w-5 text-purple" />
+                        <span className="font-outfit">Unlimited practice sessions</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Check className="h-5 w-5 text-purple" />
+                        <span className="font-outfit">AI-powered feedback</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Check className="h-5 w-5 text-purple" />
+                        <span className="font-outfit">Cancel anytime</span>
+                      </div>
+                    </div>
+                  </div>
 
-                <div className="grid grid-cols-3 gap-4 mb-8">
-                  <div className="bg-black p-4 rounded-2xl text-center">
-                    <div className="text-3xl font-bold font-sora text-pink">02</div>
-                    <div className="text-xs text-zinc-500 font-outfit">Hours</div>
-                  </div>
-                  <div className="bg-black p-4 rounded-2xl text-center">
-                    <div className="text-3xl font-bold font-sora text-orange">35</div>
-                    <div className="text-xs text-zinc-500 font-outfit">Minutes</div>
-                  </div>
-                  <div className="bg-black p-4 rounded-2xl text-center">
-                    <div className="text-3xl font-bold font-sora text-teal">56</div>
-                    <div className="text-xs text-zinc-500 font-outfit">Seconds</div>
+                  {/* Annual Plan */}
+                  <div className="bg-white/5 border-2 border-purple rounded-2xl p-8 relative">
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                      <span className="bg-purple text-white px-4 py-1 rounded-full text-sm font-mattone">
+                        Best Value
+                      </span>
+                    </div>
+                    
+                    <div>
+                      <h3 className="text-2xl font-bold font-mattone mb-2">Annual Pro</h3>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-4xl font-bold text-purple font-mattone">$6.71</span>
+                        <span className="text-zinc-400 font-outfit">/ month</span>
+                      </div>
+                      <p className="text-sm text-zinc-400 font-outfit mt-1">
+                        Billed annually at $80.49/year
+                      </p>
+                      <p className="text-sm text-purple font-outfit mt-1">
+                        Save 52% • In App Purchase: $114.99/year
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-3 mt-6">
+                      <div className="flex items-center gap-3">
+                        <Check className="h-5 w-5 text-purple" />
+                        <span className="font-outfit">All Pro features included</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Check className="h-5 w-5 text-purple" />
+                        <span className="font-outfit">12 months unlimited access</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Check className="h-5 w-5 text-purple" />
+                        <span className="font-outfit">Best value for serious prep</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <Check className="h-5 w-5 text-purple" />
+                        <span className="font-outfit">Priority support</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <Button className="bg-purple hover:bg-purple/90 text-white rounded-full px-8 py-6 w-full font-sora">
-                  More details
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+                {/* Why It Pays For Itself */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white/5 border border-white/10 rounded-2xl p-8">
+                  <div className="space-y-6">
+                    <h3 className="text-xl font-bold font-mattone text-purple">Return on Investment</h3>
+                    <ul className="space-y-3 text-zinc-300 font-outfit">
+                      <li className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 bg-purple rounded-full"></div>
+                        Users report significant salary improvements
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 bg-purple rounded-full"></div>
+                        Higher interview-to-offer conversion rates
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 bg-purple rounded-full"></div>
+                        Reduce preparation time significantly
+                      </li>
+                      <li className="flex items-center gap-3">
+                        <div className="w-1.5 h-1.5 bg-purple rounded-full"></div>
+                        Faster progression to target roles
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    <h3 className="text-xl font-bold font-mattone text-orange">Cost Comparison</h3>
+                    <div className="space-y-3 text-zinc-300 font-outfit">
+                      <div className="flex justify-between">
+                        <span>Professional Coach</span>
+                        <span className="text-zinc-400">$100-200/hour</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Career Coaching</span>
+                        <span className="text-zinc-400">$1,000-5,000</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Prep Bootcamps</span>
+                        <span className="text-zinc-400">$500-2,000</span>
+                      </div>
+                      <div className="flex justify-between border-t border-white/10 pt-3">
+                        <span className="font-bold">Mockstars Pro Annual</span>
+                        <span className="text-purple font-bold">Less than $10/month</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>
         </section>
       </main>
 
-      <footer className="py-8 border-t border-zinc-800">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
-              <span className="text-sm text-zinc-500 font-outfit">© {new Date().getFullYear()} Mockstars.app</span>
-            </div>
-            <div className="flex gap-6">
-              <Link href="/privacy" className="text-sm text-zinc-500 hover:text-teal font-outfit">
-                Privacy
-              </Link>
-              <Link href="/terms" className="text-sm text-zinc-500 hover:text-pink font-outfit">
-                Terms
-              </Link>
-              <a href="mailto:michelle@veloraai.com" className="text-sm text-zinc-500 hover:text-orange font-outfit">
-                Contact
-              </a>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }
@@ -251,10 +502,10 @@ function FeatureCard({ number, title, isHighlighted }: { number: string; title: 
         isHighlighted ? "bg-purple text-white border-purple" : "bg-black border-zinc-800"
       }`}
     >
-      <div className={`text-xs uppercase tracking-widest mb-2 font-sora ${isHighlighted ? "text-cream" : "text-teal"}`}>
+      <div className={`text-2xs uppercase tracking-widest mb-2 font-mattone ${isHighlighted ? "text-cream" : "text-teal"}`}>
         {number}
       </div>
-      <h3 className="text-xl font-bold font-sora">{title}</h3>
+      <h3 className="text-lg font-bold font-mattone">{title}</h3>
     </div>
   )
 }

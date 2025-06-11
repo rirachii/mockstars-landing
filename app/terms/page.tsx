@@ -19,12 +19,12 @@ export default function Terms() {
             
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-white font-sora">1. Acceptance of Terms</h2>
-              <p>By accessing or using Mockstars.app, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our service.</p>
+              <p>By accessing or using Mockstars, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our service.</p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-white font-sora">2. Service Description</h2>
-              <p>Mockstars.app provides an AI-powered interview practice platform that includes:</p>
+              <p>Mockstars provides an AI-powered interview practice platform that includes:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Voice-based interview practice sessions</li>
                 <li>AI-generated feedback on responses</li>
@@ -46,12 +46,12 @@ export default function Terms() {
 
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-white font-sora">4. Intellectual Property</h2>
-              <p>All content, features, and functionality of Mockstars.app are owned by VeloraAI and are protected by international copyright, trademark, and other intellectual property laws.</p>
+              <p>All content, features, and functionality of Mockstars are owned by VeloraAI and are protected by international copyright, trademark, and other intellectual property laws.</p>
             </section>
 
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-white font-sora">5. Limitation of Liability</h2>
-              <p>Mockstars.app and VeloraAI shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use the service.</p>
+              <p>Mockstars and VeloraAI shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use or inability to use the service.</p>
             </section>
 
             <section className="space-y-4">

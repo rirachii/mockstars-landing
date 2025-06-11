@@ -1,51 +1,61 @@
 import type React from "react"
-import { Sora, Outfit } from "next/font/google"
+import { Outfit } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { PostHogProvider } from "@/components/providers/posthog-provider"
-
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sora",
-})
+import JsonLd from "@/components/JsonLd"
+import type { Metadata } from 'next'
 
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
 })
 
-export const metadata = {
-  title: "Mockstars.app - Practice Makes Confidence",
-  description:
-    "Practice answering real interview questions out loud, get voice-based feedback from AI, and walk in feeling ready.",
-  generator: 'v0.dev',
-  icons: {
-    icon: '/mockstars.png',
-    shortcut: '/mockstars.png',
-    apple: '/mockstars.png',
-  },
+export const metadata: Metadata = {
+  title: "Mockstars - AI Interview Practice",
+  description: "Practice interviews with AI-powered feedback. Get personalized coaching and improve your interview skills.",
   openGraph: {
-    title: "Mockstars.app - Ace your next interview",
-    description: "Practice answering real interview questions out loud and track your progress with expert feedback.",
+    title: 'Mockstars - AI Interview Practice',
+    description: 'Practice interviews with AI-powered feedback. Get personalized coaching and improve your interview skills.',
     url: 'https://mockstars.app',
-    siteName: 'Mockstars.app',
+    siteName: 'Mockstars',
     images: [
       {
-        url: '/giphy.gif',
-        width: 800,
-        height: 600,
-        alt: 'Mockstars Preview'
-      }
+        url: '/mastery.gif',
+        width: 1200,
+        height: 630,
+        type: 'image/gif',
+      },
     ],
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Mockstars.app - Practice Makes Confidence",
-    description: "Practice answering real interview questions out loud, get voice-based feedback from AI, and walk in feeling ready.",
-    images: ['/giphy.gif'],
+    title: 'Mockstars - AI Interview Practice',
+    description: 'Practice interviews with AI-powered feedback. Get personalized coaching and improve your interview skills.',
+    images: ['/mockstars.png'],
   },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  }
+}
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: 'Mockstars',
+  description: 'Practice answering real interview questions out loud, get voice-based feedback from AI, and walk in feeling ready.',
+  url: 'https://mockstars.app',
+  applicationCategory: 'EducationalApplication',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD'
+  },
+  operatingSystem: 'Web browser'
 }
 
 export default function RootLayout({
@@ -55,10 +65,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${sora.variable} ${outfit.variable}`}>
+      <head>
+        <JsonLd data={jsonLd} />
+      </head>
+      <body className={`${outfit.variable} min-h-screen flex flex-col`}>
         <PostHogProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-            {children}
+            <main role="main" className="flex-1">
+              {children}
+            </main>
           </ThemeProvider>
         </PostHogProvider>
       </body>
