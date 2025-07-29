@@ -90,7 +90,50 @@ body {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #e8ddd4;
+    background-image: 
+        linear-gradient(to right, #d4c4b8 1px, transparent 1px),
+        linear-gradient(to bottom, #d4c4b8 1px, transparent 1px);
+    background-size: 80px 80px;
+    position: relative;
+  }
+
+  /* Add subtle cross markers at grid intersections */
+  body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 0 0, #c2b2a6 1px, transparent 1px);
+    background-size: 80px 80px;
+    background-position: 40px 40px;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Additional cross markers for more authentic grid appearance */
+  body::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        linear-gradient(to right, transparent 39px, #c2b2a6 39px, #c2b2a6 41px, transparent 41px),
+        linear-gradient(to bottom, transparent 39px, #c2b2a6 39px, #c2b2a6 41px, transparent 41px);
+    background-size: 80px 80px;
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
   }
 }
 

@@ -32,9 +32,9 @@ const aboutJsonLd = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-black text-white font-outfit">
+    <div className="min-h-screen text-gray-800 font-outfit relative z-10">
       <div className="container mx-auto px-4 py-8">
-        <Link href="/" className="inline-flex items-center text-zinc-400 hover:text-white mb-8">
+        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-gray-800 mb-8">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Home
         </Link>
@@ -43,16 +43,16 @@ export default function AboutPage() {
           <JsonLd data={aboutJsonLd} />
           <h1 className="text-3xl md:text-4xl font-bold mb-8 font-mattone">About Mockstars</h1>
           
-          <div className="space-y-8 text-zinc-300">
-            <section className="space-y-4">
-              <h2 className="text-xl md:text-2xl font-bold text-white font-mattone">Empowering Career Success Through AI-Powered Interview Practice</h2>
-              <p>
-                Mockstars is a revolutionary mobile application designed to transform how professionals prepare for job interviews. Founded with the mission to democratize interview preparation, Mockstars combines cutting-edge artificial intelligence with intuitive mobile technology to provide personalized, accessible, and effective interview practice for job seekers worldwide.
-              </p>
-            </section>
+          <div className="space-y-8 text-gray-600">
+                          <section className="space-y-4">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">Empowering Career Success Through AI-Powered Interview Practice</h2>
+                <p>
+                  Mockstars is a revolutionary mobile application designed to transform how professionals prepare for job interviews. Founded with the mission to democratize interview preparation, Mockstars combines cutting-edge artificial intelligence with intuitive mobile technology to provide personalized, accessible, and effective interview practice for job seekers worldwide.
+                </p>
+              </section>
 
-            <section className="space-y-4">
-              <h2 className="text-xl md:text-2xl font-bold text-white font-mattone">Our Story</h2>
+              <section className="space-y-4">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">Our Story</h2>
               <div className="space-y-4">
                 <p>
                   In today's competitive job market, interview preparation often determines career success. Traditional interview coaching is expensive, time-consuming, and not accessible to everyone. Mockstars was created to bridge this gap, offering AI-powered interview practice that adapts to each user's industry, experience level, and career goals.
@@ -63,12 +63,12 @@ export default function AboutPage() {
               </div>
             </section>
 
-            <section className="space-y-6">
-              <h2 className="text-xl md:text-2xl font-bold text-white font-mattone">What Makes Mockstars Unique</h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">AI-Powered Personalization</h3>
+                          <section className="space-y-6">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">What Makes Mockstars Unique</h2>
+                
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">AI-Powered Personalization</h3>
                   <ul className="list-disc pl-6 space-y-2">
                     <li><strong>Resume-Based Customization:</strong> Upload your resume to receive tailored interview questions based on your specific experience, skills, and career background</li>
                     <li><strong>Industry-Specific Questions:</strong> Access curated question banks for various industries and job roles</li>
@@ -76,17 +76,17 @@ export default function AboutPage() {
                   </ul>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">Comprehensive Interview Preparation</h3>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Voice Recording Technology:</strong> Practice speaking your answers aloud with high-quality audio recording capabilities</li>
-                    <li><strong>Real-Time Feedback:</strong> Receive instant analysis of your responses, including content quality, speaking pace, and delivery confidence</li>
-                    <li><strong>Progress Tracking:</strong> Monitor your improvement over time with detailed analytics and performance metrics</li>
-                  </ul>
-                </div>
+                                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Comprehensive Interview Preparation</h3>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li><strong>Voice Recording Technology:</strong> Practice speaking your answers aloud with high-quality audio recording capabilities</li>
+                      <li><strong>Real-Time Feedback:</strong> Receive instant analysis of your responses, including content quality, speaking pace, and delivery confidence</li>
+                      <li><strong>Progress Tracking:</strong> Monitor your improvement over time with detailed analytics and performance metrics</li>
+                    </ul>
+                  </div>
 
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">Mobile-First Experience</h3>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Mobile-First Experience</h3>
                   <ul className="list-disc pl-6 space-y-2">
                     <li><strong>Practice Anywhere:</strong> Prepare for interviews on-the-go with our fully-featured mobile application</li>
                     <li><strong>Offline Capability:</strong> Access core features even without internet connectivity</li>
@@ -96,9 +96,9 @@ export default function AboutPage() {
               </div>
             </section>
 
-            <section className="space-y-4">
-              <h2 className="text-xl md:text-2xl font-bold text-white font-mattone">Our Technology</h2>
-              <p>Mockstars is built on a robust technology stack that ensures reliability, security, and scalability:</p>
+                          <section className="space-y-4">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">Our Technology</h2>
+                <p>Mockstars is built on a robust technology stack that ensures reliability, security, and scalability:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li><strong>Frontend:</strong> React Native with Expo for cross-platform mobile development</li>
                 <li><strong>Backend:</strong> Supabase for real-time database, authentication, and storage</li>
@@ -108,12 +108,12 @@ export default function AboutPage() {
               </ul>
             </section>
 
-            <section className="space-y-6">
-              <h2 className="text-xl md:text-2xl font-bold text-white font-mattone">Target Audience</h2>
-              
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">Job Seekers</h3>
+                          <section className="space-y-6">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">Target Audience</h2>
+                
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Job Seekers</h3>
                   <ul className="list-disc pl-6 space-y-2">
                     <li>Recent graduates entering the job market</li>
                     <li>Career changers transitioning to new industries</li>
@@ -122,19 +122,19 @@ export default function AboutPage() {
                   </ul>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">Career Stages</h3>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Entry-Level:</strong> Fresh graduates and early-career professionals</li>
-                    <li><strong>Mid-Level:</strong> Professionals with 2-8 years of experience</li>
-                    <li><strong>Senior-Level:</strong> Experienced professionals seeking leadership roles</li>
-                    <li><strong>Executive:</strong> C-suite and senior management candidates</li>
-                  </ul>
+                                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Career Stages</h3>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li><strong>Entry-Level:</strong> Fresh graduates and early-career professionals</li>
+                      <li><strong>Mid-Level:</strong> Professionals with 2-8 years of experience</li>
+                      <li><strong>Senior-Level:</strong> Experienced professionals seeking leadership roles</li>
+                      <li><strong>Executive:</strong> C-suite and senior management candidates</li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <h3 className="text-lg font-bold text-white font-mattone mb-4">Industries Served</h3>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Industries Served</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <ul className="list-disc pl-6 space-y-2">
                     <li>Technology and Software Development</li>
@@ -152,12 +152,12 @@ export default function AboutPage() {
               </div>
             </section>
 
-            <section className="space-y-6">
-              <h2 className="text-xl md:text-2xl font-bold text-white font-mattone">Our Commitment</h2>
-              
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">Privacy and Security</h3>
+                          <section className="space-y-6">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">Our Commitment</h2>
+                
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Privacy and Security</h3>
                   <ul className="list-disc pl-6 space-y-2">
                     <li><strong>Data Protection:</strong> All user data is encrypted and stored securely</li>
                     <li><strong>Privacy First:</strong> We never share personal information with third parties</li>
@@ -165,17 +165,17 @@ export default function AboutPage() {
                   </ul>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">Accessibility</h3>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li><strong>Inclusive Design:</strong> Built with accessibility features for users with disabilities</li>
-                    <li><strong>Multiple Languages:</strong> Support for international users and non-native English speakers</li>
-                    <li><strong>Affordable Pricing:</strong> Competitive pricing to make professional interview preparation accessible</li>
-                  </ul>
-                </div>
+                                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Accessibility</h3>
+                    <ul className="list-disc pl-6 space-y-2">
+                      <li><strong>Inclusive Design:</strong> Built with accessibility features for users with disabilities</li>
+                      <li><strong>Multiple Languages:</strong> Support for international users and non-native English speakers</li>
+                      <li><strong>Affordable Pricing:</strong> Competitive pricing to make professional interview preparation accessible</li>
+                    </ul>
+                  </div>
 
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">Continuous Improvement</h3>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Continuous Improvement</h3>
                   <ul className="list-disc pl-6 space-y-2">
                     <li><strong>Regular Updates:</strong> Frequent app updates with new features and improvements</li>
                     <li><strong>User Feedback:</strong> Active incorporation of user suggestions and feedback</li>
@@ -185,26 +185,26 @@ export default function AboutPage() {
               </div>
             </section>
 
-            <section className="space-y-4">
-              <h2 className="text-xl md:text-2xl font-bold text-white font-mattone">Company Values</h2>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">Excellence</h3>
-                  <p>We strive for excellence in every aspect of our product, from user experience design to AI accuracy and customer support.</p>
+                          <section className="space-y-4">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">Company Values</h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Excellence</h3>
+                    <p>We strive for excellence in every aspect of our product, from user experience design to AI accuracy and customer support.</p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Innovation</h3>
+                    <p>We continuously push the boundaries of what's possible in mobile interview preparation, incorporating the latest AI and mobile technologies.</p>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800 font-mattone mb-4">Integrity</h3>
+                    <p>We maintain the highest standards of data privacy, security, and ethical AI practices in all our operations.</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">Innovation</h3>
-                  <p>We continuously push the boundaries of what's possible in mobile interview preparation, incorporating the latest AI and mobile technologies.</p>
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white font-mattone mb-4">Integrity</h3>
-                  <p>We maintain the highest standards of data privacy, security, and ethical AI practices in all our operations.</p>
-                </div>
-              </div>
-            </section>
+              </section>
 
-            <section className="space-y-4">
-              <h2 className="text-xl md:text-2xl font-bold text-white font-mattone">Contact Information</h2>
+              <section className="space-y-4">
+                <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">Contact Information</h2>
               <p>
                 For more information about Mockstars, partnerships, or support inquiries, please visit our website or contact our team through the app.
               </p>

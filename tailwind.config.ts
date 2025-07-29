@@ -35,6 +35,7 @@ const config = {
         purple: "#5E2CA5",
         pink: "#FF6B8B",
         orange: "#FF9E2C",
+        blue: "rgb(57, 125, 194)",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
