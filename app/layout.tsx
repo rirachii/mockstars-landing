@@ -3,6 +3,8 @@ import { Outfit } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { PostHogProvider } from "@/components/providers/posthog-provider"
+import Navigation from "@/components/Navigation"
+import Footer from "@/components/Footer"
 import JsonLd from "@/components/JsonLd"
 import type { Metadata } from 'next'
 
@@ -71,15 +73,14 @@ export default function RootLayout({
       <body className={`${outfit.variable} min-h-screen flex flex-col`}>
         <PostHogProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+            <Navigation />
             <main role="main" className="flex-1">
               {children}
             </main>
+            <Footer />
           </ThemeProvider>
         </PostHogProvider>
       </body>
     </html>
   )
 }
-
-
-import './globals.css'

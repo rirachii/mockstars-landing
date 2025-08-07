@@ -62,7 +62,7 @@ npm start
 - **Framework**: Next.js 14
 - **Styling**: Tailwind CSS
 - **Analytics**: PostHog
-- **Fonts**: Sora, Outfit (Google Fonts)
+- **Fonts**: Mattone, Outfit (Google Fonts)
 - **Deployment**: Standalone output
 
 ## 📁 Project Structure

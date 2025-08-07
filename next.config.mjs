@@ -1,3 +1,9 @@
+import createMDX from '@next/mdx'
+import remarkGfm from 'remark-gfm'
+import rehypeSlug from 'rehype-slug'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypePrettyCode from 'rehype-pretty-code'
+
 let userConfig = undefined
 try {
   // try to import ESM first
@@ -15,6 +21,9 @@ try {
 const nextConfig = {
   // Enable static exports for better LLM crawling
   output: 'standalone',
+  
+  // Configure the page extensions to include MDX
+  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   
   // Optimize images
   images: {
@@ -113,4 +122,30 @@ nextConfig.rewrites = async () => {
 // Add skipTrailingSlashRedirect required by PostHog
 nextConfig.skipTrailingSlashRedirect = true;
 
-export default nextConfig
+const rehypePrettyCodeOptions = {
+  theme: {
+    dark: 'github-dark',
+    light: 'github-light',
+  },
+  keepBackground: false,
+}
+
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSlug,
+      [rehypePrettyCode, rehypePrettyCodeOptions],
+      [
+        rehypeAutolinkHeadings,
+        {
+          properties: {
+            className: ['anchor'],
+          },
+        },
+      ],
+    ],
+  },
+})
+
+export default withMDX(nextConfig)

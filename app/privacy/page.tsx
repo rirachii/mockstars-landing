@@ -6,11 +6,6 @@ export default function Privacy() {
   return (
     <div className="min-h-screen text-gray-800 font-outfit relative z-10">
       <div className="container mx-auto px-4 py-8">
-        <Link href="/" className="inline-flex items-center text-gray-600 hover:text-gray-800 mb-8">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Home
-        </Link>
-        
         <div className="max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold mb-8 font-sora">Privacy Policy</h1>
           

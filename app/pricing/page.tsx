@@ -2,7 +2,6 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft, Check, Star } from "lucide-react"
 import JsonLd from "@/components/JsonLd"
-import Footer from '../../components/Footer'
 
 export const metadata = {
   title: "Mockstars Pricing - AI Interview Practice Plans",
@@ -44,14 +43,6 @@ export default function PricingPage() {
       />
       
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors mb-8 font-outfit"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Home
-        </Link>
-
         <div className="space-y-12">
           {/* Header */}
           <div className="space-y-6">
@@ -358,7 +349,6 @@ export default function PricingPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   )
 } 
