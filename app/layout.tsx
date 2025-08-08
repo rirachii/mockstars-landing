@@ -1,6 +1,6 @@
 import type React from "react"
 import { Outfit } from "next/font/google"
-import "./globals.css"
+import "@/styles/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { PostHogProvider } from "@/components/providers/posthog-provider"
 import Navigation from "@/components/Navigation"

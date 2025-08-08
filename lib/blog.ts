@@ -64,7 +64,9 @@ export function getFeaturedBlogPosts(): BlogPost[] {
 }
 
 export function getBlogPostsByCategory(category: string): BlogPost[] {
-  return getAllBlogPosts().filter(post => post.category === category)
+  return getAllBlogPosts().filter(post => 
+    post.category?.toLowerCase() === category.toLowerCase()
+  )
 }
 
 export function getBlogPostsByTag(tag: string): BlogPost[] {

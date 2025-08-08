@@ -1,9 +1,7 @@
 'use client'
 
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Mic, Star, Check } from "lucide-react"
-import Image from "next/image"
+import { Mic, Star, Check } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -13,7 +11,6 @@ import {
 } from "@/components/ui/dialog"
 import { useState } from "react"
 import posthog from 'posthog-js'
-import './fonts.css'
 import CTA from '../components/CTA'
 
 export default function Home() {

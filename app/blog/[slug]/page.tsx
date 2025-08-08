@@ -65,6 +65,18 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const previousPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null
   const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null
   
+  // Get popular posts (featured posts first, then by date, excluding current)
+  const popularPosts = allPosts
+    .filter(p => p.slug !== post.slug)
+    .sort((a, b) => {
+      // Featured posts first
+      if (a.featured && !b.featured) return -1
+      if (!a.featured && b.featured) return 1
+      // Then by date
+      return new Date(b.date).getTime() - new Date(a.date).getTime()
+    })
+    .slice(0, 5)
+  
   // Get related posts (same category or tags, excluding current post)
   const relatedPosts = allPosts
     .filter(p => 
@@ -75,19 +87,134 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     .slice(0, 3)
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      <article className="container mx-auto px-4 py-16">
-        <div className="max-w-4xl mx-auto">
-          <BlogPostHeader post={post} />
-          <BlogPostContent post={post} />
-          <BlogPostNavigation previousPost={previousPost} nextPost={nextPost} />
-        </div>
-      </article>
+    <div className="flex flex-col min-h-screen text-gray-800 font-outfit relative z-10">
+      {/* Main Content with Sidebar */}
+      <div className="flex relative">
+        {/* Main Article Content */}
+        <article className="flex-1 py-16 xl:pr-16 xl:pl-16">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto xl:mx-8 xl:ml-12">
+              {/* Article Header */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 mb-8">
+                <BlogPostHeader post={post} />
+              </div>
+              
+              {/* Article Content */}
+              <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 md:p-12 mb-8">
+                <BlogPostContent post={post} />
+              </div>
+              
+              {/* Navigation */}
+              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-6">
+                <BlogPostNavigation previousPost={previousPost} nextPost={nextPost} />
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        {/* Floating Sidebar */}
+        <aside className="hidden xl:block fixed right-16 pt-4 w-80 z-20">
+          <div className="backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 max-h-[80vh] overflow-y-auto">
+            {/* Popular Articles Section */}
+            <div className="mb-8">
+              <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">POPULAR ARTICLES</div>
+              <h3 className="text-lg font-bold mb-4 font-mattone text-gray-800">Trending Now</h3>
+              <div className="space-y-4">
+                {popularPosts.map((popularPost, index) => (
+                  <a
+                    key={popularPost.slug}
+                    href={popularPost.url}
+                    className="block group hover:bg-gray-50 rounded-lg p-3 transition-colors"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="text-blue font-bold text-sm bg-blue/10 rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 font-mattone">
+                        {index + 1}
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-sm font-semibold text-gray-800 group-hover:text-blue transition-colors line-clamp-2 font-mattone">
+                          {popularPost.title}
+                        </h4>
+                        <p className="text-xs text-gray-500 mt-1 font-outfit">
+                          {popularPost.readingTime} min read
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Related Articles Section */}
+            {relatedPosts.length > 0 && (
+              <div>
+                <div className="text-2xs uppercase tracking-widest text-teal-600 mb-4 font-mattone">RELATED ARTICLES</div>
+                <h3 className="text-lg font-bold mb-4 font-mattone text-gray-800">More Like This</h3>
+                <div className="space-y-4">
+                  {relatedPosts.map((relatedPost) => (
+                    <a
+                      key={relatedPost.slug}
+                      href={relatedPost.url}
+                      className="block group hover:bg-gray-50 rounded-lg p-3 transition-colors"
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                          <span className="text-teal-600 font-bold text-xs font-mattone">
+                            {relatedPost.category?.charAt(0) || 'A'}
+                          </span>
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-sm font-semibold text-gray-800 group-hover:text-blue transition-colors line-clamp-2 font-mattone">
+                            {relatedPost.title}
+                          </h4>
+                          <div className="flex items-center gap-2 mt-1">
+                            <span className="text-xs text-gray-500 font-outfit">
+                              {relatedPost.readingTime} min read
+                            </span>
+                            {relatedPost.category && (
+                              <>
+                                <span className="text-xs text-gray-400">•</span>
+                                <span className="text-xs text-teal-600 font-outfit">
+                                  {relatedPost.category}
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </aside>
+      </div>
       
+      {/* Related Posts Section for Mobile */}
       {relatedPosts.length > 0 && (
-        <RelatedPosts posts={relatedPosts} />
+        <section className="py-16 bg-white/30 backdrop-blur-sm xl:hidden">
+          <div className="container mx-auto px-4">
+            <div className="max-w-6xl mx-auto">
+              <RelatedPosts posts={relatedPosts} />
+            </div>
+          </div>
+        </section>
       )}
-      <CTA />
+      
+      {/* CTA Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <CTA 
+              title="Ready to Transform Your Interview Skills?"
+              subtitle="Join thousands of professionals who've built confidence and landed their dream jobs with MockStars."
+              primaryButtonText="Start Practicing Now"
+              secondaryButtonText="Download App"
+              showSecondaryButton={false}
+            />
+          </div>
+        </div>
+      </section>
     </div>
   )
 }

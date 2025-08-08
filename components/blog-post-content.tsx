@@ -13,22 +13,22 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
         remarkPlugins={[remarkGfm]}
         components={{
           h1: ({ children }) => (
-            <h1 className="text-4xl font-bold mb-8 text-gray-900 dark:text-gray-100 mt-12 first:mt-0 font-mattone">
+            <h1 className="text-2xl font-bold mb-8 text-gray-900 dark:text-gray-100 mt-12 first:mt-0 font-mattone">
               {children}
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="text-3xl font-semibold mb-6 mt-12 text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-2 font-mattone">
+            <h2 className="text-1xl font-semibold mb-6 mt-12 text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-2 font-mattone">
               {children}
             </h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-2xl font-semibold mb-4 mt-8 text-gray-900 dark:text-gray-100 font-mattone">
+            <h3 className="text-xl font-semibold mb-4 mt-8 text-gray-900 dark:text-gray-100 font-mattone">
               {children}
             </h3>
           ),
           h4: ({ children }) => (
-            <h4 className="text-xl font-semibold mb-3 mt-6 text-gray-900 dark:text-gray-100 font-mattone">
+            <h4 className="text-lg font-semibold mb-3 mt-6 text-gray-900 dark:text-gray-100 font-mattone">
               {children}
             </h4>
           ),

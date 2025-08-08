@@ -51,18 +51,18 @@ export function BlogPostHeader({ post }: BlogPostHeaderProps) {
       )}
 
       {/* Title */}
-      <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight font-mattone">
+      <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight font-mattone">
         {post.title}
       </h1>
 
       {/* Description */}
-      <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed font-outfit">
+      <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 leading-relaxed font-outfit">
         {post.description}
       </p>
 
       {/* Cover Image */}
       {post.image && (
-        <div className="relative w-full h-64 md:h-96 mb-8 rounded-xl overflow-hidden shadow-2xl">
+        <div className="relative mb-8 rounded-xl overflow-hidden shadow-2xl max-w-lg mx-auto h-96 md:h-128">
           <Image
             src={post.image}
             alt={post.title}

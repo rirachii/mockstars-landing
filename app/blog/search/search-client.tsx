@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import { BlogPost } from '@/lib/blog'
 import { BlogCard } from '@/components/blog-card'
-import { BlogSidebar } from '@/components/blog-sidebar'
+// import { BlogSidebar } from '@/components/blog-sidebar'
 import { BookOpen, Search as SearchIcon, Users } from 'lucide-react'
 
 interface SearchClientProps {
@@ -58,7 +58,7 @@ export default function SearchClient({ allPosts, categories, tags }: SearchClien
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
             {/* Sidebar */}
-            <BlogSidebar categories={categories} tags={tags} />
+            {/* <BlogSidebar categories={categories} tags={tags} /> */}
             
             {/* Main Content */}
             <div className="flex-1">
