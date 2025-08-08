@@ -26,42 +26,20 @@ export function FloatingSidebar({ popularPosts, relatedPosts }: FloatingSidebarP
   useEffect(() => {
     function updateSidebarPosition() {
       const sidebar = document.querySelector('#floating-sidebar')
-      const ctaSection = document.querySelector('#cta-section')
-      
-      if (!sidebar || !ctaSection) return
 
-      const ctaRect = ctaSection.getBoundingClientRect()
-      const sidebarHeight = sidebar.getBoundingClientRect().height
-      const viewportHeight = window.innerHeight
-      
-      // Calculate if sidebar would overlap with CTA
-      const sidebarBottom = viewportHeight / 2 + sidebarHeight / 2
-      const ctaTop = ctaRect.top
-      
-      if (ctaTop < sidebarBottom && ctaRect.top < viewportHeight) {
-        // Stop floating and position above CTA
-        setSidebarStyle({
-          position: 'absolute',
-          top: 'auto',
-          transform: 'none',
-          bottom: `${ctaRect.height + 32}px` // 32px margin from CTA
-        })
-      } else {
-        // Resume floating
-        setSidebarStyle({
-          position: 'fixed',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          bottom: 'auto'
-        })
-      }
+      if (!sidebar) return
+
+      setSidebarStyle({
+        position: 'fixed',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        bottom: 'auto'
+      })
     }
     
-    // Update on scroll and resize
     window.addEventListener('scroll', updateSidebarPosition)
     window.addEventListener('resize', updateSidebarPosition)
     
-    // Initial check after a small delay to ensure elements are rendered
     const timer = setTimeout(updateSidebarPosition, 100)
     
     return () => {
@@ -78,7 +56,6 @@ export function FloatingSidebar({ popularPosts, relatedPosts }: FloatingSidebarP
       style={sidebarStyle}
     >
       <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 max-h-[80vh] overflow-y-auto">
-        {/* Popular Articles Section */}
         <div className="mb-8">
           <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">POPULAR ARTICLES</div>
           <h3 className="text-lg font-bold mb-4 font-mattone text-gray-800">Trending Now</h3>
