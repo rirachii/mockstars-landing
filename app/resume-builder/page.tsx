@@ -1,8 +1,11 @@
+'use client';
 import React from 'react';
-import { PDFUpload } from '@/components/resume/pdf-upload';
-import { PDFGenerator } from '@/components/resume/pdf-generator';
-import { TemplateSelector } from '@/components/template-selector';
+import dynamic from 'next/dynamic';
+import { TemplateSelector } from '@/components/resume/template-selector';
 import { TemplateType } from '@/components/resume/pdf-templates';
+
+const PDFUpload = dynamic(() => import('@/components/resume/pdf-upload').then(m => m.PDFUpload), { ssr: false });
+const PDFGenerator = dynamic(() => import('@/components/resume/pdf-generator').then(m => m.PDFGenerator), { ssr: false });
 
 export default function ResumeBuilderPage() {
   const [selectedTemplate, setSelectedTemplate] = React.useState<TemplateType>('modern');

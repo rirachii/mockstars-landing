@@ -150,8 +150,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </article>
         
         {/* Floating Sidebar */}
-        <aside className="hidden xl:block fixed right-16 pt-4 w-80 z-20">
-          <div className="backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 max-h-[80vh] overflow-y-auto">
+        <aside className="hidden xl:block fixed right-8 pt-4 w-80 z-20 ">
+          <div className="backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 max-h-[80vh] overflow-y-auto scrollbar-hide">
             {/* Popular Articles Section */}
             <div className="mb-8">
               <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">POPULAR ARTICLES</div>
@@ -184,7 +184,6 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {/* Related Articles Section */}
             {relatedPosts.length > 0 && (
               <div>
-                <div className="text-2xs uppercase tracking-widest text-teal-600 mb-4 font-mattone">RELATED ARTICLES</div>
                 <h3 className="text-lg font-bold mb-4 font-mattone text-gray-800">More Like This</h3>
                 <div className="space-y-4">
                   {relatedPosts.map((relatedPost) => (

@@ -63,17 +63,18 @@ export class PDFParser {
 
       // Get PDF metadata
       const metadata = await pdf.getMetadata();
+      const info: any = (metadata as any)?.info ?? {};
 
       return {
         text: fullText.trim(),
         pages,
         metadata: {
-          title: metadata.info?.Title,
-          author: metadata.info?.Author,
-          creator: metadata.info?.Creator,
-          producer: metadata.info?.Producer,
-          creationDate: metadata.info?.CreationDate,
-          modificationDate: metadata.info?.ModDate,
+          title: info?.Title,
+          author: info?.Author,
+          creator: info?.Creator,
+          producer: info?.Producer,
+          creationDate: info?.CreationDate,
+          modificationDate: info?.ModDate,
         },
       };
     } catch (error) {

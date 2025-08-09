@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { templates, TemplateType } from './resume/pdf-templates';
+import { templates, TemplateType } from './pdf-templates';
 import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';

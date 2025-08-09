@@ -1,16 +1,16 @@
 // PDF System Exports
-export { PDFParser } from './lib/pdf/parser';
-export type { ParsedResumeData } from './lib/pdf/parser';
+export { PDFParser } from './parser';
+export type { ParsedResumeData } from './parser';
 
 // PDF Templates
-export { ModernTemplate, ClassicTemplate } from './components/pdf-templates';
-export { templates, getTemplate } from './components/pdf-templates';
-export type { TemplateType, TemplateInfo } from './components/pdf-templates';
+export { ModernTemplate, ClassicTemplate } from '@/components/resume/pdf-templates';
+export { templates, getTemplate } from '@/components/resume/pdf-templates';
+export type { TemplateType, TemplateInfo } from '@/components/resume/pdf-templates';
 
 // PDF Components
-export { PDFGenerator, ResumeBuilder } from './components/pdf-generator';
-export { PDFUpload, ResumeUploadDemo } from './components/pdf-upload';
-export { TemplateSelector, ResumeBuilderWithTemplates } from './components/template-selector';
+export { PDFGenerator, ResumeBuilder } from '@/components/resume/pdf-generator';
+export { PDFUpload, ResumeUploadDemo } from '@/components/resume/pdf-upload';
+export { TemplateSelector, ResumeBuilderWithTemplates } from '@/components/resume/template-selector';
 
 // Types
 export interface ResumeData {
