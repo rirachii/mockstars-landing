@@ -6,6 +6,8 @@ import { RelatedPosts } from '@/components/blog/related-posts'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import CTA from '@/components/layout/CTA'
+import JsonLd from '@/components/JsonLd'
+
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -86,6 +88,20 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     )
     .slice(0, 3)
 
+    const hasFaqs = Array.isArray(post.faqs) && post.faqs.length > 0
+
+    const faqJsonLd = hasFaqs
+      ? {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": post.faqs?.map((item: { q: string; a: string }) => ({
+            "@type": "Question",
+            "name": item.q,
+            "acceptedAnswer": { "@type": "Answer", "text": item.a }
+          })),
+        }
+      : null
+
   return (
     <div className="flex flex-col min-h-screen text-gray-800 font-outfit relative z-10">
       {/* Main Content with Sidebar */}
@@ -103,6 +119,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 md:p-12 mb-8">
                 <BlogPostContent post={post} />
               </div>
+
+              {/* FAQ Section (visible content) */}
+              {hasFaqs && (
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 md:p-10 mb-8">
+                  <h2 className="text-2xl font-bold mb-4 font-mattone text-gray-900">FAQs</h2>
+                  <div className="space-y-3 text-gray-700">
+                    {post.faqs?.map((item: { q: string; a: string }, i: number) => (
+                      <details
+                        key={i}
+                        className="rounded-md border border-gray-200 p-4"
+                      >
+                        <summary className="cursor-pointer font-semibold text-gray-800">
+                          {item.q}
+                        </summary>
+                        <p className="mt-2 text-gray-700">{item.a}</p>
+                      </details>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               
               {/* Navigation */}
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-6">

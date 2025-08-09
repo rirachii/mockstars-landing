@@ -18,6 +18,7 @@ export interface BlogPost {
   content: string
   readingTime: number
   url: string
+  faqs?: { q: string; a: string }[]
 }
 
 export function getAllBlogPosts(): BlogPost[] {
