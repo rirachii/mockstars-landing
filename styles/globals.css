@@ -18,6 +18,39 @@ body {
   font-family: "Outfit", sans-serif;
 }
 
+/* Hide scrollbar for horizontal navigation */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Company banner animation - Fixed for seamless scrolling */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll var(--scroll-duration, 20s) linear infinite;
+  animation-fill-mode: none;
+  display: flex;
+  width: fit-content;
+  will-change: transform; /* Optimize for animations */
+}
+
+/* Pause on hover for better UX */
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

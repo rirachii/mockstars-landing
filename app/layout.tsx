@@ -2,9 +2,9 @@ import type React from "react"
 import { Outfit } from "next/font/google"
 import "@/styles/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
-import { PostHogProvider } from "@/components/providers/posthog-provider"
-import Navigation from "@/components/Navigation"
-import Footer from "@/components/Footer"
+import { PostHogProvider } from "@/components/common/posthog-provider"
+import Navigation from "@/components/layout/Navigation"
+import Footer from "@/components/layout/Footer"
 import JsonLd from "@/components/JsonLd"
 import type { Metadata } from 'next'
 

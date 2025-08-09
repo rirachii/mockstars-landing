@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation'
 import { BlogPost } from '@/lib/blog'
-import { BlogCard } from '@/components/blog-card'
+import { BlogCard } from '@/components/blog/blog-card'
 // import { BlogSidebar } from '@/components/blog-sidebar'
 import { BookOpen, Search as SearchIcon, Users } from 'lucide-react'
 

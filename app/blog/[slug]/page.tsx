@@ -1,11 +1,11 @@
 import { getAllBlogPosts, getBlogPost } from '@/lib/blog'
-import { BlogPostContent } from '@/components/blog-post-content'
-import { BlogPostHeader } from '@/components/blog-post-header'
-import { BlogPostNavigation } from '@/components/blog-post-navigation'
-import { RelatedPosts } from '@/components/related-posts'
+import { BlogPostContent } from '@/components/blog/blog-post-content'
+import { BlogPostHeader } from '@/components/blog/blog-post-header'
+import { BlogPostNavigation } from '@/components/blog/blog-post-navigation'
+import { RelatedPosts } from '@/components/blog/related-posts'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import CTA from '@/components/CTA'
+import CTA from '@/components/layout/CTA'
 
 interface BlogPostPageProps {
   params: Promise<{
