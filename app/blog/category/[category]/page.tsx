@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const categoryName = decodeURIComponent(category).replace(/-/g, ' ')
   
   return {
-    title: `${categoryName} | MockStars Blog`,
+    title: `${categoryName} | Mockstars Blog`,
     description: `Explore our collection of articles about ${categoryName} for interview preparation and career advice.`,
   }
 }

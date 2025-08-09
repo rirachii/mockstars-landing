@@ -31,13 +31,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   
   if (!post) {
     return {
-      title: 'Post Not Found | MockStars Blog',
+      title: 'Post Not Found | Mockstars Blog',
       description: 'The blog post you are looking for could not be found.',
     }
   }
 
   return {
-    title: `${post.title} | MockStars Blog`,
+    title: `${post.title} | Mockstars Blog`,
     description: post.description,
     keywords: post.tags?.join(', '),
     openGraph: {
@@ -242,10 +242,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <CTA 
-              title="Ready to Transform Your Interview Skills?"
-              subtitle="Join thousands of professionals who've built confidence and landed their dream jobs with MockStars."
-              primaryButtonText="Start Practicing Now"
-              secondaryButtonText="Download App"
+              title="Get ATS-Ready Resume"
+              subtitle="We'll help you build a resume that ATS systems will love, cover letters that get you noticed, and a interview ready stories."
+              primaryButtonText="I want to be interview ready"
               showSecondaryButton={false}
             />
           </div>

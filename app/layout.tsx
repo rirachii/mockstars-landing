@@ -3,7 +3,7 @@ import { Outfit } from "next/font/google"
 import "@/styles/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { PostHogProvider } from "@/components/common/posthog-provider"
-import Navigation from "@/components/layout/Navigation"
+import MaybeNavigation from "@/components/layout/MaybeNavigation"
 import Footer from "@/components/layout/Footer"
 import JsonLd from "@/components/JsonLd"
 import type { Metadata } from 'next'
@@ -73,7 +73,7 @@ export default function RootLayout({
       <body className={`${outfit.variable} min-h-screen flex flex-col`}>
         <PostHogProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-            <Navigation />
+            <MaybeNavigation />
             <main role="main" className="flex-1">
               {children}
             </main>

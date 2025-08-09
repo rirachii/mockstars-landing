@@ -7,7 +7,7 @@ import Image from 'next/image'
 import { BookOpen, Clock, User } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Blog | MockStars - Interview Preparation & Career Advice',
+  title: 'Blog | Mockstars - Interview Preparation & Career Advice',
   description: 'Master your interviews with expert insights, proven strategies, and actionable tips. Discover the latest trends in interview preparation and career development.',
   keywords: 'interview tips, career advice, job interview, behavioral questions, interview preparation, career development, professional growth',
 }
@@ -211,10 +211,9 @@ export default function BlogPage() {
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
               <CTA 
-                title="Ready to Transform Your Interview Skills?"
-                subtitle="Join thousands of professionals who've built confidence and landed their dream jobs with MockStars."
-                primaryButtonText="Start Practicing Now"
-                secondaryButtonText="Download App"
+                title="Get ATS-Ready Resume"
+                subtitle="Join thousands of professionals who've built confidence and landed their dream jobs with Mockstars."
+                primaryButtonText="Start Building Your Resume"
                 showSecondaryButton={false}
               />
             </div>

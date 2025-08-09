@@ -27,7 +27,7 @@ export default function Navigation() {
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="text-xl sm:text-2xl font-bold text-blue flex items-center gap-2">
-                <Image src="/logo.png" alt="MockStars" width={40} height={40} className="sm:w-[50px] sm:h-[50px]" />
+                <Image src="/logo.png" alt="Mockstars" width={40} height={40} className="sm:w-[50px] sm:h-[50px]" />
                 <h1 className="text-xl sm:text-2xl font-bold text-blue">Mockstars</h1>  
             </span>
           </Link>
@@ -69,7 +69,7 @@ export default function Navigation() {
             asChild
             className="bg-white hover:bg-blue/90 text-blue"
           >
-          <Link href="/#download">Create Resume</Link>
+          <Link href="/resume-builder">Create Resume</Link>
           </Button>
         </div>
       </nav>
@@ -84,8 +84,8 @@ export default function Navigation() {
             <div className="flex items-center justify-between">
               <Link href="/" className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
                 <span className="text-xl sm:text-2xl font-bold text-blue flex items-center gap-2">
-                  <Image src="/logo.png" alt="MockStars" width={40} height={40} />
-                  MockStars
+                  <Image src="/logo.png" alt="Mockstars" width={40} height={40} />
+                  Mockstars
                 </span>
               </Link>
               <button
@@ -119,10 +119,10 @@ export default function Navigation() {
                 <div className="py-6">
                   <Button 
                     asChild
-                    className="w-full bg-blue hover:bg-blue/90 text-white"
+                    className="w-full bg-blue hover:bg-gray-10 text-blue"
                   >
-                    <Link href="/#download" onClick={() => setMobileMenuOpen(false)}>
-                      Create Resume
+                    <Link href="/resume-builder" onClick={() => setMobileMenuOpen(false)}>
+                      Get Started
                     </Link>
                   </Button>
                 </div>

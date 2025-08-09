@@ -1,0 +1,192 @@
+<section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl multi-color-border shadow-xl">
+              {/* Free Trial Highlight */}
+              <div className="bg-blue/10 border border-blue/20 rounded-2xl p-8 mb-12">
+                <div className="flex items-center gap-3 mb-4">
+                  <Star className="h-6 w-6 text-blue" />
+                  <h2 className="text-2xl font-bold font-mattone text-blue">3-Day Free Trial</h2>
+                </div>
+                <p className="text-gray-700 font-outfit mb-6">
+                  Try Mockstars risk-free! No credit card required. Get full access to everything and see why thousands of job seekers trust us with their career transformation.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-center gap-3">
+                    <Check className="h-5 w-5 text-blue" />
+                    <span className="font-outfit text-gray-700">No Credit Card Required</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-5 w-5 text-blue" />
+                    <span className="font-outfit text-gray-700">Full Feature Access</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-5 w-5 text-blue" />
+                    <span className="font-outfit text-gray-700">Cancel Anytime</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Check className="h-5 w-5 text-blue" />
+                    <span className="font-outfit text-gray-700">Instant Access</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Pricing Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                {/* Weekly Plan */}
+                <div className="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 shadow-lg">
+                  <div>
+                    <h3 className="text-2xl font-bold font-mattone mb-2">Quick Sprint</h3>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-4xl font-bold text-blue font-mattone">$6.99</span>
+                      <span className="text-gray-600 font-outfit">/ week</span>
+                    </div>
+                    <p className="text-sm text-gray-600 font-outfit mt-2">
+                      Perfect for urgent interview prep
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-3 mt-6">
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">Complete career toolkit</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">Unlimited practice sessions</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">AI-powered feedback</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">Cancel anytime</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Monthly Plan */}
+                <div className="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 shadow-lg">
+                  <div>
+                    <h3 className="text-2xl font-bold font-mattone mb-2">Job Hunt Pro</h3>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-4xl font-bold text-blue font-mattone">$13.99</span>
+                      <span className="text-gray-600 font-outfit">/ month</span>
+                    </div>
+                    <p className="text-sm text-gray-600 font-outfit mt-2">
+                      Most popular choice for job seekers
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-3 mt-6">
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">Everything in Quick Sprint</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">Priority support</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">Advanced analytics</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">Multiple resume versions</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Annual Plan */}
+                <div className="bg-white/60 backdrop-blur-sm border-2 border-blue rounded-2xl p-8 relative shadow-lg">
+                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                    <span className="bg-blue text-white px-4 py-1 rounded-full text-sm font-mattone">
+                      Best Value
+                    </span>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-2xl font-bold font-mattone mb-2">Career Champion</h3>
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-4xl font-bold text-blue font-mattone">$6.71</span>
+                      <span className="text-gray-600 font-outfit">/ month</span>
+                    </div>
+                    <p className="text-sm text-blue font-outfit mt-1">
+                      Save 52% • Billed annually at $80.49
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-3 mt-6">
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">Everything included</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">12 months of career support</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">Lifetime resume updates</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Check className="h-5 w-5 text-blue" />
+                      <span className="font-outfit text-gray-700">VIP support channel</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Why It Pays For Itself */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 shadow-lg">
+                <div className="space-y-6">
+                  <h3 className="text-xl font-bold font-mattone text-blue">This Pays for Itself</h3>
+                  <ul className="space-y-3 text-gray-700 font-outfit">
+                    <li className="flex items-center gap-3">
+                      <div className="w-1.5 h-1.5 bg-blue rounded-full"></div>
+                      Average salary increase: $8,000+ per year
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="w-1.5 h-1.5 bg-blue rounded-full"></div>
+                      3x higher interview-to-offer conversion rate
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="w-1.5 h-1.5 bg-blue rounded-full"></div>
+                      Save 20+ hours of resume writing time
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <div className="w-1.5 h-1.5 bg-blue rounded-full"></div>
+                      Land interviews 2x faster
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="space-y-6">
+                  <h3 className="text-xl font-bold font-mattone text-orange-600">Compare the Alternatives</h3>
+                  <div className="space-y-3 text-gray-700 font-outfit">
+                    <div className="flex justify-between">
+                      <span>Professional Resume Writer</span>
+                      <span className="text-gray-600">$300-800</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Career Coach Session</span>
+                      <span className="text-gray-600">$150-300/hour</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Interview Prep Course</span>
+                      <span className="text-gray-600">$500-2,000</span>
+                    </div>
+                    <div className="flex justify-between border-t border-gray-300 pt-3">
+                      <span className="font-bold">Mockstars Complete Package</span>
+                      <span className="text-blue font-bold">Less than $7/month</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>

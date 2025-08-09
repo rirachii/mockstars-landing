@@ -1,17 +1,13 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { Star, Check, Camera, FileText } from "lucide-react"
-import { useState } from "react"
-import posthog from 'posthog-js'
+import { Star, Check, Camera, FileText, FileSearch, Bot, BookOpen, Sparkles } from "lucide-react"
 import CTA from '../components/layout/CTA'
 import { CompanyBanner } from '@/components/layout/CompanyBanner';
 import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const router = useRouter()
-  const [showComingSoon, setShowComingSoon] = useState(false)
-  const [email, setEmail] = useState('')
 
 
   const handleCreateResumeClick = () => {
@@ -24,33 +20,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen text-gray-800 font-outfit relative z-10">
-      {/* Coming Soon Dialog */}
-      {/* <Dialog open={showComingSoon} onOpenChange={setShowComingSoon}>
-        <DialogContent className="bg-white border border-gray-200 shadow-xl">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold font-mattone text-gray-800">Coming Soon to Android!</DialogTitle>
-            <DialogDescription className="text-gray-600 font-outfit">
-              We're putting the finishing touches on the Android version. Join our waitlist and you'll be first to know when it's ready!
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-gray-50 border border-gray-300 rounded-lg px-4 py-2 text-gray-800 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            />
-            <Button 
-              className="bg-blue hover:bg-blue/90 text-white rounded-lg font-mattone"
-              onClick={handleWaitlistSignup}
-            >
-              Count Me In!
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog> */}
-
       {/* Hero Section */}
       <section id="download" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
@@ -66,7 +35,7 @@ export default function Home() {
               </h1>
 
               <div className="mb-8">
-                <p className="text-lg mb-4 font-outfit">Build resumes that don't get auto-rejected by robots </p>
+                <p className="text-lg mb-4 font-outfit">Resumes that don't get auto-rejected by robots </p>
                 <p className="text-gray-600 font-outfit">
                   Deploy with confidence using our battle-tested template engine, generate cover letters that don't sound like chatbots, and craft interview stories that land you the offer.
                 </p>
@@ -95,13 +64,14 @@ export default function Home() {
             <CompanyBanner />
             </div>
 
+            {/* Get Interview Ready */}
             <div className="relative lg:pl-12">
-              <div className="relative z-10 mx-auto max-w-md lg:mx-0 animate-float flex items-center justify-center h-full">
+              <div className="relative z-10 mx-auto max-w-md lg:mx-0 animate-float flex items-top justify-top h-full">
                 <div className="bg-white/90 backdrop-blur-sm p-8 relative overflow-hidden multi-color-border w-full shadow-xl border border-gray-200">
                   <div className="absolute top-0 left-0 w-40 h-40 bg-purple-200 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
                   <div className="relative">
                     <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-xl font-semibold font-mattone text-white ">Get Started</h3>
+                      <h3 className="text-xl font-semibold font-mattone text-white ">Get Interview Ready</h3>
                       <span className="bg-green-100 text-green-600 text-xs font-medium px-3 py-1.5 rounded-full font-outfit">
                         Processing
                       </span>
@@ -109,24 +79,57 @@ export default function Home() {
                     <div className="space-y-4">
                       <div className="p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
                         <div className="flex items-center gap-3">
-                          <Camera className="h-6 w-6 text-blue" />
+                          <FileText className="h-6 w-6 text-blue" />
                           <div className="flex-1">
                             <p className="text-sm font-medium font-outfit text-gray-800">
-                              Resume photo uploaded
+                              Old Resume Uploaded
                             </p>
                             <p className="text-xs text-gray-500 font-outfit mt-1">AI is reading your experience...</p>
                           </div>
                         </div>
                       </div>
                       <div className="p-4 bg-blue/5 rounded-lg">
-                        <div className="flex items-center gap-3 ">
-                          <FileText className="h-6 w-6 text-white animate-pulse" />
+                        <div className="flex items-center gap-4 py-4">
+                          <FileSearch className="h-6 w-6 text-white" />
                           <div className="flex-1">
                             <p className="text-sm font-medium font-outfit text-white">
-                              ✨ Creating your polished resume
+                              Parsing your resume
                             </p>
                             <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
-                              <div className="bg-blue h-1.5 rounded-full w-3/4"></div>
+                              <div className="bg-blue h-1.5 rounded-full w-1/5"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4 py-4">
+                          <Bot className="h-6 w-6 text-white " />
+                          <div className="flex-1">
+                            <p className="text-sm font-medium font-outfit text-white">
+                              Running ATS Optimization
+                            </p>
+                            <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                              <div className="bg-blue h-1.5 rounded-full w-2/5"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4 py-4">
+                          <BookOpen className="h-6 w-6 text-white " />
+                          <div className="flex-1">
+                            <p className="text-sm font-medium font-outfit text-white">
+                              Drafting your interview stories
+                            </p>
+                            <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                              <div className="bg-blue h-1.5 rounded-full w-1/5"></div>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4 py-4">
+                          <Sparkles className="h-6 w-6 text-white animate-pulse" />
+                          <div className="flex-1">
+                            <p className="text-sm font-medium font-outfit gradient-text">
+                              Polishing everything up
+                            </p>
+                            <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                              <div className="bg-blue h-1.5 rounded-full w-4/5"></div>
                             </div>
                           </div>
                         </div>
@@ -135,8 +138,8 @@ export default function Home() {
                     <div className="mt-6 border-t border-gray-200 pt-6">
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="text-sm text-white font-outfit">Next: Interview Stories</div>
-                          <div className="text-xs text-white font-outfit">Based on your experience</div>
+                          <div className="text-sm text-white font-outfit">Next: Tailored Cover Letters</div>
+                          <div className="text-xs text-white font-outfit">Based on the job description</div>
                         </div>
                         <Button size="sm" className="bg-orange-500 text-white hover:bg-orange-600 font-mattone px-6 py-2">
                           Almost Ready!
@@ -152,80 +155,290 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Simple 3-Step Process */}
+      {/* Resume Templates Showcase */}
       <section className="py-16 bg-white/30 backdrop-blur-sm">
         <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-7xl mx-auto">
+            {/* Header */}
             <div className="text-center mb-12">
-              <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">HOW IT WORKS</div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">From Photo to Interview-Ready in 3 Minutes</h2>
-              <p className="text-lg text-gray-600 font-outfit max-w-3xl mx-auto">
-                No more wrestling with resume templates or panicking about interview questions. We've made career prep ridiculously simple.
+              <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">PROFESSIONAL TEMPLATES</div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">Job-Winning Resume Templates</h2>
+              <p className="text-lg text-gray-600 font-outfit max-w-4xl mx-auto">
+                Our templates are designed and approved by HR experts to fit a wide range of tech jobs and experience 
+                levels. Choose your favorite to showcase your professional background and make your resume 
+                stand out among the competition.
               </p>
+              <button 
+                onClick={() => router.push('/templates')}
+                className="mt-6 px-6 py-3 border-2 border-gray-300 rounded-lg hover:border-blue hover:text-blue transition-colors font-outfit"
+              >
+                View More Resume Templates
+              </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 rounded-2xl shadow-lg text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-pink-100 text-pink-600 rounded-full mb-6">
-                  <Camera className="h-8 w-8" />
+            {/* Templates Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
+              {/* Elegant Template */}
+              <div className="group cursor-pointer">
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
+                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
+                    {/* Template Preview - Elegant */}
+                    <div className="h-full bg-white shadow-sm">
+                      <div className="border-b-2 border-gray-200 pb-2 mb-3">
+                        <div className="text-center">
+                          <div className="h-3 bg-gray-800 rounded mb-1"></div>
+                          <div className="h-1 bg-gray-400 rounded w-2/3 mx-auto"></div>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex">
+                          <div className="w-1/3 pr-2">
+                            <div className="h-1 bg-gray-300 rounded mb-1"></div>
+                            <div className="h-1 bg-gray-300 rounded mb-1 w-3/4"></div>
+                            <div className="h-1 bg-gray-300 rounded mb-2 w-1/2"></div>
+                            <div className="h-1 bg-gray-300 rounded mb-1"></div>
+                            <div className="h-1 bg-gray-300 rounded w-2/3"></div>
+                          </div>
+                          <div className="w-2/3 pl-2">
+                            <div className="h-1 bg-gray-600 rounded mb-1"></div>
+                            <div className="h-1 bg-gray-300 rounded mb-1"></div>
+                            <div className="h-1 bg-gray-300 rounded mb-1 w-4/5"></div>
+                            <div className="h-1 bg-gray-300 rounded mb-2 w-3/5"></div>
+                            <div className="h-1 bg-gray-600 rounded mb-1"></div>
+                            <div className="h-1 bg-gray-300 rounded mb-1"></div>
+                            <div className="h-1 bg-gray-300 rounded w-4/5"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Use This Template Button */}
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
+                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
+                        📄 Use This Template
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-2xs uppercase tracking-widest text-pink-600 mb-3 font-mattone">STEP 1</div>
-                <h3 className="text-xl font-bold mb-4 font-mattone">📸 Snap & Upload</h3>
-                <p className="text-gray-600 font-outfit mb-4">
-                  Take a photo of your resume, upload a PDF, paste your LinkedIn URL, or start fresh. Our AI reads everything - even your messiest handwriting.
-                </p>
-                <div className="flex justify-center gap-3 text-xs">
-                  <span className="bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-outfit">Photos</span>
-                  <span className="bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-outfit">PDFs</span>
-                  <span className="bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-outfit">LinkedIn</span>
+                <div className="text-center mt-3">
+                  <h3 className="font-bold text-gray-800 font-mattone">Elegant</h3>
                 </div>
               </div>
 
-              <div className="bg-blue text-white border border-blue p-8 rounded-2xl shadow-lg text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mb-6">
-                  <FileText className="h-8 w-8" />
+              {/* Chicago Template */}
+              <div className="group cursor-pointer">
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
+                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
+                    {/* Template Preview - Chicago */}
+                    <div className="h-full bg-white shadow-sm">
+                      <div className="text-center border-b border-gray-300 pb-2 mb-3">
+                        <div className="h-3 bg-blue rounded mb-1"></div>
+                        <div className="h-1 bg-gray-400 rounded w-1/2 mx-auto"></div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="h-1 bg-blue rounded mb-1"></div>
+                        <div className="space-y-1 mb-2">
+                          <div className="h-1 bg-gray-300 rounded"></div>
+                          <div className="h-1 bg-gray-300 rounded w-4/5"></div>
+                          <div className="h-1 bg-gray-300 rounded w-3/5"></div>
+                        </div>
+                        <div className="h-1 bg-blue rounded mb-1"></div>
+                        <div className="space-y-1">
+                          <div className="h-1 bg-gray-300 rounded"></div>
+                          <div className="h-1 bg-gray-300 rounded w-4/5"></div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Use This Template Button */}
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
+                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
+                        📄 Use This Template
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-2xs uppercase tracking-widest text-blue-100 mb-3 font-mattone">STEP 2</div>
-                <h3 className="text-xl font-bold mb-4 font-mattone">✨ AI Magic Happens</h3>
-                <p className="text-blue-100 font-outfit mb-4">
-                  Get a professionally formatted, ATS-optimized resume + 5-6 personalized STAR method interview stories based on your actual experience. No generic templates here.
-                </p>
-                <div className="flex justify-center gap-3 text-xs">
-                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-outfit">Resume</span>
-                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-outfit">Stories</span>
-                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-outfit">Cover Letters</span>
+                <div className="text-center mt-3">
+                  <h3 className="font-bold text-gray-800 font-mattone">Chicago</h3>
                 </div>
               </div>
 
-              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 rounded-2xl shadow-lg text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-100 text-orange-600 rounded-full mb-6">
-                  <Star className="h-8 w-8" />
+              {/* Clean Template */}
+              <div className="group cursor-pointer">
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
+                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
+                    {/* Template Preview - Clean */}
+                    <div className="h-full bg-white shadow-sm">
+                      <div className="bg-orange-400 text-white p-2 mb-3">
+                        <div className="h-2 bg-white bg-opacity-80 rounded mb-1"></div>
+                        <div className="h-1 bg-white bg-opacity-60 rounded w-2/3"></div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex">
+                          <div className="w-1/3 pr-2 space-y-1">
+                            <div className="h-1 bg-orange-400 rounded"></div>
+                            <div className="h-1 bg-gray-300 rounded w-3/4"></div>
+                            <div className="h-1 bg-gray-300 rounded w-1/2"></div>
+                          </div>
+                          <div className="w-2/3 pl-2 space-y-1">
+                            <div className="h-1 bg-orange-400 rounded"></div>
+                            <div className="h-1 bg-gray-300 rounded"></div>
+                            <div className="h-1 bg-gray-300 rounded w-4/5"></div>
+                            <div className="h-1 bg-gray-300 rounded w-3/5"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Use This Template Button */}
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
+                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
+                        📄 Use This Template
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="text-2xs uppercase tracking-widest text-orange-600 mb-3 font-mattone">STEP 3</div>
-                <h3 className="text-xl font-bold mb-4 font-mattone">🎯 Master Your Interview</h3>
-                <p className="text-gray-600 font-outfit mb-4">
-                  Practice your stories with voice recording and get real-time AI feedback. Build confidence through repetition, not just preparation.
-                </p>
-                <div className="flex justify-center gap-3 text-xs">
-                  <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-outfit">Voice Practice</span>
-                  <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-outfit">AI Feedback</span>
-                  <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-outfit">Confidence</span>
+                <div className="text-center mt-3">
+                  <h3 className="font-bold text-gray-800 font-mattone">Clean</h3>
+                </div>
+              </div>
+
+              {/* Taj Mahal Template */}
+              <div className="group cursor-pointer">
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
+                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
+                    {/* Template Preview - Taj Mahal */}
+                    <div className="h-full bg-white shadow-sm">
+                      <div className="text-center mb-3">
+                        <div className="h-3 bg-gray-800 rounded mb-1"></div>
+                        <div className="h-1 bg-gray-400 rounded w-2/3 mx-auto mb-2"></div>
+                        <div className="w-8 h-8 bg-gray-300 rounded-full mx-auto"></div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="border-l-2 border-purple-400 pl-2">
+                          <div className="h-1 bg-purple-400 rounded mb-1"></div>
+                          <div className="h-1 bg-gray-300 rounded mb-1"></div>
+                          <div className="h-1 bg-gray-300 rounded w-4/5"></div>
+                        </div>
+                        <div className="border-l-2 border-purple-400 pl-2">
+                          <div className="h-1 bg-purple-400 rounded mb-1"></div>
+                          <div className="h-1 bg-gray-300 rounded w-3/5"></div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Use This Template Button */}
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
+                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
+                        📄 Use This Template
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-center mt-3">
+                  <h3 className="font-bold text-gray-800 font-mattone">Taj Mahal</h3>
+                </div>
+              </div>
+
+              {/* 2025 Template */}
+              <div className="group cursor-pointer">
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
+                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
+                    {/* Template Preview - 2025 */}
+                    <div className="h-full bg-white shadow-sm">
+                      <div className="bg-gray-800 text-white p-2 mb-3">
+                        <div className="h-2 bg-white bg-opacity-80 rounded mb-1"></div>
+                        <div className="h-1 bg-white bg-opacity-60 rounded w-1/2"></div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2 mb-2">
+                          <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
+                          <div className="flex-1">
+                            <div className="h-1 bg-gray-800 rounded mb-1"></div>
+                            <div className="h-1 bg-gray-400 rounded w-2/3"></div>
+                          </div>
+                        </div>
+                        <div className="space-y-1">
+                          <div className="h-1 bg-gray-600 rounded"></div>
+                          <div className="flex space-x-1">
+                            <div className="flex-1 h-1 bg-gray-300 rounded"></div>
+                            <div className="w-8 h-1 bg-gray-400 rounded"></div>
+                          </div>
+                          <div className="h-1 bg-gray-300 rounded w-4/5"></div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Use This Template Button */}
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
+                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
+                        📄 Use This Template
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-center mt-3">
+                  <h3 className="font-bold text-gray-800 font-mattone">2025</h3>
+                </div>
+              </div>
+
+              {/* Corporate Template */}
+              <div className="group cursor-pointer">
+                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
+                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
+                    {/* Template Preview - Corporate */}
+                    <div className="h-full bg-white shadow-sm">
+                      <div className="border-b-2 border-gray-800 pb-2 mb-3">
+                        <div className="h-3 bg-gray-800 rounded mb-1"></div>
+                        <div className="h-1 bg-gray-400 rounded w-2/3"></div>
+                      </div>
+                      <div className="space-y-2">
+                        <div className="grid grid-cols-2 gap-2">
+                          <div className="space-y-1">
+                            <div className="h-1 bg-gray-800 rounded"></div>
+                            <div className="h-1 bg-gray-300 rounded w-3/4"></div>
+                            <div className="h-1 bg-gray-300 rounded w-1/2"></div>
+                          </div>
+                          <div className="space-y-1">
+                            <div className="h-1 bg-gray-800 rounded"></div>
+                            <div className="h-1 bg-gray-300 rounded w-4/5"></div>
+                            <div className="h-1 bg-gray-300 rounded w-2/3"></div>
+                          </div>
+                        </div>
+                        <div className="space-y-1 mt-3">
+                          <div className="h-1 bg-gray-800 rounded"></div>
+                          <div className="h-1 bg-gray-300 rounded"></div>
+                          <div className="h-1 bg-gray-300 rounded w-4/5"></div>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Use This Template Button */}
+                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
+                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
+                        📄 Use This Template
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="text-center mt-3">
+                  <h3 className="font-bold text-gray-800 font-mattone">Corporate</h3>
                 </div>
               </div>
             </div>
 
-            <div className="text-center mt-12">
-              <p className="text-lg font-outfit text-gray-600 mb-6">
-                "I went from dreading interviews to actually looking forward to them. MockStars turned my scattered experiences into compelling stories." 
-                <span className="text-blue font-medium">- Sarah, Recent Grad</span>
-              </p>
+            {/* Navigation dots */}
+            <div className="flex justify-center space-x-2">
+              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* What You Actually Get */}
-      <section className="py-16">
+       {/* What You Actually Get */}
+       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
@@ -238,7 +451,7 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 rounded-2xl shadow-lg">
-                <h3 className="text-xl font-bold mb-6 font-mattone text-blue">🎯 Smart Resume Builder</h3>
+                <h3 className="text-xl font-bold mb-6 font-mattone text-gray-800">🎯 Smart Resume Builder</h3>
                 <ul className="space-y-3 text-gray-700 font-outfit">
                   <li className="flex items-start gap-3">
                     <Check className="h-5 w-5 text-blue mt-0.5" />
@@ -351,205 +564,475 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section with Pricing */}
-      <section className="py-16">
+      {/* How It Works */}
+      <section className="py-16 bg-white/30 backdrop-blur-sm">
         <div className="container mx-auto px-4">
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl multi-color-border shadow-xl">
-              {/* Free Trial Highlight */}
-              <div className="bg-blue/10 border border-blue/20 rounded-2xl p-8 mb-12">
-                <div className="flex items-center gap-3 mb-4">
-                  <Star className="h-6 w-6 text-blue" />
-                  <h2 className="text-2xl font-bold font-mattone text-blue">3-Day Free Trial</h2>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">HOW IT WORKS</div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">From Photo to Interview-Ready in 3 Minutes</h2>
+              <p className="text-lg text-gray-600 font-outfit max-w-3xl mx-auto">
+                No more wrestling with resume templates or panicking about interview questions. We've made career prep ridiculously simple.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 rounded-2xl shadow-lg text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-pink-100 text-pink-600 rounded-full mb-6">
+                  <Camera className="h-8 w-8" />
                 </div>
-                <p className="text-gray-700 font-outfit mb-6">
-                  Try MockStars risk-free! No credit card required. Get full access to everything and see why thousands of job seekers trust us with their career transformation.
+                <div className="text-2xs uppercase tracking-widest text-pink-600 mb-3 font-mattone">STEP 1</div>
+                <h3 className="text-xl font-bold mb-4 font-mattone">📸 Snap & Upload</h3>
+                <p className="text-gray-600 font-outfit mb-4">
+                  Take a photo of your resume, upload a PDF, paste your LinkedIn URL, or start fresh. Our AI reads everything - even your messiest handwriting.
                 </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-blue" />
-                    <span className="font-outfit text-gray-700">No Credit Card Required</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-blue" />
-                    <span className="font-outfit text-gray-700">Full Feature Access</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-blue" />
-                    <span className="font-outfit text-gray-700">Cancel Anytime</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Check className="h-5 w-5 text-blue" />
-                    <span className="font-outfit text-gray-700">Instant Access</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Pricing Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                {/* Weekly Plan */}
-                <div className="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 shadow-lg">
-                  <div>
-                    <h3 className="text-2xl font-bold font-mattone mb-2">Quick Sprint</h3>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-4xl font-bold text-blue font-mattone">$6.99</span>
-                      <span className="text-gray-600 font-outfit">/ week</span>
-                    </div>
-                    <p className="text-sm text-gray-600 font-outfit mt-2">
-                      Perfect for urgent interview prep
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-3 mt-6">
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">Complete career toolkit</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">Unlimited practice sessions</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">AI-powered feedback</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">Cancel anytime</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Monthly Plan */}
-                <div className="bg-white/60 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 shadow-lg">
-                  <div>
-                    <h3 className="text-2xl font-bold font-mattone mb-2">Job Hunt Pro</h3>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-4xl font-bold text-blue font-mattone">$13.99</span>
-                      <span className="text-gray-600 font-outfit">/ month</span>
-                    </div>
-                    <p className="text-sm text-gray-600 font-outfit mt-2">
-                      Most popular choice for job seekers
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-3 mt-6">
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">Everything in Quick Sprint</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">Priority support</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">Advanced analytics</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">Multiple resume versions</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Annual Plan */}
-                <div className="bg-white/60 backdrop-blur-sm border-2 border-blue rounded-2xl p-8 relative shadow-lg">
-                  <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                    <span className="bg-blue text-white px-4 py-1 rounded-full text-sm font-mattone">
-                      Best Value
-                    </span>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-2xl font-bold font-mattone mb-2">Career Champion</h3>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-4xl font-bold text-blue font-mattone">$6.71</span>
-                      <span className="text-gray-600 font-outfit">/ month</span>
-                    </div>
-                    <p className="text-sm text-blue font-outfit mt-1">
-                      Save 52% • Billed annually at $80.49
-                    </p>
-                  </div>
-                  
-                  <div className="space-y-3 mt-6">
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">Everything included</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">12 months of career support</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">Lifetime resume updates</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <Check className="h-5 w-5 text-blue" />
-                      <span className="font-outfit text-gray-700">VIP support channel</span>
-                    </div>
-                  </div>
+                <div className="flex justify-center gap-3 text-xs">
+                  <span className="bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-outfit">Photos</span>
+                  <span className="bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-outfit">PDFs</span>
+                  <span className="bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-outfit">LinkedIn</span>
                 </div>
               </div>
 
-              {/* Why It Pays For Itself */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-white/60 backdrop-blur-sm border border-gray-200 rounded-2xl p-8 shadow-lg">
-                <div className="space-y-6">
-                  <h3 className="text-xl font-bold font-mattone text-blue">This Pays for Itself</h3>
-                  <ul className="space-y-3 text-gray-700 font-outfit">
-                    <li className="flex items-center gap-3">
-                      <div className="w-1.5 h-1.5 bg-blue rounded-full"></div>
-                      Average salary increase: $8,000+ per year
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <div className="w-1.5 h-1.5 bg-blue rounded-full"></div>
-                      3x higher interview-to-offer conversion rate
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <div className="w-1.5 h-1.5 bg-blue rounded-full"></div>
-                      Save 20+ hours of resume writing time
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <div className="w-1.5 h-1.5 bg-blue rounded-full"></div>
-                      Land interviews 2x faster
-                    </li>
-                  </ul>
+              <div className="bg-blue text-white border border-blue p-8 rounded-2xl shadow-lg text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 text-blue-600 rounded-full mb-6">
+                  <FileText className="h-8 w-8" />
                 </div>
-                
-                <div className="space-y-6">
-                  <h3 className="text-xl font-bold font-mattone text-orange-600">Compare the Alternatives</h3>
-                  <div className="space-y-3 text-gray-700 font-outfit">
-                    <div className="flex justify-between">
-                      <span>Professional Resume Writer</span>
-                      <span className="text-gray-600">$300-800</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Career Coach Session</span>
-                      <span className="text-gray-600">$150-300/hour</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Interview Prep Course</span>
-                      <span className="text-gray-600">$500-2,000</span>
-                    </div>
-                    <div className="flex justify-between border-t border-gray-300 pt-3">
-                      <span className="font-bold">MockStars Complete Package</span>
-                      <span className="text-blue font-bold">Less than $7/month</span>
-                    </div>
-                  </div>
+                <div className="text-2xs uppercase tracking-widest text-blue-100 mb-3 font-mattone">STEP 2</div>
+                <h3 className="text-xl font-bold mb-4 font-mattone">✨ AI Magic Happens</h3>
+                <p className="text-blue-100 font-outfit mb-4">
+                  Get a professionally formatted, ATS-optimized resume + 5-6 personalized STAR method interview stories based on your actual experience. No generic templates here.
+                </p>
+                <div className="flex justify-center gap-3 text-xs">
+                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-outfit">Resume</span>
+                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-outfit">Stories</span>
+                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-outfit">Cover Letters</span>
                 </div>
               </div>
 
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 rounded-2xl shadow-lg text-center">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-orange-100 text-orange-600 rounded-full mb-6">
+                  <Star className="h-8 w-8" />
+                </div>
+                <div className="text-2xs uppercase tracking-widest text-orange-600 mb-3 font-mattone">STEP 3</div>
+                <h3 className="text-xl font-bold mb-4 font-mattone">🎯 Master Your Interview</h3>
+                <p className="text-gray-600 font-outfit mb-4">
+                  Practice your stories with voice recording and get real-time AI feedback. Build confidence through repetition, not just preparation.
+                </p>
+                <div className="flex justify-center gap-3 text-xs">
+                  <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-outfit">Voice Practice</span>
+                  <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-outfit">AI Feedback</span>
+                  <span className="bg-orange-50 text-orange-600 px-3 py-1 rounded-full font-outfit">Confidence</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center mt-12">
+              <p className="text-lg font-outfit text-gray-600 mb-6">
+                "I went from dreading interviews to actually looking forward to them. Mockstars turned my scattered experiences into compelling stories." 
+                <span className="text-blue font-medium">- Sarah, Recent Grad</span>
+              </p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Customer Reviews Section */}
+      <section className="py-16 bg-white/50 backdrop-blur-sm">
+        <div className="container mx-auto px-4">
+          <div className="max-w-7xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-12">
+              <div className="text-2xs uppercase tracking-widest text-teal-600 mb-4 font-mattone">PROVEN RESULTS</div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">The most effective strategy for your job search</h2>
+              <p className="text-lg mb-4 font-outfit">
+                <span className="font-semibold">Loved by over 10,000+ job seekers</span>
+              </p>
+              <div className="flex items-center justify-center gap-2 mb-8">
+                <span className="text-sm text-gray-600 font-outfit">Rated 4.8 on</span>
+                <div className="flex items-center gap-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg key={star} className="w-4 h-4 text-green-500 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                    </svg>
+                  ))}
+                </div>
+                <span className="text-sm text-gray-600 font-outfit">App Store & Google Play</span>
+              </div>
+            </div>
+
+            {/* Featured Review */}
+            <div className="bg-gradient-to-r from-teal-600 to-blue rounded-2xl p-8 text-white mb-12">
+              <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="flex-1">
+                  <div className="flex gap-1 mb-4">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <svg key={star} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                        <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-lg md:text-xl font-outfit leading-relaxed text-gray-800">
+                    "MockStars transformed my job search completely. The ATS-optimized resumes got me past the filters, 
+                    the tailored cover letters saved me hours of writing, and practicing my interview stories with the 
+                    voice feedback gave me the confidence I needed. I went from zero interviews to three job offers!"
+                  </p>
+                </div>
+                <div className="flex-shrink-0 text-center">
+                  <div className="w-16 h-16 bg-blue rounded-full flex items-center justify-center mb-3">
+                    <span className="text-2xl font-bold">SJ</span>
+                  </div>
+                  <div className="text-sm text-gray-800">
+                    <div className="font-semibold">Sarah Johnson</div>
+                    <div className="text-gray-800">Marketing Manager</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Reviews Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              {/* Review 1 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg">
+                <div className="flex gap-1 mb-3">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-gray-700 font-outfit mb-4 text-sm leading-relaxed">
+                  "The writing tool is incredible! I can customize my resume and cover letter for any job posting in minutes. The ATS optimization means I actually get interviews now instead of my applications disappearing into the void."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue to-teal-600 rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-bold">AF</span>
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-gray-800 font-mattone">Alex Foster</div>
+                    <div className="text-xs text-gray-600 font-outfit">Software Engineer</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Review 2 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg">
+                <div className="flex gap-1 mb-3">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-gray-700 font-outfit mb-4 text-sm leading-relaxed">
+                  "The interview stories feature is a game-changer! I got 5 personalized STAR method stories based on my experience, and the voice practice with feedback helped me nail every behavioral question in my interviews."
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-pink to-orange rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-bold">BA</span>
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-gray-800 font-mattone">Brittany Archard</div>
+                    <div className="text-xs text-gray-600 font-outfit">Product Manager</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Review 3 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg">
+                <div className="flex gap-1 mb-3">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-gray-700 font-outfit mb-4 text-sm leading-relaxed">
+                  "Having my entire resume and cover letter library organized by job is so helpful. I can track which applications I've submitted and where I am in each process. Plus the speak mode practice made me way more confident!"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-purple to-pink rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-bold">MT</span>
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-gray-800 font-mattone">Meg Thomas</div>
+                    <div className="text-xs text-gray-600 font-outfit">Business Analyst</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Review 4 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg">
+                <div className="flex gap-1 mb-3">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg key={star} className="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-gray-700 font-outfit mb-4 text-sm leading-relaxed">
+                  "I love how I can tailor each resume and cover letter to match the exact job description. The AI writing tool picks up on the keywords and requirements perfectly. My interview stories are now polished and ready for any question!"
+                </p>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-r from-teal-600 to-blue rounded-full flex items-center justify-center">
+                    <span className="text-white text-sm font-bold">TS</span>
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-gray-800 font-mattone">Therese Sollars</div>
+                    <div className="text-xs text-gray-600 font-outfit">Communications Director</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="text-center">
+              <button 
+                onClick={handleCreateResumeClick}
+                className="bg-blue text-white px-8 py-3 rounded-2xl font-mattone hover:bg-blue/90 transition-colors">
+                Upload Your Resume Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 bg-white/30 backdrop-blur-sm">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            {/* Header */}
+            <div className="text-center mb-12">
+              <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">QUESTIONS & ANSWERS</div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">Frequently Asked Questions</h2>
+              <p className="text-lg text-gray-600 font-outfit">
+                Everything you need to know about Mockstars and how it can transform your job search.
+              </p>
+            </div>
+
+            {/* FAQ Items */}
+            <div className="space-y-4">
+              {/* FAQ 1 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
+                <details className="group">
+                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none">
+                    <h3 className="text-lg font-semibold text-gray-800 font-mattone pr-4">
+                      How does Mockstars help me get more interviews?
+                    </h3>
+                    <div className="text-blue transition-transform group-open:rotate-180">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-600 font-outfit leading-relaxed">
+                      MockStars creates ATS-optimized resumes and cover letters that are tailored to each job description using our AI writing tool. 
+                      You get 5-6 personalized STAR method interview stories based on your experience, plus voice practice with grading to help you 
+                      rehearse and perfect your delivery. You can also track which jobs you've applied to and their status (submitted, interviewing, 
+                      rejected, or hired) to stay organized throughout your job search.
+                    </p>
+                  </div>
+                </details>
+              </div>
+
+              {/* FAQ 2 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
+                <details className="group">
+                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none">
+                    <h3 className="text-lg font-semibold text-gray-800 font-mattone pr-4">
+                      Can I upload my existing resume or do I start from scratch?
+                    </h3>
+                    <div className="text-blue transition-transform group-open:rotate-180">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-600 font-outfit leading-relaxed">
+                      You can absolutely upload your existing resume! Mockstars accepts photos of resumes, PDF files, or you can 
+                      paste your LinkedIn URL. Our AI reads and understands your experience, then transforms it into a professionally 
+                      formatted, ATS-optimized resume. You can also start fresh if you prefer. Either way, you'll have a polished 
+                      resume ready in minutes.
+                    </p>
+                  </div>
+                </details>
+              </div>
+
+              {/* FAQ 3 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
+                <details className="group">
+                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none">
+                    <h3 className="text-lg font-semibold text-gray-800 font-mattone pr-4">
+                      What makes Mockstars different from other resume builders?
+                    </h3>
+                    <div className="text-blue transition-transform group-open:rotate-180">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-600 font-outfit leading-relaxed">
+                      MockStars is a complete interview preparation platform. We create ATS-optimized resumes and cover letters using our AI writing tool 
+                      that customizes content to any job description. You get a personal library to organize multiple resumes and cover letters, 
+                      5-6 personalized interview stories for each resume, and voice practice with grading to perfect your delivery. Plus simple 
+                      job application tracking to monitor your progress through each opportunity.
+                    </p>
+                  </div>
+                </details>
+              </div>
+
+              {/* FAQ 4 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
+                <details className="group">
+                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none">
+                    <h3 className="text-lg font-semibold text-gray-800 font-mattone pr-4">
+                      How does the AI interview preparation work?
+                    </h3>
+                    <div className="text-blue transition-transform group-open:rotate-180">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-600 font-outfit leading-relaxed">
+                      Our AI analyzes your resume and creates 5-6 personalized STAR method stories based on your actual experiences. 
+                      You can then practice these stories using our speak mode, where you record yourself answering common behavioral questions. 
+                      Our AI provides detailed grading on your delivery, including clarity, pace, confidence, and structure. You can track your 
+                      improvement over time and perfect your stories before the real interview.
+                    </p>
+                  </div>
+                </details>
+              </div>
+
+              {/* FAQ 5 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
+                <details className="group">
+                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none">
+                    <h3 className="text-lg font-semibold text-gray-800 font-mattone pr-4">
+                      Is there a free trial? What's included?
+                    </h3>
+                    <div className="text-blue transition-transform group-open:rotate-180">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-600 font-outfit leading-relaxed">
+                      Yes! We offer a 3-day free trial with full access to all features - no credit card required. You can create 
+                      your resume, generate interview stories, practice with voice feedback, create cover letters, and explore all 
+                      our templates. It's enough time to transform your job search materials and see real results. After the trial, 
+                      plans start at just $6.99/week.
+                    </p>
+                  </div>
+                </details>
+              </div>
+
+              {/* FAQ 6 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
+                <details className="group">
+                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none">
+                    <h3 className="text-lg font-semibold text-gray-800 font-mattone pr-4">
+                      Will my resume pass ATS (Applicant Tracking Systems)?
+                    </h3>
+                    <div className="text-blue transition-transform group-open:rotate-180">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-600 font-outfit leading-relaxed">
+                      Absolutely! All our templates are specifically designed to be ATS-friendly. We use proper formatting, standard 
+                      section headers, and clean layouts that applicant tracking systems can easily read and parse. Our AI also helps 
+                      optimize your content with relevant keywords from job descriptions, ensuring your resume gets past the initial 
+                      automated screening and into human hands.
+                    </p>
+                  </div>
+                </details>
+              </div>
+
+              {/* FAQ 7 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
+                <details className="group">
+                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none">
+                    <h3 className="text-lg font-semibold text-gray-800 font-mattone pr-4">
+                      Can I cancel anytime? Are there any long-term commitments?
+                    </h3>
+                    <div className="text-blue transition-transform group-open:rotate-180">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-600 font-outfit leading-relaxed">
+                      Yes, you can cancel anytime with no questions asked and no cancellation fees. There are no long-term commitments 
+                      or contracts. Whether you choose our weekly, monthly, or annual plan, you have complete flexibility. Many users 
+                      find they land their dream job quickly and only need Mockstars for a short period during their active job search.
+                    </p>
+                  </div>
+                </details>
+              </div>
+
+              {/* FAQ 8 */}
+              <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
+                <details className="group">
+                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none">
+                    <h3 className="text-lg font-semibold text-gray-800 font-mattone pr-4">
+                      What if I'm a recent graduate with limited experience?
+                    </h3>
+                    <div className="text-blue transition-transform group-open:rotate-180">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </summary>
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-600 font-outfit leading-relaxed">
+                      Mockstars is perfect for recent graduates! Our AI helps you identify transferable skills from internships, 
+                      part-time jobs, volunteer work, and academic projects. We'll help you craft compelling stories about leadership 
+                      in group projects, problem-solving in coursework, or initiative in extracurricular activities. Many of our most 
+                      successful users are new graduates who landed their first professional roles using our platform.
+                    </p>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            {/* Still have questions CTA */}
+            <div className="mt-12 text-center bg-gradient-to-r from-blue/10 to-teal-600/10 border border-blue/20 rounded-2xl p-8">
+              <h3 className="text-xl font-bold font-mattone mb-4">Still have questions?</h3>
+              <p className="text-gray-600 font-outfit mb-6">
+                Our support team is here to help you succeed. Get personalized assistance with your job search strategy.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <button className="bg-blue text-white px-6 py-3 rounded-lg font-mattone hover:bg-blue/90 transition-colors">
+                  Contact Support
+                </button>
+                <button 
+                  onClick={() => router.push('/blog')}
+                  className="bg-white border-2 border-blue text-blue px-6 py-3 rounded-lg font-mattone hover:bg-blue/5 transition-colors"
+                >
+                  Check out our Blog
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section with Pricing */}
+      
+
       {/* Final CTA */}
       <CTA 
-        title="Ready to Transform Your Career?"
+        title="Get ATS-Ready Resume"
         subtitle="Join thousands who've gone from resume anxiety to interview confidence. Your dream job is waiting."
-        primaryButtonText="Start Free Trial"
+        primaryButtonText="Start Building Your Resume"
         secondaryButtonText="Download App"
         showSecondaryButton={false}
       />

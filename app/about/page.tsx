@@ -4,9 +4,9 @@ import { ArrowLeft } from "lucide-react"
 import JsonLd from "@/components/JsonLd"
 
 export const metadata = {
-  title: "About MockStars — AI Resume, ATS Match, Cover Letters, Behavioral Stories",
+  title: "About Mockstars — AI Resume, ATS Match, Cover Letters, Behavioral Stories",
   description:
-    "MockStars helps you generate a resume you love, tailor it to a specific job to pass ATS, create a matching cover letter, and craft core behavioral stories—all fast and privacy-first.",
+    "Mockstars helps you generate a resume you love, tailor it to a specific job to pass ATS, create a matching cover letter, and craft core behavioral stories—all fast and privacy-first.",
 }
 
 const aboutJsonLd = {
@@ -14,7 +14,7 @@ const aboutJsonLd = {
   "@type": "AboutPage",
   "mainEntity": {
     "@type": "Organization",
-    "name": "MockStars",
+    "name": "Mockstars",
     "url": "https://mockstars.app",
     "description": "AI career platform for job-matched resumes, ATS alignment, per-job cover letters, and behavioral story crafting.",
     "foundingDate": "2024",
@@ -73,10 +73,10 @@ const faqJsonLd = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What is MockStars in one sentence?",
+      "name": "What is Mockstars in one sentence?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MockStars is an AI career platform that generates a resume you love, tailors it to a specific job to pass ATS, creates a matching cover letter, and crafts core behavioral stories."
+        "text": "Mockstars is an AI career platform that generates a resume you love, tailors it to a specific job to pass ATS, creates a matching cover letter, and crafts core behavioral stories."
       }
     },
     {
@@ -84,7 +84,7 @@ const faqJsonLd = {
       "name": "How does ATS matching work?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Paste a job description or link and MockStars aligns your resume’s language, skills, and achievements to the role—keeping truth intact while improving relevance and screening scores."
+        "text": "Paste a job description or link and Mockstars aligns your resume’s language, skills, and achievements to the role—keeping truth intact while improving relevance and screening scores."
       }
     },
     {
@@ -100,7 +100,7 @@ const faqJsonLd = {
       "name": "Can you generate a per-job cover letter?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes—MockStars produces a concise cover letter that mirrors your tailored resume and the job’s priorities."
+        "text": "Yes—Mockstars produces a concise cover letter that mirrors your tailored resume and the job’s priorities."
       }
     },
     {
@@ -131,7 +131,7 @@ export default function AboutPage() {
           <JsonLd data={faqJsonLd} />
 
           <h1 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">
-            About MockStars
+            About Mockstars
           </h1>
 
           {/* KEY POINTS — answer-first and liftable */}
@@ -148,9 +148,9 @@ export default function AboutPage() {
 
           {/* WHAT IS MOCKSTARS */}
           <section className="space-y-3 mb-10">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">What is MockStars?</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">What is Mockstars?</h2>
             <p className="text-gray-700">
-              MockStars is an AI platform that helps you generate a resume in the style you want, tailor it to a specific job so it passes ATS, produce a matching cover letter, and craft core behavioral stories you can use in interviews.
+              Mockstars is an AI platform that helps you generate a resume in the style you want, tailor it to a specific job so it passes ATS, produce a matching cover letter, and craft core behavioral stories you can use in interviews.
             </p>
             <p className="italic text-zinc-500">“From blank page to job-matched resume, cover letter, and interview stories—fast.”</p>
           </section>
@@ -213,7 +213,7 @@ export default function AboutPage() {
 
           {/* WHY CHOOSE — decision-grade differentiators */}
           <section className="space-y-5 mb-10">
-            <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">Why choose MockStars?</h2>
+            <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">Why choose Mockstars?</h2>
             <ul className="list-disc pl-6 space-y-2 text-gray-700">
               <li><strong>Job-matched outputs:</strong> Resume + cover letter aligned to the exact role.</li>
               <li><strong>Template you control:</strong> Keep your preferred look; reuse and iterate quickly.</li>
@@ -245,7 +245,7 @@ export default function AboutPage() {
           <section className="space-y-4 mb-10">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">FAQs</h2>
             <div className="space-y-3 text-gray-700">
-              <details><summary className="font-semibold">What is MockStars in one sentence?</summary><p>AI that generates a resume you love, tailors it to a job to pass ATS, adds a matching cover letter, and crafts core behavioral stories.</p></details>
+              <details><summary className="font-semibold">What is Mockstars in one sentence?</summary><p>AI that generates a resume you love, tailors it to a job to pass ATS, adds a matching cover letter, and crafts core behavioral stories.</p></details>
               <details><summary className="font-semibold">How does ATS matching work?</summary><p>Paste a job description or link; your resume is aligned to the role’s language, skills, and priorities—truthful, targeted, and screening-friendly.</p></details>
               <details><summary className="font-semibold">Do you rewrite my experience?</summary><p>We clarify and organize your true impact; you approve changes and can revert anytime.</p></details>
               <details><summary className="font-semibold">Can you create a per-job cover letter?</summary><p>Yes—generated to mirror the tailored resume and employer priorities.</p></details>
@@ -258,7 +258,7 @@ export default function AboutPage() {
           <section className="space-y-3">
             <h2 className="text-xl md:text-2xl font-bold text-gray-800 font-mattone">Get in touch</h2>
             <p className="text-gray-700">Questions or feedback? We read every message.</p>
-            <p className="italic text-zinc-400">MockStars — where your experience becomes your advantage.</p>
+            <p className="italic text-zinc-400">Mockstars — where your experience becomes your advantage.</p>
           </section>
         </div>
       </div>

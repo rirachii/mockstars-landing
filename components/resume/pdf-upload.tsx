@@ -23,10 +23,13 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
   const [parseResult, setParseResult] = useState<ParsedResumeData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  const allowedExtensions = ['pdf', 'doc', 'docx', 'txt', 'html', 'rtf', 'png', 'jpg', 'jpeg', 'webp'];
+
   const handleFile = async (file: File) => {
-    // Validate file type
-    if (file.type !== 'application/pdf') {
-      const errorMsg = 'Please upload a PDF file.';
+    // Validate extension
+    const extension = file.name.split('.').pop()?.toLowerCase();
+    if (!extension || !allowedExtensions.includes(extension)) {
+      const errorMsg = 'Please upload a supported file type.';
       setError(errorMsg);
       onError?.(errorMsg);
       return;
@@ -45,9 +48,20 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
     setUploadedFile(file);
 
     try {
-      const result = await PDFParser.parseFile(file);
-      setParseResult(result);
-      onParsed?.(result);
+      if (extension === 'pdf') {
+        const result = await PDFParser.parseFile(file);
+        setParseResult(result);
+        onParsed?.(result);
+      } else {
+        // For non-PDF types, allow upload and proceed without parsing
+        const minimal: ParsedResumeData = {
+          text: '',
+          pages: [],
+          metadata: { title: file.name }
+        };
+        setParseResult(minimal);
+        onParsed?.(minimal);
+      }
     } catch (err) {
       const errorMsg = 'Failed to parse PDF. Please try another file.';
       setError(errorMsg);
@@ -101,7 +115,7 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
       >
         <input
           type="file"
-          accept=".pdf"
+          accept=".pdf,.doc,.docx,.txt,.html,.rtf,.png,.jpg,.jpeg,.webp,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain,text/html,application/rtf,image/png,image/jpeg,image/webp"
           onChange={handleFileInput}
           className="hidden"
           id="pdf-upload"
@@ -122,7 +136,10 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
             <div>
               <p className="text-lg font-medium text-gray-900">Resume uploaded successfully!</p>
               <p className="text-sm text-gray-600">
-                Extracted {parseResult.text.length} characters from {parseResult.pages.length} page(s)
+                {parseResult.pages.length > 0
+                  ? <>Extracted {parseResult.text.length} characters from {parseResult.pages.length} page(s)</>
+                  : <>Uploaded {uploadedFile?.name}</>
+                }
               </p>
             </div>
             <Button
@@ -161,7 +178,7 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
                 </label>
               </p>
               <p className="text-sm text-gray-600">
-                PDF files only, up to 10MB
+                PDF, DOCX, DOC, TXT, HTML, RTF, PNG, JPG, JPEG, WEBP
               </p>
             </div>
           </div>

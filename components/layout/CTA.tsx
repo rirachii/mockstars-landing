@@ -12,7 +12,7 @@ interface CTAProps {
 
 export default function CTA({
   title = "Ready to Ace Your Next Interview?",
-  subtitle = "Join thousands of professionals who've transformed their interview skills with MockStars.",
+  subtitle = "Join thousands of professionals who've transformed their interview skills with Mockstars.",
   primaryButtonText = "Start Practicing Today",
   secondaryButtonText = "Download App",
   onPrimaryClick,
