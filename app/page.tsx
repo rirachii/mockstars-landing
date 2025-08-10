@@ -1,8 +1,8 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
-import { Star, Check, Camera, FileText, FileSearch, Bot, BookOpen, Sparkles } from "lucide-react"
-import CTA from '../components/layout/CTA'
+import { Star, Check, Camera, FileText, FileSearch, Bot, BookOpen, Sparkles, Brain, ScrollText, Mic } from "lucide-react"
+import CTA from '../components/common/CTA'
 import { CompanyBanner } from '@/components/layout/CompanyBanner';
 import { TemplateShowcase } from '@/components/resume/TemplateShowcase';
 import { useRouter } from 'next/navigation'
