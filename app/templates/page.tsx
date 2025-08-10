@@ -1,17 +1,30 @@
 // app/templates/page.tsx
 'use client';
 
-import React, { useState } from 'react';
-import { resumeTemplates, getTemplatesByCategory, TemplateCategories } from '@/lib/resume/resume-types';
-import { TemplateCard,  } from '@/components/resume/TemplateCard';
+import React, { useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { resumeTemplates, getTemplatesByCategory, TemplateCategories, TemplateInfo } from '@/lib/resume/resume-types';
+import { TemplateCard } from '@/components/resume/TemplateCard';
+import CTA from '@/components/common/CTA';
 
 export default function TemplatesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const router = useRouter();
 
   const filteredTemplates = selectedCategory === 'all' 
     ? resumeTemplates 
-    : getTemplatesByCategory(selectedCategory as any);
+    : getTemplatesByCategory(selectedCategory as keyof typeof TemplateCategories);
+
+  const categories = useMemo(() => {
+    const entries = Object.entries(TemplateCategories).map(([id, meta]) => ({
+      id,
+      name: meta.name,
+      count: resumeTemplates.filter(t => t.category === (id as keyof typeof TemplateCategories)).length,
+    }))
+    const total = resumeTemplates.length
+    return [{ id: 'all', name: 'All', count: total }, ...entries]
+  }, [])
 
   const handleTemplateSelect = (templateId: string) => {
     setSelectedTemplate(templateId);
@@ -59,7 +72,7 @@ export default function TemplatesPage() {
 
           {/* Templates Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredTemplates.map((template) => (
+            {filteredTemplates.map((template: TemplateInfo) => (
               <TemplateCard
                 key={template.id}
                 template={template}
@@ -70,7 +83,17 @@ export default function TemplatesPage() {
           </div>
 
           {/* Call to Action */}
-          <div className="mt-12 text-center bg-white rounded-xl p-8 shadow-lg">
+          <div className="mt-12 text-center ">
+            <CTA
+              title="Ready to build your professional resume?"
+              subtitle="Get started with our AI-powered resume builder and create a job-winning resume in minutes."
+              primaryButtonText="Start Building Your Resume"
+              onPrimaryClick={() => {
+                router.push('/resume-builder')
+              }}
+            />
+          </div>
+          {/* <div className="mt-12 text-center bg-white rounded-xl p-8 shadow-lg">
             <h3 className="text-2xl font-bold mb-4 font-mattone">
               Ready to build your professional resume?
             </h3>
@@ -80,7 +103,7 @@ export default function TemplatesPage() {
             <button className="bg-blue text-white px-8 py-3 rounded-lg font-mattone hover:bg-blue/90 transition-colors">
               Start Building Your Resume
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -24,64 +24,58 @@ export default function Home() {
       {/* Hero Section */}
       <section id="download" className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-6xl mx-auto">
-            <div className="max-w-2xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-16 max-w-6xl mx-auto">
+            {/* Left Column */}
+            <div className="max-w-2xl mx-auto md:mx-0 text-center md:text-left">
               <div className="text-2xs uppercase tracking-widest text-teal-600 mb-2 font-mattone">ATS Perfected</div>
-              <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-8 font-mattone">
-                {/* Your ATS */}
-                {/* <br /> */}
-                <span className="gradient-text">TECH</span>
+              <h1 className="text-5xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 lg:mb-8 font-mattone leading-tight">
+                <span className="gradient-text">ELITE</span>
                 <br />
-                RESUME BUILDER
+                RESUME
+                <br />
+                BUILDER
               </h1>
 
-              <div className="mb-8">
-                <p className="text-lg mb-4 font-outfit">Resumes that don't get auto-rejected by robots </p>
-                <p className="text-gray-600 font-outfit">
-                  Deploy with confidence using our battle-tested template engine, generate cover letters that don't sound like chatbots, and craft interview stories that land you the offer.
+              <div className="mb-6 lg:mb-8">
+                <p className="text-base sm:text-lg mb-4 font-outfit"> No more rejection, no more unemployment. </p>
+                <p className="text-gray-600 font-outfit text-sm sm:text-base">
+                  Use our battle-tested template, generate cover letters that don't sound like chatbots, and craft interview stories that land you the offer. 
                 </p>
               </div>
 
-              <div className="flex justify-start gap-4">
+              <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 px-2 sm:px-0 mb-8 lg:mb-0">
                 <Button 
-                  className="bg-white hover:bg-gray-100 text-blue text-base py-6 px-8 rounded-full font-mattone border border-blue/20 flex items-center justify-center max-w-sm"
+                  className="bg-white hover:bg-gray-100 text-blue text-sm sm:text-base py-4 sm:py-6 px-6 sm:px-8 rounded-full font-mattone border border-blue/20 flex items-center justify-center w-full sm:w-auto max-w-xs mx-auto sm:mx-0"
                   onClick={handleCreateResumeClick}
                 >
-                  {/* <svg width="24" height="24" viewBox="0 0 24 24" className="mr-3" fill="currentColor">
-                    <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 22C14.32 22.05 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09997 22C7.78997 22.05 6.79997 20.68 5.95997 19.47C4.24997 17 2.93997 12.45 4.69997 9.39C5.56997 7.87 7.12997 6.91 8.81997 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z" />
-                  </svg> */}
                   Create Resume
                 </Button>
                 <Button 
-                  className="bg-blue hover:bg-blue/90 text-white text-base py-6 px-8 rounded-full font-mattone border border-blue/20 flex items-center justify-center max-w-sm"
+                  className="bg-blue hover:bg-blue/90 text-white text-sm sm:text-base py-4 sm:py-6 px-6 sm:px-8 rounded-full font-mattone border border-blue/20 flex items-center justify-center w-full sm:w-auto max-w-xs mx-auto sm:mx-0"
                   onClick={handleUploadResumeClick}
                 >
-                  {/* <svg width="24" height="24" viewBox="0 0 24 24" className="mr-3" fill="currentColor">
-                    <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 22C14.32 22.05 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.09997 22C7.78997 22.05 6.79997 20.68 5.95997 19.47C4.24997 17 2.93997 12.45 4.69997 9.39C5.56997 7.87 7.12997 6.91 8.81997 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5ZM13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z" />
-                  </svg> */}
                   Upload Resume
                 </Button> 
               </div>
-            <CompanyBanner />
             </div>
 
             {/* Get Interview Ready */}
-            <div className="relative lg:pl-12">
-              <div className="relative z-10 mx-auto max-w-md lg:mx-0 animate-float flex items-top justify-top h-full">
-                <div className="bg-white/90 backdrop-blur-sm p-8 relative overflow-hidden multi-color-border w-full shadow-xl border border-gray-200">
+            <div className="relative order-2 lg:order-2 sm:mt-0 lg:mt-8 lg:pl-8 xl:pl-12">
+              <div className="relative z-10 mx-auto max-w-md lg:mx-0 animate-float sm:h-[200px] md:h-[350px] lg:h-[400px]">
+                <div className="bg-white/95 backdrop-blur-sm p-6 lg:p-8 relative overflow-hidden multi-color-border w-full shadow-xl border border-gray-200 rounded-2xl">
                   <div className="absolute top-0 left-0 w-40 h-40 bg-purple-200 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
                   <div className="relative">
                     <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-xl font-semibold font-mattone text-white ">Get Interview Ready</h3>
-                      <span className="bg-green-100 text-green-600 text-xs font-medium px-3 py-1.5 rounded-full font-outfit">
+                      <h3 className="text-lg lg:text-xl font-semibold font-mattone text-white">Get Interview Ready</h3>
+                      <span className="bg-green-100 text-green-600 text-xs font-medium px-2 lg:px-3 py-1 lg:py-1.5 rounded-full font-outfit">
                         Processing
                       </span>
                     </div>
-                    <div className="space-y-4">
-                      <div className="p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+                    <div className="space-y-3 lg:space-y-4">
+                      <div className="p-3 lg:p-4 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
                         <div className="flex items-center gap-3">
-                          <FileText className="h-6 w-6 text-blue" />
-                          <div className="flex-1">
+                          <FileText className="h-5 w-5 lg:h-6 lg:w-6 text-blue flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium font-outfit text-gray-800">
                               Old Resume Uploaded
                             </p>
@@ -89,21 +83,21 @@ export default function Home() {
                           </div>
                         </div>
                       </div>
-                      <div className="p-4 bg-blue/5 rounded-lg">
-                        <div className="flex items-center gap-4 py-4">
-                          <FileSearch className="h-6 w-6 text-white" />
-                          <div className="flex-1">
-                            <p className="text-sm font-medium font-outfit text-white">
+                      <div className="p-3 lg:p-4 rounded-lg">
+                        {/* <div className="flex items-center gap-3 lg:gap-4 py-3 lg:py-4">
+                          <FileSearch className="h-5 w-5 lg:h-6 lg:w-6 text-blue flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium font-outfit text-gray-800">
                               Parsing your resume
                             </p>
                             <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
                               <div className="bg-blue h-1.5 rounded-full w-1/5"></div>
                             </div>
                           </div>
-                        </div>
-                        <div className="flex items-center gap-4 py-4">
-                          <Bot className="h-6 w-6 text-white " />
-                          <div className="flex-1">
+                        </div> */}
+                        <div className="flex items-center gap-3 lg:gap-4 py-3 lg:py-4">
+                          <Bot className="h-5 w-5 lg:h-6 lg:w-6 text-blue flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
                             <p className="text-sm font-medium font-outfit text-white">
                               Running ATS Optimization
                             </p>
@@ -112,37 +106,37 @@ export default function Home() {
                             </div>
                           </div>
                         </div>
-                        <div className="flex items-center gap-4 py-4">
-                          <BookOpen className="h-6 w-6 text-white " />
-                          <div className="flex-1">
-                            <p className="text-sm font-medium font-outfit text-white">
+                        {/* <div className="flex items-center gap-3 lg:gap-4 py-3 lg:py-4">
+                          <BookOpen className="h-5 w-5 lg:h-6 lg:w-6 text-blue flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium font-outfit text-gray-800">
                               Drafting your interview stories
                             </p>
                             <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
                               <div className="bg-blue h-1.5 rounded-full w-1/5"></div>
                             </div>
                           </div>
-                        </div>
-                        <div className="flex items-center gap-4 py-4">
-                          <Sparkles className="h-6 w-6 text-white animate-pulse" />
-                          <div className="flex-1">
-                            <p className="text-sm font-medium font-outfit gradient-text">
+                        </div> */}
+                        {/* <div className="flex items-center gap-3 lg:gap-4 py-3 lg:py-4">
+                          <Sparkles className="h-5 w-5 lg:h-6 lg:w-6 text-blue animate-pulse flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium font-outfit text-blue">
                               Polishing everything up
                             </p>
                             <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
                               <div className="bg-blue h-1.5 rounded-full w-4/5"></div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
-                    <div className="mt-6 border-t border-gray-200 pt-6">
-                      <div className="flex items-center justify-between">
-                        <div>
+                    <div className="mt-4 lg:mt-6 border-t border-gray-200 pt-4 lg:pt-6">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex-1 min-w-0">
                           <div className="text-sm text-white font-outfit">Next: Tailored Cover Letters</div>
                           <div className="text-xs text-white font-outfit">Based on the job description</div>
                         </div>
-                        <Button size="sm" className="bg-orange-500 text-white hover:bg-orange-600 font-mattone px-6 py-2">
+                        <Button size="sm" className="bg-orange-500 text-white hover:bg-orange-600 font-mattone px-4 lg:px-6 py-2 text-xs lg:text-sm flex-shrink-0">
                           Almost Ready!
                         </Button>
                       </div>
@@ -151,7 +145,11 @@ export default function Home() {
                 </div>
               </div>
             </div>
-
+          </div>
+          
+          {/* Company Banner - moved outside grid for better mobile layout */}
+          <div className="mt-0 md:mt-8 lg:mt-12">
+            <CompanyBanner />
           </div>
         </div>
       </section>
@@ -171,9 +169,12 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 rounded-2xl shadow-lg">
-                <h3 className="text-xl font-bold mb-6 font-mattone text-gray-800">🎯 Smart Resume Builder</h3>
+                <h3 className="text-xl font-bold mb-6 font-mattone gradient-text flex items-center gap-2">
+                  <Brain className="h-6 w-6 text-blue mt-0.5" />
+                  Smart Resume Builder
+                </h3>
                 <ul className="space-y-3 text-gray-700 font-outfit">
                   <li className="flex items-start gap-3">
                     <Check className="h-5 w-5 text-blue mt-0.5" />
@@ -195,73 +196,82 @@ export default function Home() {
               </div>
 
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 rounded-2xl shadow-lg">
-                <h3 className="text-xl font-bold mb-6 font-mattone text-orange-600">🗣️ Interview Story Generator</h3>
+                <h3 className="text-xl font-bold mb-6 font-mattone gradient-text flex items-center gap-2">
+                  <Bot className="h-6 w-6 text-orange mt-0.5" />
+                  Interview Story Generator
+                </h3>
                 <ul className="space-y-3 text-gray-700 font-outfit">
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-orange-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-orange mt-0.5" />
                     <span>5-6 personalized STAR method stories</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-orange-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-orange mt-0.5" />
                     <span>Based on YOUR actual experiences</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-orange-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-orange mt-0.5" />
                     <span>Covers all major behavioral question types</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-orange-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-orange mt-0.5" />
                     <span>Never get caught off-guard again</span>
                   </li>
                 </ul>
               </div>
 
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 rounded-2xl shadow-lg">
-                <h3 className="text-xl font-bold mb-6 font-mattone text-pink-600">📝 Cover Letter Magic</h3>
+                <h3 className="text-xl font-bold mb-6 font-mattone gradient-text flex items-center gap-2">
+                  <ScrollText className="h-6 w-6 text-pink mt-0.5" />
+                  Cover Letter Magic
+                </h3>
                 <ul className="space-y-3 text-gray-700 font-outfit">
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-pink-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-pink mt-0.5" />
                     <span>Generate custom cover letters for any job</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-pink-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-pink mt-0.5" />
                     <span>Automatically tailored to job descriptions</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-pink-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-pink mt-0.5" />
                     <span>Professional tone that sounds like you</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-pink-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-pink mt-0.5" />
                     <span>Stop staring at blank documents</span>
                   </li>
                 </ul>
               </div>
 
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 p-8 rounded-2xl shadow-lg">
-                <h3 className="text-xl font-bold mb-6 font-mattone text-teal-600">🎙️ Practice Platform</h3>
+                <h3 className="text-xl font-bold mb-6 font-mattone gradient-text flex items-center gap-2">
+                  <Mic className="h-6 w-6 text-teal mt-0.5" />
+                  Practice Platform
+                </h3>
                 <ul className="space-y-3 text-gray-700 font-outfit">
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-teal-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-teal mt-0.5" />
                     <span>Voice recording with real-time feedback</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-teal-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-teal mt-0.5" />
                     <span>AI analyzes clarity, pace, and confidence</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-teal-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-teal mt-0.5" />
                     <span>Track your improvement over time</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <Check className="h-5 w-5 text-teal-600 mt-0.5" />
+                    <Check className="h-5 w-5 text-teal mt-0.5" />
                     <span>Build confidence through repetition</span>
                   </li>
                 </ul>
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-blue/10 to-purple-500/10 border border-blue/20 rounded-2xl p-8 mt-12 text-center">
+            <div className="bg-gradient-to-r from-blue/10 to-pink/10 border border-blue/20 rounded-2xl p-8 mt-12 text-center">
               <h3 className="text-2xl font-bold font-mattone mb-4">Perfect For...</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-gray-700 font-outfit">
                 <div>
@@ -401,12 +411,12 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex-shrink-0 text-center">
-                  <div className="w-16 h-16 bg-blue rounded-full flex items-center justify-center mb-3">
-                    <span className="text-2xl font-bold">SJ</span>
+                  <div className="w-16 h-16 bg-blue rounded-full flex items-center justify-center mb-3 mx-auto">
+                    <span className="text-2xl font-bold">KC</span>
                   </div>
                   <div className="text-sm text-gray-800">
-                    <div className="font-semibold">Sarah Johnson</div>
-                    <div className="text-gray-800">Marketing Manager</div>
+                    <div className="font-semibold">Kevin C</div>
+                    <div className="text-gray-800">Business Student</div>
                   </div>
                 </div>
               </div>
@@ -424,7 +434,7 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-gray-700 font-outfit mb-4 text-sm leading-relaxed">
-                  "The writing tool is incredible! I can customize my resume and cover letter for any job posting in minutes. The ATS optimization means I actually get interviews now instead of my applications disappearing into the void."
+                  "The resume builder tool is incredible! I can customize my resume and cover letter for any job posting in minutes. The ATS optimization means I actually get interviews now instead of my applications disappearing into the void."
                 </p>
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gradient-to-r from-blue to-teal-600 rounded-full flex items-center justify-center">
@@ -432,7 +442,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-gray-800 font-mattone">Alex Foster</div>
-                    <div className="text-xs text-gray-600 font-outfit">Software Engineer</div>
+                    <div className="text-xs text-gray-600 font-outfit">Software Engineer Intern</div>
                   </div>
                 </div>
               </div>
@@ -493,15 +503,15 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-gray-700 font-outfit mb-4 text-sm leading-relaxed">
-                  "I love how I can tailor each resume and cover letter to match the exact job description. The AI writing tool picks up on the keywords and requirements perfectly. My interview stories are now polished and ready for any question!"
+                  "I got my first job at Starbucks because of Mockstars. I was so nervous about the interview but I was able to simulate the interview and practice with the voice practice feature. I was able to get the job, thanks Mockstars!"
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-teal-600 to-blue rounded-full flex items-center justify-center">
+                  <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">TS</span>
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-gray-800 font-mattone">Therese Sollars</div>
-                    <div className="text-xs text-gray-600 font-outfit">Communications Director</div>
+                    <div className="text-xs text-gray-600 font-outfit">High School Student</div>
                   </div>
                 </div>
               </div>
@@ -512,7 +522,7 @@ export default function Home() {
               <button 
                 onClick={handleCreateResumeClick}
                 className="bg-blue text-white px-8 py-3 rounded-2xl font-mattone hover:bg-blue/90 transition-colors">
-                Upload Your Resume Now
+                Craft Your Resume Now
               </button>
             </div>
           </div>
@@ -732,13 +742,13 @@ export default function Home() {
               <p className="text-gray-600 font-outfit mb-6">
                 Our support team is here to help you succeed. Get personalized assistance with your job search strategy.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="bg-blue text-white px-6 py-3 rounded-lg font-mattone hover:bg-blue/90 transition-colors">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+                <button className="bg-blue text-white px-6 py-3 rounded-lg font-mattone hover:bg-blue/90 transition-colors w-full sm:w-auto">
                   Contact Support
                 </button>
                 <button 
                   onClick={() => router.push('/blog')}
-                  className="bg-white border-2 border-blue text-blue px-6 py-3 rounded-lg font-mattone hover:bg-blue/5 transition-colors"
+                  className="bg-white border-2 border-blue text-blue px-6 py-3 rounded-lg font-mattone hover:bg-blue/5 transition-colors w-full sm:w-auto"
                 >
                   Check out our Blog
                 </button>

@@ -2,12 +2,17 @@ import React from 'react';
 import Image from 'next/image';
 
 const companies = [
-  { name: 'Google', logo: '/logos/logos.png' },
-  { name: 'Amazon', logo: '/logos/logos.png' }, 
-  { name: 'Meta', logo: '/logos/logos.png' },
-  { name: 'J.P.Morgan', logo: '/logos/jpmorgan.png' },
-  { name: 'Palantir', logo: '/logos/logos.png' },
-  { name: 'Microsoft', logo: '/logos/logos.png' }
+  { name: 'McDonalds', logo: '/logos/mcdonalds.png' },
+  { name: 'Chipotle', logo: '/logos/chipotle.png' },
+  { name: 'Amazon', logo: '/logos/amazon.png' }, 
+  { name: 'Starbucks', logo: '/logos/starbucks.png' },
+  { name: 'Meta', logo: '/logos/meta.png' },
+  { name: 'Target', logo: '/logos/target.png' },
+  { name: 'JPMorgan', logo: '/logos/jpmorgan.png' },
+  { name: 'Microsoft', logo: '/logos/logos.png' },
+  { name: 'Trader Joes', logo: '/logos/chickfila.png' },
+  { name: 'Chick-fil-A', logo: '/logos/chickfila.png' },
+
 ];
 
 interface CompanyBannerProps {
@@ -19,7 +24,7 @@ interface CompanyBannerProps {
 export function CompanyBanner({ 
   showLogos = false, 
   title = "Trusted by professionals at:",
-  speed = 12
+  speed = 24
 }: CompanyBannerProps) {
   return (
     <div className="w-full py-8 overflow-hidden">

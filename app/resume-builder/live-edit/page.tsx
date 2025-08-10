@@ -2,13 +2,12 @@
 
 import React, { useState } from 'react'
 import { LiveResumeEditor } from '@/components/resume/live-resume-editor'
-import { useLocalStorage } from '@/lib/hooks/useLocalStorage'
-import { ResumeData } from '@/lib/pdf'
 import { SAMPLE_RESUME_DATA } from '@/lib/resume/resume-storage'
-import { DEFAULT_CUSTOMIZATION } from '@/lib/resume/template-customization'
+import { DEFAULT_CUSTOMIZATION, resumeTemplates, TemplateId } from '@/lib/resume/resume-types'
+
 
 export default function LiveEditPage() {
-  const [resumeData, setResumeData] = useLocalStorage<ResumeData>('mockstars_resume_data', SAMPLE_RESUME_DATA)
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateId>(resumeTemplates[0].id)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50">
@@ -30,9 +29,9 @@ export default function LiveEditPage() {
       {/* Live Editor */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <LiveResumeEditor
-          data={resumeData}
-          onChange={setResumeData}
-          template="modern"
+          data={SAMPLE_RESUME_DATA}
+          onChange={() => {}}
+          template={selectedTemplate}
           customization={DEFAULT_CUSTOMIZATION}
         />
       </div>

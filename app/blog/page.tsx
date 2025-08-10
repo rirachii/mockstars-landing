@@ -1,5 +1,5 @@
 import { getAllBlogPosts, getFeaturedBlogPosts, getAllCategories, getAllTags } from '@/lib/blog'
-import CTA from '@/components/layout/CTA'
+import CTA from '@/components/common/CTA'
 import { HorizontalNavigation } from '@/components/layout/HorizontalNavigation'
 import { Metadata } from 'next'
 import Link from 'next/link'

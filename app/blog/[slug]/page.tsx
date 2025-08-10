@@ -5,7 +5,7 @@ import { BlogPostNavigation } from '@/components/blog/blog-post-navigation'
 import { RelatedPosts } from '@/components/blog/related-posts'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import CTA from '@/components/layout/CTA'
+import CTA from '@/components/common/CTA'
 import JsonLd from '@/components/JsonLd'
 
 

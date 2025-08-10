@@ -2,7 +2,6 @@
 import React from 'react';
 import { FilledClassicTemplate } from './filled-classic-template';
 import { FilledModernTemplate } from './filled-modern-template';
-import { FilledRizzumeTemplate } from './filled-rizzume-template';
 import { FilledPiedPiperTemplate } from './filled-pied-piper-template';
 import { FilledGyattPointsTemplate } from './filled-gyatt-points-template';
 import { mockProfile, mockProfiles } from './mock-profile';
@@ -11,7 +10,6 @@ import { mockProfile, mockProfiles } from './mock-profile';
 export const resumeTemplateShowcase = {
   classic: FilledClassicTemplate,
   modern: FilledModernTemplate,
-  rizzume: FilledRizzumeTemplate,
   piedPiper: FilledPiedPiperTemplate,
   gyattPoints: FilledGyattPointsTemplate,
 };

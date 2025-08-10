@@ -22,13 +22,12 @@ import {
 } from 'lucide-react'
 import { ResumeData } from '@/lib/pdf'
 import { cn } from '@/lib/utils'
-import { TemplateType } from './pdf-templates'
-import { TemplateCustomization } from '@/lib/resume/template-customization'
+import type { TemplateInfo, TemplateCustomization, TemplateId } from '@/lib/resume/resume-types'
 
 interface LiveResumeEditorProps {
   data: ResumeData
   onChange: (data: ResumeData) => void
-  template?: TemplateType
+  template?: TemplateId
   className?: string
   customization: TemplateCustomization
 }
@@ -44,7 +43,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
   data,
   onChange,
   template,
-  className = '',
+  className,
   customization
 }) => {
   const [editingField, setEditingField] = useState<EditingField>(null)

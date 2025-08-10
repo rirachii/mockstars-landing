@@ -8,7 +8,16 @@ export default function Footer() {
           <div className="mb-4 md:mb-0">
             <span className="text-sm text-zinc-500 font-outfit">© {new Date().getFullYear()} Mockstars</span>
           </div>
-          <div className="flex gap-6">
+          <div className="flex gap-6 flex-wrap justify-center">
+            <Link href="/features" className="text-sm text-zinc-500 hover:text-teal font-outfit">
+              Features
+            </Link>
+            <Link href="/pricing" className="text-sm text-zinc-500 hover:text-teal font-outfit">
+              Pricing
+            </Link>
+            <Link href="/about" className="text-sm text-zinc-500 hover:text-teal font-outfit">
+              About
+            </Link>
             <Link href="/privacy" className="text-sm text-zinc-500 hover:text-teal font-outfit">
               Privacy
             </Link>

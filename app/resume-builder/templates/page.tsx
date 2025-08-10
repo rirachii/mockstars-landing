@@ -426,7 +426,7 @@ export default function TemplatesPage() {
 
             <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg p-8">
               <TemplateSelector
-                selectedTemplate={selectedTemplate as TemplateInfo}
+                selectedTemplateId={selectedTemplate as any}
                 onTemplateSelect={handleTemplateSelect}
               />
               
