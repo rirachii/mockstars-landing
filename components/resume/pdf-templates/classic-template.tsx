@@ -1,7 +1,43 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
-// Classic template styles
+export interface ClassicResumeData {
+  personalInfo: {
+    name: string;
+    title: string;
+    email: string;
+    phone: string;
+    location: string;
+    linkedin?: string;
+    website?: string;
+  };
+  summary?: string;
+  experience: Array<{
+    title: string;
+    company: string;
+    startDate: string;
+    endDate: string;
+    description: string[];
+    location?: string;
+  }>;
+  education: Array<{
+    degree: string;
+    school: string;
+    year: string;
+    gpa?: string;
+  }>;
+  skills: string[];
+  projects?: Array<{
+    name: string;
+    description: string;
+    technologies: string[];
+  }>;
+}
+
+interface ClassicTemplateProps {
+  data: ClassicResumeData;
+}
+
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
@@ -14,7 +50,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     paddingBottom: 20,
     borderBottom: 1,
-    borderBottomColor: '#000000',
+    borderBottomColor: '#000',
   },
   name: {
     fontSize: 22,
@@ -45,7 +81,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     textAlign: 'left',
     borderBottom: 0.5,
-    borderBottomColor: '#000000',
+    borderBottomColor: '#000',
     paddingBottom: 3,
   },
   experienceItem: {
@@ -99,43 +135,6 @@ const styles = StyleSheet.create({
     width: '48%',
   },
 });
-
-interface ResumeData {
-  personalInfo: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    location: string;
-    linkedin?: string;
-    website?: string;
-  };
-  summary?: string;
-  experience: Array<{
-    title: string;
-    company: string;
-    startDate: string;
-    endDate: string;
-    description: string[];
-    location?: string;
-  }>;
-  education: Array<{
-    degree: string;
-    school: string;
-    year: string;
-    gpa?: string;
-  }>;
-  skills: string[];
-  projects?: Array<{
-    name: string;
-    description: string;
-    technologies: string[];
-  }>;
-}
-
-interface ClassicTemplateProps {
-  data: ResumeData;
-}
 
 export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => (
   <Document>
@@ -219,9 +218,7 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => (
             <View key={index} style={styles.experienceItem}>
               <Text style={styles.jobTitle}>{project.name}</Text>
               <Text style={styles.description}>{project.description}</Text>
-              <Text style={[styles.description, { fontStyle: 'italic', marginTop: 3 }]}>
-                Technologies: {project.technologies.join(', ')}
-              </Text>
+              <Text style={[styles.description, { fontStyle: 'italic', marginTop: 3 }]}>Technologies: {project.technologies.join(', ')}</Text>
             </View>
           ))}
         </View>

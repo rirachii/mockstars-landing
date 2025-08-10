@@ -3,6 +3,7 @@ import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import { getTemplate, TemplateType } from './pdf-templates';
 import { Button } from '@/components/ui/button';
 import { Download, Eye } from 'lucide-react';
+import { TemplateCustomization } from '@/lib/template-customization';
 
 interface ResumeData {
   personalInfo: {
@@ -41,24 +42,26 @@ interface PDFGeneratorProps {
   resumeData: ResumeData;
   template?: TemplateType;
   showPreview?: boolean;
+  customization: TemplateCustomization;
 }
 
 export const PDFGenerator: React.FC<PDFGeneratorProps> = ({ 
   resumeData, 
   template = 'modern',
-  showPreview = false 
+  showPreview = false,
+  customization
 }) => {
   // Select template component based on template prop
   const getTemplateComponent = () => {
     const templateInfo = getTemplate(template);
     if (templateInfo) {
       const TemplateComponent = templateInfo.component;
-      return <TemplateComponent data={resumeData} />;
+      return <TemplateComponent data={resumeData} customization={customization} />;
     }
     // Fallback to modern template
     const fallbackTemplate = getTemplate('modern')!;
     const FallbackComponent = fallbackTemplate.component;
-    return <FallbackComponent data={resumeData} />;
+    return <FallbackComponent data={resumeData} customization={customization} />;
   };
 
   const fileName = `${resumeData.personalInfo.name.replace(/\s+/g, '_')}_Resume.pdf`;
@@ -109,6 +112,16 @@ export const PDFGenerator: React.FC<PDFGeneratorProps> = ({
 
 // Example usage component
 export const ResumeBuilder: React.FC = () => {
+  // Example customization - this would come from your customization state
+  const exampleCustomization: TemplateCustomization = {
+    color: '#397DC2',
+    fontSize: 'default',
+    fontFamily: 'Helvetica',
+    sectionSpacing: 16,
+    paragraphSpacing: 8,
+    lineSpacing: 1.4
+  };
+
   // This would typically come from a form or state management
   const sampleResumeData: ResumeData = {
     personalInfo: {
@@ -185,6 +198,7 @@ export const ResumeBuilder: React.FC = () => {
           resumeData={sampleResumeData}
           template="modern"
           showPreview={true}
+          customization={exampleCustomization}
         />
       </div>
     </div>

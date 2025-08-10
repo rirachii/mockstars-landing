@@ -672,7 +672,7 @@ export default function Home() {
                     ))}
                   </div>
                   <p className="text-lg md:text-xl font-outfit leading-relaxed text-gray-800">
-                    "MockStars transformed my job search completely. The ATS-optimized resumes got me past the filters, 
+                    "Mockstars transformed my job search completely. The ATS-optimized resumes got me past the filters, 
                     the tailored cover letters saved me hours of writing, and practicing my interview stories with the 
                     voice feedback gave me the confidence I needed. I went from zero interviews to three job offers!"
                   </p>
@@ -826,7 +826,7 @@ export default function Home() {
                   </summary>
                   <div className="px-6 pb-6">
                     <p className="text-gray-600 font-outfit leading-relaxed">
-                      MockStars creates ATS-optimized resumes and cover letters that are tailored to each job description using our AI writing tool. 
+                      Mockstars creates ATS-optimized resumes and cover letters that are tailored to each job description using our AI writing tool. 
                       You get 5-6 personalized STAR method interview stories based on your experience, plus voice practice with grading to help you 
                       rehearse and perfect your delivery. You can also track which jobs you've applied to and their status (submitted, interviewing, 
                       rejected, or hired) to stay organized throughout your job search.
@@ -874,7 +874,7 @@ export default function Home() {
                   </summary>
                   <div className="px-6 pb-6">
                     <p className="text-gray-600 font-outfit leading-relaxed">
-                      MockStars is a complete interview preparation platform. We create ATS-optimized resumes and cover letters using our AI writing tool 
+                      Mockstars is a complete interview preparation platform. We create ATS-optimized resumes and cover letters using our AI writing tool 
                       that customizes content to any job description. You get a personal library to organize multiple resumes and cover letters, 
                       5-6 personalized interview stories for each resume, and voice practice with grading to perfect your delivery. Plus simple 
                       job application tracking to monitor your progress through each opportunity.

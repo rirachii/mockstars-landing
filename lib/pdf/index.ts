@@ -9,7 +9,7 @@ export type { TemplateType, TemplateInfo } from '@/components/resume/pdf-templat
 
 // PDF Components
 export { PDFGenerator, ResumeBuilder } from '@/components/resume/pdf-generator';
-export { PDFUpload, ResumeUploadDemo } from '@/components/resume/pdf-upload';
+export { PDFUpload } from '@/components/resume/pdf-upload';
 export { TemplateSelector, ResumeBuilderWithTemplates } from '@/components/resume/template-selector';
 
 // Types

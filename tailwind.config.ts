@@ -20,7 +20,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        outfit: ["var(--font-outfit)"],
+        outfit: ["Outfit", "sans-serif"],
         mattone: ['Mattone', 'sans-serif'],
       },
       colors: {

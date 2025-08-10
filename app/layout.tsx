@@ -1,5 +1,4 @@
 import type React from "react"
-import { Outfit } from "next/font/google"
 import "@/styles/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { PostHogProvider } from "@/components/common/posthog-provider"
@@ -8,10 +7,6 @@ import Footer from "@/components/layout/Footer"
 import JsonLd from "@/components/JsonLd"
 import type { Metadata } from 'next'
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-})
 
 export const metadata: Metadata = {
   title: "Mockstars - AI Interview Practice",
@@ -70,7 +65,7 @@ export default function RootLayout({
       <head>
         <JsonLd data={jsonLd} />
       </head>
-      <body className={`${outfit.variable} min-h-screen flex flex-col`}>
+      <body className="min-h-screen flex flex-col">
         <PostHogProvider>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <MaybeNavigation />

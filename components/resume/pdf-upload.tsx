@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PDFParser, ParsedResumeData } from '@/lib/pdf/parser';
+import type { ParsedResumeData } from '@/lib/pdf/parser';
 import { Button } from '@/components/ui/button';
 import { Upload, FileText, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -49,6 +49,8 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
 
     try {
       if (extension === 'pdf') {
+        // Defer-load the heavy parser only when needed
+        const { PDFParser } = await import('@/lib/pdf/parser');
         const result = await PDFParser.parseFile(file);
         setParseResult(result);
         onParsed?.(result);
@@ -219,33 +221,4 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
   );
 };
 
-// Example usage component
-export const ResumeUploadDemo: React.FC = () => {
-  const [parsedData, setParsedData] = useState<ParsedResumeData | null>(null);
-
-  return (
-    <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Upload Your Resume</h1>
-      
-      <PDFUpload
-        onParsed={(data) => {
-          setParsedData(data);
-          console.log('Parsed resume data:', data);
-        }}
-        onError={(error) => {
-          console.error('Upload error:', error);
-        }}
-      />
-
-      {/* Show extracted data for demo */}
-      {parsedData && (
-        <div className="mt-8 p-4 bg-gray-50 rounded-lg">
-          <h3 className="text-lg font-medium mb-4">Extracted Data (for development)</h3>
-          <pre className="text-xs overflow-x-auto">
-            {JSON.stringify(PDFParser.extractResumeData(parsedData.text), null, 2)}
-          </pre>
-        </div>
-      )}
-    </div>
-  );
-};
+// Note: Removed the in-file demo export to avoid bundling heavy parser code unnecessarily.
