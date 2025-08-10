@@ -1,6 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-import { TemplateCustomization } from '@/lib/resume/template-customization';
+import { TemplateCustomization } from '@/lib/resume/resume-types';
 
 // Register fonts (you'll need to add font files to your public folder)
 // Font.register({
@@ -75,13 +75,13 @@ export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({
     header: {
       marginBottom: customization.sectionSpacing,
       borderBottom: 2,
-      borderBottomColor: customization.color,
+      borderBottomColor: customization.primaryColor,
       paddingBottom: 10,
     },
     name: {
       fontSize: getFontSize(24),
       fontWeight: 'bold',
-      color: customization.color,
+      color: customization.primaryColor,
       marginBottom: 5,
       lineHeight: customization.lineSpacing,
     },
@@ -105,11 +105,11 @@ export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({
     sectionTitle: {
       fontSize: getFontSize(14),
       fontWeight: 'bold',
-      color: customization.color,
+      color: customization.primaryColor,
       marginBottom: customization.paragraphSpacing,
       textTransform: 'uppercase',
       borderBottom: 1,
-      borderBottomColor: customization.color,
+      borderBottomColor: customization.primaryColor,
       paddingBottom: 2,
       lineHeight: customization.lineSpacing,
     },
