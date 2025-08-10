@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Star, Check, Camera, FileText, FileSearch, Bot, BookOpen, Sparkles } from "lucide-react"
 import CTA from '../components/layout/CTA'
 import { CompanyBanner } from '@/components/layout/CompanyBanner';
+import { TemplateShowcase } from '@/components/resume/TemplateShowcase';
 import { useRouter } from 'next/navigation'
 
 export default function Home() {
@@ -156,286 +157,7 @@ export default function Home() {
       </section>
 
       {/* Resume Templates Showcase */}
-      <section className="py-16 bg-white/30 backdrop-blur-sm">
-        <div className="container mx-auto px-4">
-          <div className="max-w-7xl mx-auto">
-            {/* Header */}
-            <div className="text-center mb-12">
-              <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">PROFESSIONAL TEMPLATES</div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">Job-Winning Resume Templates</h2>
-              <p className="text-lg text-gray-600 font-outfit max-w-4xl mx-auto">
-                Our templates are designed and approved by HR experts to fit a wide range of tech jobs and experience 
-                levels. Choose your favorite to showcase your professional background and make your resume 
-                stand out among the competition.
-              </p>
-              <button 
-                onClick={() => router.push('/templates')}
-                className="mt-6 px-6 py-3 border-2 border-gray-300 rounded-lg hover:border-blue hover:text-blue transition-colors font-outfit"
-              >
-                View More Resume Templates
-              </button>
-            </div>
-
-            {/* Templates Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-8">
-              {/* Elegant Template */}
-              <div className="group cursor-pointer">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
-                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
-                    {/* Template Preview - Elegant */}
-                    <div className="h-full bg-white shadow-sm">
-                      <div className="border-b-2 border-gray-200 pb-2 mb-3">
-                        <div className="text-center">
-                          <div className="h-3 bg-gray-800 rounded mb-1"></div>
-                          <div className="h-1 bg-gray-400 rounded w-2/3 mx-auto"></div>
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex">
-                          <div className="w-1/3 pr-2">
-                            <div className="h-1 bg-gray-300 rounded mb-1"></div>
-                            <div className="h-1 bg-gray-300 rounded mb-1 w-3/4"></div>
-                            <div className="h-1 bg-gray-300 rounded mb-2 w-1/2"></div>
-                            <div className="h-1 bg-gray-300 rounded mb-1"></div>
-                            <div className="h-1 bg-gray-300 rounded w-2/3"></div>
-                          </div>
-                          <div className="w-2/3 pl-2">
-                            <div className="h-1 bg-gray-600 rounded mb-1"></div>
-                            <div className="h-1 bg-gray-300 rounded mb-1"></div>
-                            <div className="h-1 bg-gray-300 rounded mb-1 w-4/5"></div>
-                            <div className="h-1 bg-gray-300 rounded mb-2 w-3/5"></div>
-                            <div className="h-1 bg-gray-600 rounded mb-1"></div>
-                            <div className="h-1 bg-gray-300 rounded mb-1"></div>
-                            <div className="h-1 bg-gray-300 rounded w-4/5"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Use This Template Button */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
-                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
-                        📄 Use This Template
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-3">
-                  <h3 className="font-bold text-gray-800 font-mattone">Elegant</h3>
-                </div>
-              </div>
-
-              {/* Chicago Template */}
-              <div className="group cursor-pointer">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
-                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
-                    {/* Template Preview - Chicago */}
-                    <div className="h-full bg-white shadow-sm">
-                      <div className="text-center border-b border-gray-300 pb-2 mb-3">
-                        <div className="h-3 bg-blue rounded mb-1"></div>
-                        <div className="h-1 bg-gray-400 rounded w-1/2 mx-auto"></div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="h-1 bg-blue rounded mb-1"></div>
-                        <div className="space-y-1 mb-2">
-                          <div className="h-1 bg-gray-300 rounded"></div>
-                          <div className="h-1 bg-gray-300 rounded w-4/5"></div>
-                          <div className="h-1 bg-gray-300 rounded w-3/5"></div>
-                        </div>
-                        <div className="h-1 bg-blue rounded mb-1"></div>
-                        <div className="space-y-1">
-                          <div className="h-1 bg-gray-300 rounded"></div>
-                          <div className="h-1 bg-gray-300 rounded w-4/5"></div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Use This Template Button */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
-                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
-                        📄 Use This Template
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-3">
-                  <h3 className="font-bold text-gray-800 font-mattone">Chicago</h3>
-                </div>
-              </div>
-
-              {/* Clean Template */}
-              <div className="group cursor-pointer">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
-                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
-                    {/* Template Preview - Clean */}
-                    <div className="h-full bg-white shadow-sm">
-                      <div className="bg-orange-400 text-white p-2 mb-3">
-                        <div className="h-2 bg-white bg-opacity-80 rounded mb-1"></div>
-                        <div className="h-1 bg-white bg-opacity-60 rounded w-2/3"></div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex">
-                          <div className="w-1/3 pr-2 space-y-1">
-                            <div className="h-1 bg-orange-400 rounded"></div>
-                            <div className="h-1 bg-gray-300 rounded w-3/4"></div>
-                            <div className="h-1 bg-gray-300 rounded w-1/2"></div>
-                          </div>
-                          <div className="w-2/3 pl-2 space-y-1">
-                            <div className="h-1 bg-orange-400 rounded"></div>
-                            <div className="h-1 bg-gray-300 rounded"></div>
-                            <div className="h-1 bg-gray-300 rounded w-4/5"></div>
-                            <div className="h-1 bg-gray-300 rounded w-3/5"></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Use This Template Button */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
-                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
-                        📄 Use This Template
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-3">
-                  <h3 className="font-bold text-gray-800 font-mattone">Clean</h3>
-                </div>
-              </div>
-
-              {/* Taj Mahal Template */}
-              <div className="group cursor-pointer">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
-                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
-                    {/* Template Preview - Taj Mahal */}
-                    <div className="h-full bg-white shadow-sm">
-                      <div className="text-center mb-3">
-                        <div className="h-3 bg-gray-800 rounded mb-1"></div>
-                        <div className="h-1 bg-gray-400 rounded w-2/3 mx-auto mb-2"></div>
-                        <div className="w-8 h-8 bg-gray-300 rounded-full mx-auto"></div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="border-l-2 border-purple-400 pl-2">
-                          <div className="h-1 bg-purple-400 rounded mb-1"></div>
-                          <div className="h-1 bg-gray-300 rounded mb-1"></div>
-                          <div className="h-1 bg-gray-300 rounded w-4/5"></div>
-                        </div>
-                        <div className="border-l-2 border-purple-400 pl-2">
-                          <div className="h-1 bg-purple-400 rounded mb-1"></div>
-                          <div className="h-1 bg-gray-300 rounded w-3/5"></div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Use This Template Button */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
-                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
-                        📄 Use This Template
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-3">
-                  <h3 className="font-bold text-gray-800 font-mattone">Taj Mahal</h3>
-                </div>
-              </div>
-
-              {/* 2025 Template */}
-              <div className="group cursor-pointer">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
-                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
-                    {/* Template Preview - 2025 */}
-                    <div className="h-full bg-white shadow-sm">
-                      <div className="bg-gray-800 text-white p-2 mb-3">
-                        <div className="h-2 bg-white bg-opacity-80 rounded mb-1"></div>
-                        <div className="h-1 bg-white bg-opacity-60 rounded w-1/2"></div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="flex items-center space-x-2 mb-2">
-                          <div className="w-6 h-6 bg-gray-300 rounded-full"></div>
-                          <div className="flex-1">
-                            <div className="h-1 bg-gray-800 rounded mb-1"></div>
-                            <div className="h-1 bg-gray-400 rounded w-2/3"></div>
-                          </div>
-                        </div>
-                        <div className="space-y-1">
-                          <div className="h-1 bg-gray-600 rounded"></div>
-                          <div className="flex space-x-1">
-                            <div className="flex-1 h-1 bg-gray-300 rounded"></div>
-                            <div className="w-8 h-1 bg-gray-400 rounded"></div>
-                          </div>
-                          <div className="h-1 bg-gray-300 rounded w-4/5"></div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Use This Template Button */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
-                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
-                        📄 Use This Template
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-3">
-                  <h3 className="font-bold text-gray-800 font-mattone">2025</h3>
-                </div>
-              </div>
-
-              {/* Corporate Template */}
-              <div className="group cursor-pointer">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-transparent group-hover:border-blue transition-all duration-300 transform group-hover:scale-105">
-                  <div className="aspect-[8/11] bg-gray-50 p-4 relative overflow-hidden">
-                    {/* Template Preview - Corporate */}
-                    <div className="h-full bg-white shadow-sm">
-                      <div className="border-b-2 border-gray-800 pb-2 mb-3">
-                        <div className="h-3 bg-gray-800 rounded mb-1"></div>
-                        <div className="h-1 bg-gray-400 rounded w-2/3"></div>
-                      </div>
-                      <div className="space-y-2">
-                        <div className="grid grid-cols-2 gap-2">
-                          <div className="space-y-1">
-                            <div className="h-1 bg-gray-800 rounded"></div>
-                            <div className="h-1 bg-gray-300 rounded w-3/4"></div>
-                            <div className="h-1 bg-gray-300 rounded w-1/2"></div>
-                          </div>
-                          <div className="space-y-1">
-                            <div className="h-1 bg-gray-800 rounded"></div>
-                            <div className="h-1 bg-gray-300 rounded w-4/5"></div>
-                            <div className="h-1 bg-gray-300 rounded w-2/3"></div>
-                          </div>
-                        </div>
-                        <div className="space-y-1 mt-3">
-                          <div className="h-1 bg-gray-800 rounded"></div>
-                          <div className="h-1 bg-gray-300 rounded"></div>
-                          <div className="h-1 bg-gray-300 rounded w-4/5"></div>
-                        </div>
-                      </div>
-                    </div>
-                    {/* Use This Template Button */}
-                    <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-75 transition-all duration-300 flex items-center justify-center">
-                      <button className="bg-orange-500 text-white px-4 py-2 rounded-lg opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 font-outfit">
-                        📄 Use This Template
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div className="text-center mt-3">
-                  <h3 className="font-bold text-gray-800 font-mattone">Corporate</h3>
-                </div>
-              </div>
-            </div>
-
-            {/* Navigation dots */}
-            <div className="flex justify-center space-x-2">
-              <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TemplateShowcase />
 
        {/* What You Actually Get */}
        <section className="py-16">
@@ -589,7 +311,7 @@ export default function Home() {
                 <div className="flex justify-center gap-3 text-xs">
                   <span className="bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-outfit">Photos</span>
                   <span className="bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-outfit">PDFs</span>
-                  <span className="bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-outfit">LinkedIn</span>
+                  <span className="bg-pink-50 text-pink-600 px-3 py-1 rounded-full font-outfit">Text</span>
                 </div>
               </div>
 
@@ -599,13 +321,13 @@ export default function Home() {
                 </div>
                 <div className="text-2xs uppercase tracking-widest text-blue-100 mb-3 font-mattone">STEP 2</div>
                 <h3 className="text-xl font-bold mb-4 font-mattone">✨ AI Magic Happens</h3>
-                <p className="text-blue-100 font-outfit mb-4">
+                <p className="text-white font-outfit mb-4">
                   Get a professionally formatted, ATS-optimized resume + 5-6 personalized STAR method interview stories based on your actual experience. No generic templates here.
                 </p>
                 <div className="flex justify-center gap-3 text-xs">
-                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-outfit">Resume</span>
-                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-outfit">Stories</span>
-                  <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full font-outfit">Cover Letters</span>
+                  <span className="text-white px-3 py-1 rounded-full font-outfit">Resume</span>
+                  <span className="text-white px-3 py-1 rounded-full font-outfit">Stories</span>
+                  <span className="text-white px-3 py-1 rounded-full font-outfit">Cover Letters</span>
                 </div>
               </div>
 
@@ -629,7 +351,8 @@ export default function Home() {
             <div className="text-center mt-12">
               <p className="text-lg font-outfit text-gray-600 mb-6">
                 "I went from dreading interviews to actually looking forward to them. Mockstars turned my scattered experiences into compelling stories." 
-                <span className="text-blue font-medium">- Sarah, Recent Grad</span>
+                <span className="text-blue font-medium">
+                  <br />- Sarah, Recent Grad</span>
               </p>
             </div>
           </div>
@@ -1004,7 +727,7 @@ export default function Home() {
             </div>
 
             {/* Still have questions CTA */}
-            <div className="mt-12 text-center bg-gradient-to-r from-blue/10 to-teal-600/10 border border-blue/20 rounded-2xl p-8">
+            <div className="mt-12 text-center bg-white/80 border border-gray-200 rounded-2xl p-8">
               <h3 className="text-xl font-bold font-mattone mb-4">Still have questions?</h3>
               <p className="text-gray-600 font-outfit mb-6">
                 Our support team is here to help you succeed. Get personalized assistance with your job search strategy.

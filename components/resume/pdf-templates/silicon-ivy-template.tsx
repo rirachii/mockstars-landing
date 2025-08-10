@@ -255,11 +255,11 @@ interface ResumeData {
   }>;
 }
 
-interface AcademicPurpleTemplateProps {
+interface SiliconIvyTemplateProps {
   data: ResumeData;
 }
 
-export const AcademicPurpleTemplate: React.FC<AcademicPurpleTemplateProps> = ({ data }) => {
+export const SiliconIvyTemplate: React.FC<SiliconIvyTemplateProps> = ({ data }) => {
   // Function to get bullet color based on index
   const getBulletStyle = (index: number) => {
     const colors = [styles.redBullet, styles.greenBullet, styles.orangeBullet];

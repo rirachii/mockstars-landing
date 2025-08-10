@@ -1,10 +1,10 @@
 // components/resume/TemplateCard.tsx
 import React from 'react';
-import { ResumeTemplate } from '@/lib/resume-templates';
+import { TemplateInfo } from '@/lib/resume/resume-types';
 import TemplatePreview from './TemplatePreview';
 
 interface TemplateCardProps {
-  template: ResumeTemplate;
+  template: TemplateInfo;
   onSelect: (templateId: string) => void;
   isSelected?: boolean;
 }
@@ -41,9 +41,9 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
           )}
 
           {/* Popular Badge */}
-          {template.isPopular && (
+          {template.isPro && (
             <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-outfit">
-              Popular
+              Pro
             </div>
           )}
         </div>
@@ -55,7 +55,7 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
         
         {/* Template Features */}
         <div className="flex justify-center gap-1 mt-2">
-          {template.features.slice(0, 2).map((feature, index) => (
+          {template.features.slice(0, 2).map((feature: string, index: number) => (
             <span 
               key={index} 
               className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full font-outfit"

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
-import { TemplateCustomization } from '@/lib/template-customization';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { TemplateCustomization } from '@/lib/resume/template-customization';
 
 // Register fonts (you'll need to add font files to your public folder)
 // Font.register({
@@ -41,12 +41,12 @@ interface ResumeData {
   }>;
 }
 
-interface ModernTemplateProps {
+interface MockstarsTemplateProps {
   data: ResumeData;
   customization?: TemplateCustomization;
 }
 
-export const ModernTemplate: React.FC<ModernTemplateProps> = ({ 
+export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({ 
   data, 
   customization = {
     color: '#397DC2',

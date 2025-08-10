@@ -2,25 +2,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { resumeTemplates, getTemplatesByCategory } from '@/lib/resume-templates';
-import { TemplateCard } from '@/components/resume/TemplateCard';
+import { resumeTemplates, getTemplatesByCategory, TemplateCategories } from '@/lib/resume/resume-types';
+import { TemplateCard,  } from '@/components/resume/TemplateCard';
 
 export default function TemplatesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
 
-  const categories = [
-    { id: 'all', name: 'All Templates', count: resumeTemplates.length },
-    { id: 'modern', name: 'Modern', count: getTemplatesByCategory('modern').length },
-    { id: 'traditional', name: 'Traditional', count: getTemplatesByCategory('traditional').length },
-    { id: 'creative', name: 'Creative', count: getTemplatesByCategory('creative').length },
-    { id: 'corporate', name: 'Corporate', count: getTemplatesByCategory('corporate').length },
-    { id: 'tech', name: 'Tech', count: getTemplatesByCategory('tech').length },
-  ];
-
   const filteredTemplates = selectedCategory === 'all' 
     ? resumeTemplates 
-    : getTemplatesByCategory(selectedCategory);
+    : getTemplatesByCategory(selectedCategory as any);
 
   const handleTemplateSelect = (templateId: string) => {
     setSelectedTemplate(templateId);

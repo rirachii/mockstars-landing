@@ -4,8 +4,8 @@ import React, { useState } from 'react'
 import { LiveResumeEditor } from '@/components/resume/live-resume-editor'
 import { useLocalStorage } from '@/lib/hooks/useLocalStorage'
 import { ResumeData } from '@/lib/pdf'
-import { SAMPLE_RESUME_DATA } from '@/lib/storage/resume-storage'
-import { DEFAULT_CUSTOMIZATION } from '@/lib/template-customization'
+import { SAMPLE_RESUME_DATA } from '@/lib/resume/resume-storage'
+import { DEFAULT_CUSTOMIZATION } from '@/lib/resume/template-customization'
 
 export default function LiveEditPage() {
   const [resumeData, setResumeData] = useLocalStorage<ResumeData>('mockstars_resume_data', SAMPLE_RESUME_DATA)

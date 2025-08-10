@@ -6,7 +6,7 @@ import NextLink from 'next/link'
 import NextDynamic from 'next/dynamic'
 import { PencilLine, Upload, FileText, ArrowRight, CheckCircle } from 'lucide-react'
 import { ParsedResumeData } from '@/lib/pdf/parser'
-import { ResumeStorage, DEFAULT_RESUME_DATA } from '@/lib/storage/resume-storage'
+import { ResumeStorage, DEFAULT_RESUME_DATA } from '@/lib/resume/resume-storage'
 import { ResumeData } from '@/lib/pdf'
 
 const PDFUpload = NextDynamic(() => import('@/components/resume/pdf-upload').then(m => m.PDFUpload), { ssr: false })

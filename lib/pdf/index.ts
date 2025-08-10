@@ -3,9 +3,7 @@ export { PDFParser } from './parser';
 export type { ParsedResumeData } from './parser';
 
 // PDF Templates
-export { ModernTemplate, ClassicTemplate } from '@/components/resume/pdf-templates';
-export { templates, getTemplate } from '@/components/resume/pdf-templates';
-export type { TemplateType, TemplateInfo } from '@/components/resume/pdf-templates';
+export type { TemplateId, TemplateInfo, TemplateCustomization } from '@/lib/resume/resume-types';
 
 // PDF Components
 export { PDFGenerator, ResumeBuilder } from '@/components/resume/pdf-generator';

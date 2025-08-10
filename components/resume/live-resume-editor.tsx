@@ -23,7 +23,7 @@ import {
 import { ResumeData } from '@/lib/pdf'
 import { cn } from '@/lib/utils'
 import { TemplateType } from './pdf-templates'
-import { TemplateCustomization } from '@/lib/template-customization'
+import { TemplateCustomization } from '@/lib/resume/template-customization'
 
 interface LiveResumeEditorProps {
   data: ResumeData

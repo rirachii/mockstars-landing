@@ -4,9 +4,9 @@ import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FBF5E2',
     padding: 40,
-    fontFamily: 'Helvetica',
+    fontFamily: 'Times-Roman',
     fontSize: 10,
     lineHeight: 1.4,
   },
@@ -22,14 +22,15 @@ const styles = StyleSheet.create({
     marginBottom: 25,
   },
   name: {
-    fontSize: 16,
-    fontFamily: 'Helvetica-Bold',
+    fontSize: 18,
+    fontFamily: 'Times-Bold',
     color: '#D2691E',
     marginBottom: 3,
   },
   title: {
-    fontSize: 12,
-    color: '#333333',
+    fontSize: 14,
+    fontFamily: 'Times-Italic',
+    color: '#CD853F',
     marginBottom: 15,
   },
   contactInfo: {
@@ -197,11 +198,11 @@ interface ResumeData {
   }>;
 }
 
-interface TwoColumnMarketingTemplateProps {
+interface MarblesTemplateProps {
   data: ResumeData;
 }
 
-export const TwoColumnMarketingTemplate: React.FC<TwoColumnMarketingTemplateProps> = ({ data }) => (
+export const MarblesTemplate: React.FC<MarblesTemplateProps> = ({ data }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       {/* Left Column */}

@@ -4,7 +4,7 @@ import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FAFAFA',
     padding: 40,
     fontFamily: 'Helvetica',
     fontSize: 10,
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontFamily: 'Helvetica-Bold',
-    color: '#2D5A5A',
+    color: '#00A651',
     marginBottom: 8,
   },
   contactInfo: {
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   jobTitle: {
     fontSize: 16,
     fontFamily: 'Helvetica-Bold',
-    color: '#2D5A5A',
+    color: '#00A651',
     marginBottom: 12,
   },
   summary: {
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 12,
     fontFamily: 'Helvetica-Bold',
-    color: '#2D5A5A',
+    color: '#00A651',
     marginTop: 20,
     marginBottom: 12,
     textTransform: 'uppercase',
@@ -235,11 +235,11 @@ interface ResumeData {
   }>;
 }
 
-interface TechDeveloperTemplateProps {
+interface PiedPiperTemplateProps {
   data: ResumeData;
 }
 
-export const TechDeveloperTemplate: React.FC<TechDeveloperTemplateProps> = ({ data }) => {
+export const PiedPiperTemplate: React.FC<PiedPiperTemplateProps> = ({ data }) => {
   // Split skills into two columns for better layout
   const splitSkills = (skills: string[]) => {
     const mid = Math.ceil(skills.length / 2);

@@ -24,16 +24,20 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   name: {
-    fontSize: 18,
+    fontSize: 22,
     fontFamily: 'Helvetica-Bold',
-    color: '#D2691E',
+    color: '#FF6B35',
     marginBottom: 5,
+    textTransform: 'uppercase',
+    letterSpacing: 2,
   },
   title: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: 'Helvetica-Bold',
-    color: '#333333',
+    color: '#F7931E',
     marginBottom: 15,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
   },
   contactInfo: {
     fontSize: 9,
@@ -180,11 +184,11 @@ interface ResumeData {
   }>;
 }
 
-interface MarketingProfessionalTemplateProps {
+interface AviatoTemplateProps {
   data: ResumeData;
 }
 
-export const MarketingProfessionalTemplate: React.FC<MarketingProfessionalTemplateProps> = ({ data }) => (
+export const AviatoTemplate: React.FC<AviatoTemplateProps> = ({ data }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       {/* Header Section */}

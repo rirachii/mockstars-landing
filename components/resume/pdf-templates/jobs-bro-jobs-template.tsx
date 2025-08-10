@@ -191,11 +191,11 @@ interface ResumeData {
   }>;
 }
 
-interface ClassicLegalTemplateProps {
+interface JobsBroJobsTemplateProps {
   data: ResumeData;
 }
 
-export const ClassicLegalTemplate: React.FC<ClassicLegalTemplateProps> = ({ data }) => {
+export const JobsBroJobsTemplate: React.FC<JobsBroJobsTemplateProps> = ({ data }) => {
   const formatContactInfo = () => {
     const parts = [];
     if (data.personalInfo.location) parts.push(data.personalInfo.location);

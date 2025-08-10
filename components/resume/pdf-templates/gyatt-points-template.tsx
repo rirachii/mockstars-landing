@@ -1,0 +1,57 @@
+// Gyatt Points Template - Over-the-top emphasis
+import React from 'react';
+import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+
+const styles = StyleSheet.create({
+  page: {
+    flexDirection: 'column',
+    backgroundColor: '#FF69B4',
+    padding: 30,
+    fontFamily: 'Helvetica',
+    fontSize: 12,
+    lineHeight: 1.4,
+  },
+  header: {
+    marginBottom: 25,
+    textAlign: 'center',
+    backgroundColor: '#FFD700',
+    padding: 25,
+    borderRadius: 25,
+    border: '5px solid #FF1493',
+  },
+  name: {
+    fontSize: 32,
+    fontFamily: 'Helvetica-Bold',
+    color: '#FF1493',
+    marginBottom: 10,
+    letterSpacing: 3,
+    textTransform: 'uppercase',
+  },
+  title: {
+    fontSize: 18,
+    color: '#FF4500',
+    marginBottom: 15,
+    textTransform: 'uppercase',
+    letterSpacing: 2,
+  },
+});
+
+interface ResumeData {
+  personalInfo: { name: string; title: string; email: string; phone: string; location: string; linkedin?: string; website?: string; };
+  summary?: string;
+  experience: Array<{ title: string; company: string; startDate: string; endDate: string; description: string[]; location?: string; }>;
+  education: Array<{ degree: string; school: string; year: string; gpa?: string; }>;
+  skills: string[];
+  projects?: Array<{ name: string; description: string; technologies: string[]; }>;
+}
+
+export const GyattPointsTemplate: React.FC<{data: ResumeData}> = ({ data }) => (
+  <Document>
+    <Page size="A4" style={styles.page}>
+      <View style={styles.header}>
+        <Text style={styles.name}>⭐ {data.personalInfo.name} ⭐</Text>
+        <Text style={styles.title}>🔥 {data.personalInfo.title} 🔥</Text>
+      </View>
+    </Page>
+  </Document>
+);

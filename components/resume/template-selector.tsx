@@ -1,20 +1,20 @@
 'use client';
 
 import React from 'react';
-import { templates, TemplateType } from './pdf-templates';
+import { resumeTemplates, TemplateId, TemplateInfo } from '@/lib/resume/resume-types';
 import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 interface TemplateSelectorProps {
-  selectedTemplate: TemplateType;
-  onTemplateSelect: (template: TemplateType) => void;
+  selectedTemplateId?: TemplateId | null;
+  onTemplateSelect: (template: TemplateInfo) => void;
   className?: string;
 }
 
 export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
-  selectedTemplate,
+  selectedTemplateId,
   onTemplateSelect,
   className
 }) => {
@@ -30,16 +30,16 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {templates.map((template) => (
+        {resumeTemplates.map((template) => (
           <div
             key={template.id}
             className={cn(
               "relative border-2 rounded-lg overflow-hidden transition-all cursor-pointer hover:shadow-lg",
-              selectedTemplate === template.id
+              selectedTemplateId === template.id
                 ? "border-blue shadow-md" 
                 : "border-gray-200 hover:border-gray-300"
             )}
-            onClick={() => onTemplateSelect(template.id)}
+            onClick={() => onTemplateSelect(template)}
           >
             {/* Template Preview */}
             <div className="relative h-64 bg-gray-100">
@@ -63,7 +63,7 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
               </div>
               
               {/* Selection Indicator */}
-              {selectedTemplate === template.id && (
+              {selectedTemplateId === template.id && (
                 <div className="absolute top-3 right-3 w-6 h-6 bg-blue rounded-full flex items-center justify-center">
                   <Check className="w-4 h-4 text-white" />
                 </div>
@@ -80,20 +80,20 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
               </p>
               
               <Button
-                variant={selectedTemplate === template.id ? "default" : "outline"}
+                variant={selectedTemplateId === template.id ? "default" : "outline"}
                 size="sm"
                 className={cn(
                   "w-full mt-3",
-                  selectedTemplate === template.id 
+                  selectedTemplateId === template.id 
                     ? "bg-blue hover:bg-blue/90" 
                     : "border-gray-300"
                 )}
                 onClick={(e) => {
                   e.stopPropagation();
-                  onTemplateSelect(template.id);
+                  onTemplateSelect(template);
                 }}
               >
-                {selectedTemplate === template.id ? "Selected" : "Select Template"}
+                {selectedTemplateId === template.id ? "Selected" : "Select Template"}
               </Button>
             </div>
           </div>
@@ -105,7 +105,8 @@ export const TemplateSelector: React.FC<TemplateSelectorProps> = ({
 
 // Complete Resume Builder with Template Selection
 export const ResumeBuilderWithTemplates: React.FC = () => {
-  const [selectedTemplate, setSelectedTemplate] = React.useState<TemplateType>('modern');
+  const [selectedTemplateId, setSelectedTemplateId] = React.useState<TemplateId>(resumeTemplates[0].id);
+  const [selectedTemplateInfo, setSelectedTemplateInfo] = React.useState<TemplateInfo>(resumeTemplates[0]);
   
   // Sample data - this would come from your form
   const sampleResumeData = {
@@ -134,8 +135,12 @@ export const ResumeBuilderWithTemplates: React.FC = () => {
 
       {/* Template Selection */}
       <TemplateSelector
-        selectedTemplate={selectedTemplate}
-        onTemplateSelect={setSelectedTemplate}
+        selectedTemplateId={selectedTemplateId}
+        onTemplateSelect={(tpl) => {
+          setSelectedTemplateId(tpl.id)
+          setSelectedTemplateInfo(tpl)
+          // Navigate to preview screen or store in context/state as needed
+        }}
       />
 
       {/* Resume Form would go here */}
@@ -146,11 +151,11 @@ export const ResumeBuilderWithTemplates: React.FC = () => {
         </p>
       </div>
 
-      {/* Live Preview would go here */}
+      {/* Live Preview placeholder */}
       <div className="bg-white border border-gray-200 rounded-lg p-6">
         <h3 className="text-lg font-semibold mb-4">Live Preview</h3>
         <p className="text-gray-600">
-          PDF preview with selected template will appear here...
+          Selected template: <span className="font-medium">{selectedTemplateInfo.name}</span>
         </p>
       </div>
     </div>

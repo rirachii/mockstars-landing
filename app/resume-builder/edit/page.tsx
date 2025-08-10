@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, ArrowLeft, Save, Eye } from 'lucide-react'
 import { ResumeForm } from '@/components/resume/resume-form'
 import { useLocalStorage } from '@/lib/hooks/useLocalStorage'
-import { ResumeStorage, DEFAULT_RESUME_DATA, SAMPLE_RESUME_DATA } from '@/lib/storage/resume-storage'
+import { ResumeStorage, DEFAULT_RESUME_DATA, SAMPLE_RESUME_DATA } from '@/lib/resume/resume-storage'
 import { ResumeData } from '@/lib/pdf'
 
 export default function EditPage() {
@@ -227,7 +227,7 @@ export default function EditPage() {
             
             <Button 
               onClick={handleContinue}
-              className="bg-blue hover:bg-blue-700 text-white flex items-center gap-2"
+              className="bg-blue hover:bg-blue text-white flex items-center gap-2"
               disabled={completeness < 60}
             >
               Continue to Templates

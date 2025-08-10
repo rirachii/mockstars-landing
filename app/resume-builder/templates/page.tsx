@@ -7,12 +7,12 @@ import { ArrowRight, ArrowLeft, Download, Eye, Edit, RefreshCw, Palette, Type, S
 import { TemplateSelector } from '@/components/resume/template-selector'
 import { PDFGenerator } from '@/components/resume/pdf-generator'
 import { LiveResumeEditor } from '@/components/resume/live-resume-editor'
-import { TemplateType } from '@/components/resume/pdf-templates'
+import { TemplateId, TemplateInfo } from '@/lib/resume/resume-types'
 import { useLocalStorage } from '@/lib/hooks/useLocalStorage'
-import { ResumeStorage, DEFAULT_RESUME_DATA } from '@/lib/storage/resume-storage'
+import { ResumeStorage, DEFAULT_RESUME_DATA } from '@/lib/resume/resume-storage'
 import { ResumeData } from '@/lib/pdf'
-import { getAvailableFonts, getFontOptions } from '@/lib/resume-fonts'
-import { TemplateCustomization, DEFAULT_CUSTOMIZATION } from '@/lib/template-customization'
+import { getAvailableFonts, getFontOptions } from '@/lib/resume/resume-fonts'
+import { TemplateCustomization, DEFAULT_CUSTOMIZATION } from '@/lib/resume/resume-types'
 
 // Template customization options
 // (moved to '@/lib/template-customization')
@@ -42,7 +42,7 @@ const fontOptions = getFontOptions()
 
 export default function TemplatesPage() {
   const router = useRouter()
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateType | undefined>(undefined)
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateId | undefined>(undefined)
   const [resumeData, setResumeData, , isLoaded] = useLocalStorage<ResumeData>('mockstars_resume_data', DEFAULT_RESUME_DATA)
   const [customization, setCustomization] = useState<TemplateCustomization>(DEFAULT_CUSTOMIZATION)
   const [viewMode, setViewMode] = useState<'templates' | 'preview' | 'live-edit' | 'customize'>('templates')
@@ -52,7 +52,7 @@ export default function TemplatesPage() {
   useEffect(() => {
     if (isLoaded) {
       const savedTemplate = ResumeStorage.loadTemplate()
-      setSelectedTemplate(savedTemplate as TemplateType)
+      setSelectedTemplate(savedTemplate as TemplateId)
       
       // Load saved customization
       const savedCustomization = localStorage.getItem('mockstars_template_customization')
@@ -67,9 +67,9 @@ export default function TemplatesPage() {
   }, [isLoaded])
 
   // Save template selection
-  const handleTemplateSelect = (templateId: TemplateType) => {
-    setSelectedTemplate(templateId)
-    ResumeStorage.saveTemplate(templateId)
+  const handleTemplateSelect = (template: TemplateInfo) => {
+    setSelectedTemplate(template.id as TemplateId)
+    ResumeStorage.saveTemplate(template.id as TemplateId)
     setViewMode('preview')
   }
 
@@ -218,7 +218,7 @@ export default function TemplatesPage() {
                       key={color}
                       onClick={() => setCustomization(prev => ({ ...prev, color }))}
                       className={`w-10 h-10 rounded-lg border-2 transition-all ${
-                        customization.color === color 
+                        customization.primaryColor === color 
                           ? 'border-gray-800 ring-2 ring-gray-300' 
                           : 'border-gray-200 hover:border-gray-400'
                       }`}
@@ -228,7 +228,7 @@ export default function TemplatesPage() {
                   ))}
                 </div>
                 <div className="mt-3 text-xs text-gray-600">
-                  Selected: {customization.color}
+                  Selected: {customization.primaryColor}
                 </div>
               </div>
 
@@ -373,7 +373,7 @@ export default function TemplatesPage() {
                   <div 
                     className="inline-block ml-2 px-3 py-1 rounded border"
                     style={{
-                      color: customization.color,
+                      color: customization.primaryColor,
                       fontFamily: customization.fontFamily,
                       fontSize: customization.fontSize === 'small' ? '12px' : 
                                customization.fontSize === 'large' ? '16px' : '14px',
@@ -426,7 +426,7 @@ export default function TemplatesPage() {
 
             <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg p-8">
               <TemplateSelector
-                selectedTemplate={selectedTemplate as TemplateType}
+                selectedTemplate={selectedTemplate as TemplateInfo}
                 onTemplateSelect={handleTemplateSelect}
               />
               
@@ -535,7 +535,7 @@ export default function TemplatesPage() {
 
               <PDFGenerator 
                 resumeData={resumeData}
-                template={selectedTemplate as TemplateType}
+                template={selectedTemplate as TemplateId}
                 customization={customization}
                 showPreview={true}
               />
@@ -565,7 +565,7 @@ export default function TemplatesPage() {
                 <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-lg p-1">
                   <PDFGenerator 
                     resumeData={resumeData}
-                    template={selectedTemplate as TemplateType}
+                    template={selectedTemplate as TemplateId}
                     customization={customization as TemplateCustomization}
                     showPreview={false}
                   />

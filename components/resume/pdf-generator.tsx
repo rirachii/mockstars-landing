@@ -1,9 +1,8 @@
 import React from 'react';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
-import { getTemplate, TemplateType } from './pdf-templates';
 import { Button } from '@/components/ui/button';
 import { Download, Eye } from 'lucide-react';
-import { TemplateCustomization } from '@/lib/template-customization';
+import { TemplateCustomization, TemplateId, getTemplate } from '@/lib/resume/resume-types';
 
 interface ResumeData {
   personalInfo: {
@@ -40,14 +39,14 @@ interface ResumeData {
 
 interface PDFGeneratorProps {
   resumeData: ResumeData;
-  template?: TemplateType;
+  template: TemplateId;
   showPreview?: boolean;
   customization: TemplateCustomization;
 }
 
 export const PDFGenerator: React.FC<PDFGeneratorProps> = ({ 
   resumeData, 
-  template = 'modern',
+  template,
   showPreview = false,
   customization
 }) => {
@@ -59,7 +58,7 @@ export const PDFGenerator: React.FC<PDFGeneratorProps> = ({
       return <TemplateComponent data={resumeData} customization={customization} />;
     }
     // Fallback to modern template
-    const fallbackTemplate = getTemplate('modern')!;
+    const fallbackTemplate = getTemplate('mockstars')!;
     const FallbackComponent = fallbackTemplate.component;
     return <FallbackComponent data={resumeData} customization={customization} />;
   };
@@ -111,10 +110,10 @@ export const PDFGenerator: React.FC<PDFGeneratorProps> = ({
 };
 
 // Example usage component
-export const ResumeBuilder: React.FC = () => {
+export const ResumeBuilder: React.FC<{ template: TemplateId }> = ({ template } ) => {
   // Example customization - this would come from your customization state
   const exampleCustomization: TemplateCustomization = {
-    color: '#397DC2',
+    primaryColor: '#397DC2',
     fontSize: 'default',
     fontFamily: 'Helvetica',
     sectionSpacing: 16,
@@ -196,7 +195,7 @@ export const ResumeBuilder: React.FC = () => {
         {/* PDF Generator */}
         <PDFGenerator 
           resumeData={sampleResumeData}
-          template="modern"
+          template={template}
           showPreview={true}
           customization={exampleCustomization}
         />
