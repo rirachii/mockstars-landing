@@ -1,5 +1,7 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { ResumeData } from '@/lib/resume/resume-data';
+import { TemplateCustomization } from '@/lib/resume/template-types';
 
 const styles = StyleSheet.create({
   page: {
@@ -158,41 +160,9 @@ const styles = StyleSheet.create({
   },
 });
 
-interface ResumeData {
-  personalInfo: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    location: string;
-    linkedin?: string;
-    website?: string;
-  };
-  summary?: string;
-  experience: Array<{
-    title: string;
-    company: string;
-    startDate: string;
-    endDate: string;
-    description: string[];
-    location?: string;
-  }>;
-  education: Array<{
-    degree: string;
-    school: string;
-    year: string;
-    gpa?: string;
-  }>;
-  skills: string[];
-  projects?: Array<{
-    name: string;
-    description: string;
-    technologies: string[];
-  }>;
-}
-
 interface JobsBroJobsTemplateProps {
   data: ResumeData;
+  customization?: TemplateCustomization
 }
 
 export const JobsBroJobsTemplate: React.FC<JobsBroJobsTemplateProps> = ({ data }) => {
@@ -201,8 +171,7 @@ export const JobsBroJobsTemplate: React.FC<JobsBroJobsTemplateProps> = ({ data }
     if (data.personalInfo.location) parts.push(data.personalInfo.location);
     if (data.personalInfo.phone) parts.push(data.personalInfo.phone);
     if (data.personalInfo.email) parts.push(data.personalInfo.email);
-    if (data.personalInfo.linkedin) parts.push(data.personalInfo.linkedin);
-    if (data.personalInfo.website) parts.push(data.personalInfo.website);
+    if (data.personalInfo.links) parts.push(data.personalInfo.links.map((link) => link.url));
     return parts.join(', ');
   };
 
@@ -246,11 +215,8 @@ export const JobsBroJobsTemplate: React.FC<JobsBroJobsTemplateProps> = ({ data }
             </View>
             
             <View style={styles.bulletPoints}>
-              {job.description.map((bullet, bulletIndex) => (
-                <View key={bulletIndex} style={styles.bulletPoint}>
-                  <Text style={styles.bullet}>•</Text>
-                  <Text style={styles.bulletText}>{bullet}</Text>
-                </View>
+              {(job.bullets || []).map((b, bulletIndex) => (
+                <Text key={bulletIndex} style={styles.bullet}>• {b.text}</Text>
               ))}
             </View>
           </View>
@@ -265,7 +231,7 @@ export const JobsBroJobsTemplate: React.FC<JobsBroJobsTemplateProps> = ({ data }
 
         {data.education.map((edu, index) => (
           <View key={index} style={styles.educationItem}>
-            <Text style={styles.educationDate}>{edu.year}</Text>
+            <Text style={styles.educationDate}>{[edu.startYear, edu.endYear].filter(Boolean).join(' - ')}</Text>
             <Text style={styles.educationDetails}>
               {edu.degree}, {edu.school}
               {edu.gpa && `, GPA: ${edu.gpa}`}

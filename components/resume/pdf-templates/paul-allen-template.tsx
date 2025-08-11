@@ -1,5 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { ResumeData } from '@/lib/resume/resume-data';
 
 const styles = StyleSheet.create({
   page: {
@@ -202,51 +203,17 @@ const styles = StyleSheet.create({
   },
 });
 
-interface ResumeData {
-  personalInfo: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    location: string;
-    linkedin?: string;
-    website?: string;
-  };
-  summary?: string;
-  experience: Array<{
-    title: string;
-    company: string;
-    startDate: string;
-    endDate: string;
-    description: string[];
-    location?: string;
-  }>;
-  education: Array<{
-    degree: string;
-    school: string;
-    year: string;
-    gpa?: string;
-  }>;
-  skills: string[];
-  projects?: Array<{
-    name: string;
-    description: string;
-    technologies: string[];
-  }>;
-}
-
-interface PaulAllenCardTemplateProps {
+interface PaulAllenTemplateProps {
   data: ResumeData;
 }
 
-export const PaulAllenCardTemplate: React.FC<PaulAllenCardTemplateProps> = ({ data }) => {
+export const PaulAllenTemplate: React.FC<PaulAllenTemplateProps> = ({ data }) => {
   const formatContactInfo = () => {
     const parts = [];
     if (data.personalInfo.email) parts.push(data.personalInfo.email);
     if (data.personalInfo.phone) parts.push(data.personalInfo.phone);
     if (data.personalInfo.location) parts.push(data.personalInfo.location);
-    if (data.personalInfo.linkedin) parts.push(data.personalInfo.linkedin);
-    if (data.personalInfo.website) parts.push(data.personalInfo.website);
+    if (data.personalInfo.links) parts.push(data.personalInfo.links.map((link) => link.url));
     
     return parts.map((part, index) => (
       <React.Fragment key={index}>

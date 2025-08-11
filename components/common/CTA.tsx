@@ -41,7 +41,7 @@ export default function CTA({
   }
 
   return (
-    <section className="py-16 bg-gradient-to-r from-blue to-purple relative overflow-hidden rounded-xl p-8 shadow-lg">
+    <section className="mx-8 py-16 bg-gradient-to-r from-blue to-purple relative overflow-hidden rounded-xl shadow-lg">
       <div className="absolute inset-0 bg-black/10"></div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">

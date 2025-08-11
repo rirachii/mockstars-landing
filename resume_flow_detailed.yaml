@@ -1,0 +1,942 @@
+version: 1.0.0
+last_updated: '2025-08-11T15:47:30.572977Z'
+root:
+  id: Q1
+  question: Are you in school?
+  type: single
+  options:
+  - HS
+  - UNI
+  - Other
+  - 'No'
+  branches:
+    HS:
+      id: HS_Q2
+      question: What's your current resume goal?
+      type: single
+      options:
+      - Club Leadership
+      - First Job / Part-time
+      - Internship / Summer Program
+      - Scholarship / Competition
+      - College Applications
+      paths:
+        Club Leadership:
+          sequence:
+          - id: HS_CLUB_Q3
+            question: Org Type
+            type: single
+            options:
+            - STEM
+            - Business
+            - Service
+            - Arts
+            - Residence Life
+            - Athletics
+            - Other
+          - id: HS_CLUB_Q4
+            question: Leadership Focus
+            type: single
+            options:
+            - Events
+            - Finance
+            - Operations
+            - Comms/Marketing
+            - Recruiting
+          - id: HS_CLUB_Q5
+            question: Strongest Asset
+            type: single
+            options:
+            - Projects
+            - Volunteer
+            - Awards
+            - Coursework
+          - id: HS_CLUB_Q6
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - experience
+            - projects
+            - skills
+            - awards
+            - volunteering
+            - interests
+            - languages
+            theme: ScrantonStandard
+            length_hint: 1 page
+        First Job / Part-time:
+          sequence:
+          - id: HS_FIRST_Q3
+            question: Target Field
+            type: single
+            options:
+            - Tech/Software
+            - Design/Creative
+            - Marketing/Sales
+            - Finance/Consulting
+            - Education/Nonprofit
+            - Healthcare
+            - Skilled Trades/Manufacturing
+            - Other
+          - id: HS_FIRST_Q4
+            question: Experience Level
+            type: single
+            options:
+            - None
+            - "0\u20131 year"
+            - "1\u20133 years"
+          - id: HS_FIRST_Q5
+            question: Spotlight Section
+            type: single
+            options:
+            - Education
+            - Projects
+            - Experience
+          - id: HS_FIRST_Q6
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - projects
+            - skills
+            - experience
+            - awards
+            - volunteering
+            - languages
+            - interests
+            theme: ScrantonStandard
+            length_hint: 1 page
+        Internship / Summer Program:
+          sequence:
+          - id: HS_INT_Q3
+            question: Target Field
+            type: single
+            options:
+            - Tech/Software
+            - Design/Creative
+            - Marketing/Sales
+            - Finance/Consulting
+            - Education/Nonprofit
+            - Healthcare
+            - Skilled Trades/Manufacturing
+            - Other
+          - id: HS_INT_Q4
+            question: Experience Level
+            type: single
+            options:
+            - None
+            - "0\u20131 year"
+            - "1\u20133 years"
+          - id: HS_INT_Q5
+            question: Spotlight Section
+            type: single
+            options:
+            - Education
+            - Projects
+            - Experience
+          - id: HS_INT_Q6
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - projects
+            - skills
+            - experience
+            - awards
+            - volunteering
+            - languages
+            - interests
+            theme: ATSMinimal
+            length_hint: 1 page
+        Scholarship / Competition:
+          sequence:
+          - id: HS_SCH_Q3
+            question: Most Impressive
+            type: single
+            options:
+            - Awards
+            - Volunteer
+            - Projects
+            - Coursework/Grades
+          - id: HS_SCH_Q4
+            question: Any Leadership?
+            type: single
+            options:
+            - 'Yes'
+            - 'No'
+            followups:
+              'Yes':
+                id: HS_SCH_Q4a
+                question: Org Type
+                type: single
+                options:
+                - STEM
+                - Business
+                - Service
+                - Arts
+                - Residence Life
+                - Athletics
+                - Other
+          - id: HS_SCH_Q5
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - awards
+            - volunteering
+            - projects
+            - skills
+            - experience
+            - interests
+            - languages
+            theme: ScrantonStandard
+            length_hint: 1 page
+        College Applications:
+          sequence:
+          - id: HS_CA_Q3
+            question: Most Impressive
+            type: single
+            options:
+            - Awards
+            - Volunteer
+            - Projects
+            - Coursework/Grades
+          - id: HS_CA_Q4
+            question: Any Leadership?
+            type: single
+            options:
+            - 'Yes'
+            - 'No'
+            followups:
+              'Yes':
+                id: HS_CA_Q4a
+                question: Org Type
+                type: single
+                options:
+                - STEM
+                - Business
+                - Service
+                - Arts
+                - Residence Life
+                - Athletics
+                - Other
+          - id: HS_CA_Q5
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - awards
+            - volunteering
+            - projects
+            - skills
+            - experience
+            - interests
+            - languages
+            theme: ScrantonStandard
+            length_hint: 1 page
+    UNI:
+      id: UNI_Q2
+      question: What's your current resume goal?
+      type: single
+      options:
+      - On-campus Leadership
+      - Internship / Co-op
+      - Research Assistant / Lab
+      - Part-time / Campus Job
+      - Scholarship / Fellowship
+      - Grad School
+      paths:
+        On-campus Leadership:
+          sequence:
+          - id: UNI_LEAD_Q3
+            question: Org Type
+            type: single
+            options:
+            - STEM
+            - Business
+            - Service
+            - Arts
+            - Residence Life
+            - Athletics
+            - Other
+          - id: UNI_LEAD_Q4
+            question: Leadership Focus
+            type: single
+            options:
+            - Events
+            - Finance
+            - Operations
+            - Comms/Marketing
+            - Recruiting
+          - id: UNI_LEAD_Q5
+            question: Strongest Asset
+            type: single
+            options:
+            - Projects
+            - Volunteer
+            - Awards
+            - Coursework
+          - id: UNI_LEAD_Q6
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - experience
+            - projects
+            - skills
+            - awards
+            - volunteering
+            - interests
+            - languages
+            theme: ScrantonStandard
+            length_hint: 1 page
+        Internship / Co-op:
+          sequence:
+          - id: UNI_INT_Q3
+            question: Target Field
+            type: single
+            options:
+            - Tech/Software
+            - Design/Creative
+            - Marketing/Sales
+            - Finance/Consulting
+            - Education/Nonprofit
+            - Healthcare
+            - Skilled Trades/Manufacturing
+            - Other
+          - id: UNI_INT_Q4
+            question: Experience Level
+            type: single
+            options:
+            - None
+            - "0\u20131 year"
+            - "1\u20133 years"
+          - id: UNI_INT_Q5
+            question: Spotlight Section
+            type: single
+            options:
+            - Education
+            - Projects
+            - Experience
+          - id: UNI_INT_Q6
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - projects
+            - skills
+            - experience
+            - awards
+            - volunteering
+            - languages
+            - interests
+            theme: ATSMinimal
+            length_hint: 1 page
+        Research Assistant / Lab:
+          sequence:
+          - id: UNI_RA_Q3
+            question: Lab Area
+            type: single
+            options:
+            - CS/AI
+            - Biology
+            - Chemistry
+            - Social Science
+            - Other
+          - id: UNI_RA_Q4
+            question: Output Type
+            type: single
+            options:
+            - Posters
+            - Conference
+            - Paper Draft
+            - Dataset/Tool
+          - id: UNI_RA_Q5
+            question: Technical Focus
+            type: single
+            options:
+            - Programming
+            - Analysis
+            - Wet-lab
+            - Literature Review
+          - id: UNI_RA_Q6
+            question: Optional Sections
+            type: multi
+            options:
+            - Publications
+            - Awards
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - projects
+            - experience
+            - skills
+            - publications
+            - awards
+            - languages
+            - interests
+            theme: ATSMinimal
+            length_hint: 1 page
+        Part-time / Campus Job:
+          sequence:
+          - id: UNI_PT_Q3
+            question: Target Field
+            type: single
+            options:
+            - Tech/Software
+            - Design/Creative
+            - Marketing/Sales
+            - Finance/Consulting
+            - Education/Nonprofit
+            - Healthcare
+            - Skilled Trades/Manufacturing
+            - Other
+          - id: UNI_PT_Q4
+            question: Experience Level
+            type: single
+            options:
+            - None
+            - "0\u20131 year"
+            - "1\u20133 years"
+          - id: UNI_PT_Q5
+            question: Spotlight Section
+            type: single
+            options:
+            - Education
+            - Projects
+            - Experience
+          - id: UNI_PT_Q6
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - projects
+            - skills
+            - experience
+            - awards
+            - volunteering
+            - languages
+            - interests
+            theme: ScrantonStandard
+            length_hint: 1 page
+        Scholarship / Fellowship:
+          sequence:
+          - id: UNI_SCH_Q3
+            question: Most Impressive
+            type: single
+            options:
+            - Awards
+            - Volunteer
+            - Projects
+            - Coursework/Grades
+          - id: UNI_SCH_Q4
+            question: Any Leadership?
+            type: single
+            options:
+            - 'Yes'
+            - 'No'
+            followups:
+              'Yes':
+                id: UNI_SCH_Q4a
+                question: Org Type
+                type: single
+                options:
+                - STEM
+                - Business
+                - Service
+                - Arts
+                - Residence Life
+                - Athletics
+                - Other
+          - id: UNI_SCH_Q5
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - awards
+            - volunteering
+            - projects
+            - skills
+            - experience
+            - interests
+            - languages
+            theme: ScrantonStandard
+            length_hint: 1 page
+        Grad School:
+          sequence:
+          - id: UNI_GS_Q3
+            question: Research / Academic Focus
+            type: single
+            options:
+            - STEM
+            - Social Science
+            - Humanities
+            - Business
+            - Other
+          - id: UNI_GS_Q4
+            question: Publications?
+            type: single
+            options:
+            - 'Yes'
+            - 'No'
+          - id: UNI_GS_Q5
+            question: Optional Sections
+            type: multi
+            options:
+            - Publications
+            - Awards
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - projects
+            - experience
+            - skills
+            - publications
+            - awards
+            - languages
+            - interests
+            theme: ATSMinimal
+            length_hint: 1 page (CV option later)
+    Other:
+      id: OTHER_Q2
+      question: What's your current resume goal?
+      type: single
+      options:
+      - Program Leadership / Mentor
+      - Apprenticeship / Entry Role
+      - Portfolio Review / Showcase
+      - Certification Application
+      paths:
+        Program Leadership / Mentor:
+          sequence:
+          - id: OTH_PL_Q3
+            question: Org Type
+            type: single
+            options:
+            - Bootcamp
+            - Trade School
+            - Community Org
+            - Online Program
+            - Other
+          - id: OTH_PL_Q4
+            question: Leadership Focus
+            type: single
+            options:
+            - Curriculum
+            - Mentoring
+            - Operations
+            - Comms/Marketing
+            - Recruiting
+          - id: OTH_PL_Q5
+            question: Strongest Asset
+            type: single
+            options:
+            - Projects
+            - Volunteer
+            - Awards
+            - Coursework
+          - id: OTH_PL_Q6
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - experience
+            - projects
+            - skills
+            - awards
+            - volunteering
+            - interests
+            - languages
+            theme: ScrantonStandard
+            length_hint: 1 page
+        Apprenticeship / Entry Role:
+          sequence:
+          - id: OTH_APP_Q3
+            question: Target Field
+            type: single
+            options:
+            - Tech/Software
+            - Design/Creative
+            - Marketing/Sales
+            - Finance/Consulting
+            - Healthcare
+            - Skilled Trades/Manufacturing
+            - Other
+          - id: OTH_APP_Q4
+            question: Experience Level
+            type: single
+            options:
+            - None
+            - "0\u20131 year"
+            - "1\u20133 years"
+          - id: OTH_APP_Q5
+            question: Spotlight Section
+            type: single
+            options:
+            - Education
+            - Projects
+            - Experience
+          - id: OTH_APP_Q6
+            question: Optional Sections
+            type: multi
+            options:
+            - Certifications
+            - Awards
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - projects
+            - skills
+            - experience
+            - certifications
+            - awards
+            - languages
+            - interests
+            theme: ATSMinimal
+            length_hint: 1 page
+        Portfolio Review / Showcase:
+          sequence:
+          - id: OTH_PORT_Q3
+            question: Portfolio Type
+            type: single
+            options:
+            - Design
+            - Video
+            - Writing
+            - Art
+            - Music
+            - Game Dev
+            - Other
+          - id: OTH_PORT_Q4
+            question: Spotlight Section
+            type: single
+            options:
+            - Projects
+            - Experience
+            - Education
+          - id: OTH_PORT_Q5
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - projects
+            - skills
+            - experience
+            - awards
+            - volunteering
+            - languages
+            - interests
+            theme: ScrantonStandard
+            length_hint: 1 page
+        Certification Application:
+          sequence:
+          - id: OTH_CERT_Q3
+            question: Certification Domain
+            type: single
+            options:
+            - Cloud
+            - Security
+            - Finance
+            - Data
+            - Healthcare
+            - Trades
+            - Other
+          - id: OTH_CERT_Q4
+            question: Experience Level
+            type: single
+            options:
+            - None
+            - "0\u20131 year"
+            - "1\u20133 years"
+            - "4\u20137 years"
+            - 8+ years
+          - id: OTH_CERT_Q5
+            question: Optional Sections
+            type: multi
+            options:
+            - Certifications
+            - Awards
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - education
+            - projects
+            - skills
+            - experience
+            - certifications
+            - awards
+            - languages
+            - interests
+            theme: ATSMinimal
+            length_hint: 1 page
+    'No':
+      id: NO_Q2
+      question: What's your current resume goal?
+      type: single
+      options:
+      - First Job / Internship
+      - Continue in Field
+      - Switch Careers
+      - Leadership / Management
+      paths:
+        First Job / Internship:
+          sequence:
+          - id: NO_FIRST_Q3
+            question: Target Field
+            type: single
+            options:
+            - Tech/Software
+            - Design/Creative
+            - Marketing/Sales
+            - Finance/Consulting
+            - Education/Nonprofit
+            - Healthcare
+            - Skilled Trades/Manufacturing
+            - Other
+          - id: NO_FIRST_Q4
+            question: Experience Level
+            type: single
+            options:
+            - None
+            - "0\u20131 year"
+            - "1\u20133 years"
+          - id: NO_FIRST_Q5
+            question: Spotlight Section
+            type: single
+            options:
+            - Education
+            - Projects
+            - Experience
+          - id: NO_FIRST_Q6
+            question: Optional Sections
+            type: multi
+            options:
+            - Awards
+            - Volunteering
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - experience
+            - projects
+            - skills
+            - education
+            - awards
+            - volunteering
+            - languages
+            - interests
+            theme: ScrantonStandard
+            length_hint: 1 page
+        Continue in Field:
+          sequence:
+          - id: NO_CONT_Q3
+            question: Years of Experience
+            type: single
+            options:
+            - "1\u20133"
+            - "4\u20137"
+            - 8+
+          - id: NO_CONT_Q4
+            question: Spotlight Section
+            type: single
+            options:
+            - Experience
+            - Projects
+            - Skills
+          - id: NO_CONT_Q5
+            question: Optional Sections
+            type: multi
+            options:
+            - Certifications
+            - Awards
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - experience
+            - projects
+            - skills
+            - education
+            - certifications
+            - awards
+            - languages
+            - interests
+            theme: ScrantonStandard
+            length_hint: "1\u20132 pages"
+        Switch Careers:
+          sequence:
+          - id: NO_SW_Q3
+            question: Target Field
+            type: single
+            options:
+            - Tech/Software
+            - Design/Creative
+            - Marketing/Sales
+            - Finance/Consulting
+            - Education/Nonprofit
+            - Healthcare
+            - Skilled Trades/Manufacturing
+            - Other
+          - id: NO_SW_Q4
+            question: Most Transferable Strength
+            type: single
+            options:
+            - Projects
+            - Skills
+            - Certifications
+            - Volunteering
+          - id: NO_SW_Q5
+            question: Optional Sections
+            type: multi
+            options:
+            - Certifications
+            - Awards
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - projects
+            - skills
+            - experience
+            - education
+            - certifications
+            - awards
+            - languages
+            - interests
+            theme: ATSMinimal
+            length_hint: 1 page
+        Leadership / Management:
+          sequence:
+          - id: NO_LEAD_Q3
+            question: Years of Leadership Experience
+            type: single
+            options:
+            - "1\u20133"
+            - "4\u20137"
+            - 8+
+          - id: NO_LEAD_Q4
+            question: Spotlight Section
+            type: single
+            options:
+            - Experience
+            - Skills
+            - Projects
+          - id: NO_LEAD_Q5
+            question: Optional Sections
+            type: multi
+            options:
+            - Certifications
+            - Awards
+            - Languages
+            - Interests
+          presets:
+            sectionOrder:
+            - summary
+            - experience
+            - skills
+            - projects
+            - education
+            - awards
+            - certifications
+            - languages
+            - interests
+            theme: PaulAllensCard
+            length_hint: 2 pages suggested
+notes:
+- "Each path includes the Q3\u2013Q6 sequence, with optional followups when needed."
+- Presets provide initial sectionOrder, theme preset, and a length hint; users can
+  adjust afterward.
+- You can extend with field-specific skill seeds and summary templates keyed by path
+  IDs.

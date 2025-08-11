@@ -1,5 +1,7 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { ResumeData } from '@/lib/resume/resume-data';
+import { TemplateCustomization } from '@/lib/resume/template-types';
 
 const styles = StyleSheet.create({
   page: {
@@ -119,8 +121,10 @@ interface ResumeData {
   }>;
 }
 
+
 interface ItsGivingProfessionalTemplateProps {
   data: ResumeData;
+  customization?: TemplateCustomization
 }
 
 export const ItsGivingProfessionalTemplate: React.FC<ItsGivingProfessionalTemplateProps> = ({ data }) => (

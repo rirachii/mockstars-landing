@@ -1,5 +1,6 @@
 import React from 'react'
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
+import { ResumeData } from '@/lib/resume/resume-data'
 
 const styles = StyleSheet.create({
   page: {
@@ -75,39 +76,6 @@ const styles = StyleSheet.create({
   },
 })
 
-interface ResumeData {
-  personalInfo: {
-    name: string
-    title: string
-    email: string
-    phone: string
-    location: string
-    linkedin?: string
-    website?: string
-  }
-  summary?: string
-  experience: Array<{
-    title: string
-    company: string
-    startDate: string
-    endDate: string
-    description: string[]
-    location?: string
-  }>
-  education: Array<{
-    degree: string
-    school: string
-    year: string
-    gpa?: string
-  }>
-  skills: string[]
-  projects?: Array<{
-    name: string
-    description: string
-    technologies: string[]
-  }>
-}
-
 interface LavenderDuskTemplateProps {
   data: ResumeData
 }
@@ -125,12 +93,9 @@ export const LavenderDuskTemplate: React.FC<LavenderDuskTemplateProps> = ({ data
           <Text style={styles.contactItem}>{data.personalInfo.phone}</Text>
           <Text style={styles.contactItem}>•</Text>
           <Text style={styles.contactItem}>{data.personalInfo.location}</Text>
-          {data.personalInfo.linkedin && (
-            <>
-              <Text style={styles.contactItem}>•</Text>
-              <Text style={styles.contactItem}>{data.personalInfo.linkedin}</Text>
-            </>
-          )}
+          {(data.personalInfo.links || []).map((l) => (
+            <Text key={l.id} style={styles.contactItem}>{l.label}: {l.url}</Text>
+          ))}
         </View>
       </View>
 
@@ -158,7 +123,13 @@ export const LavenderDuskTemplate: React.FC<LavenderDuskTemplateProps> = ({ data
       {data.education.length > 0 && (
         <>
           <Text style={styles.sectionTitle}>Education</Text>
-          {/* Add education section */}
+          {data.education.map((edu) => (
+            <View key={edu.id} style={styles.educationItem}>
+              <Text style={styles.educationTitle}>{edu.degree}</Text>
+              <Text style={styles.educationDate}>{[edu.startYear, edu.endYear].filter(Boolean).join(' - ')}</Text>
+              <Text style={styles.educationInstitution}>{edu.institution}</Text>
+            </View>
+          ))}
         </>
       )}
     </Page>

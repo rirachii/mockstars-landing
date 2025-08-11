@@ -1,5 +1,8 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { ResumeData } from '@/lib/resume/resume-data';
+import { TemplateCustomization } from '@/lib/resume/template-types';
+
 
 const styles = StyleSheet.create({
   page: {
@@ -151,41 +154,9 @@ const styles = StyleSheet.create({
   },
 });
 
-interface ResumeData {
-  personalInfo: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    location: string;
-    linkedin?: string;
-    website?: string;
-  };
-  summary?: string;
-  experience: Array<{
-    title: string;
-    company: string;
-    startDate: string;
-    endDate: string;
-    description: string[];
-    location?: string;
-  }>;
-  education: Array<{
-    degree: string;
-    school: string;
-    year: string;
-    gpa?: string;
-  }>;
-  skills: string[];
-  projects?: Array<{
-    name: string;
-    description: string;
-    technologies: string[];
-  }>;
-}
-
 interface AviatoTemplateProps {
   data: ResumeData;
+  customization?: TemplateCustomization
 }
 
 export const AviatoTemplate: React.FC<AviatoTemplateProps> = ({ data }) => (
@@ -196,15 +167,18 @@ export const AviatoTemplate: React.FC<AviatoTemplateProps> = ({ data }) => (
         <View style={styles.leftColumn}>
           <Text style={styles.name}>{data.personalInfo.name}</Text>
           <View style={styles.contactInfo}>
-            <Text style={styles.contactItem}>{data.personalInfo.location}</Text>
-            <Text style={styles.contactItem}>{data.personalInfo.phone}</Text>
-            <Text style={styles.contactItem}>{data.personalInfo.email}</Text>
-            {data.personalInfo.linkedin && (
-              <Text style={styles.contactItem}>{data.personalInfo.linkedin}</Text>
+            {data.personalInfo.location && (
+              <Text style={styles.contactItem}>{data.personalInfo.location}</Text>
             )}
-            {data.personalInfo.website && (
-              <Text style={styles.contactItem}>{data.personalInfo.website}</Text>
+            {data.personalInfo.phone && (
+              <Text style={styles.contactItem}>{data.personalInfo.phone}</Text>
             )}
+            {data.personalInfo.email && (
+              <Text style={styles.contactItem}>{data.personalInfo.email}</Text>
+            )}
+            {(data.personalInfo.links || []).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)).map((l) => (
+              <Text key={l.id} style={styles.contactItem}>{l.label}: {l.url}</Text>
+            ))}
           </View>
         </View>
         
@@ -223,17 +197,17 @@ export const AviatoTemplate: React.FC<AviatoTemplateProps> = ({ data }) => (
           <View style={styles.jobHeader}>
             <View style={{ flex: 1 }}>
               <Text style={styles.company}>
-                {job.company} • {job.location || 'Remote'} • {job.startDate} - {job.endDate}
+                {job.company} • {job.location || 'Remote'} • {job.startDate}{job.endDate ? ` - ${job.endDate}` : ''}
               </Text>
               <Text style={styles.jobTitle}>{job.title}</Text>
             </View>
           </View>
           
           <View style={styles.bulletPoints}>
-            {job.description.map((bullet, bulletIndex) => (
+            {(job.bullets || []).map((b, bulletIndex) => (
               <View key={bulletIndex} style={styles.bulletPoint}>
                 <Text style={styles.bullet}>-</Text>
-                <Text style={styles.bulletText}>{bullet}</Text>
+                <Text style={styles.bulletText}>{b.text}</Text>
               </View>
             ))}
           </View>
@@ -247,7 +221,7 @@ export const AviatoTemplate: React.FC<AviatoTemplateProps> = ({ data }) => (
           {data.education.map((edu, index) => (
             <View key={index} style={styles.educationItem}>
               <Text style={styles.degree}>{edu.degree}</Text>
-              <Text style={styles.school}>{edu.school} • {edu.year}</Text>
+              <Text style={styles.school}>{edu.school} • {[edu.startYear, edu.endYear].filter(Boolean).join(' - ')}</Text>
               {edu.gpa && <Text style={styles.school}>GPA: {edu.gpa}</Text>}
             </View>
           ))}
@@ -261,7 +235,7 @@ export const AviatoTemplate: React.FC<AviatoTemplateProps> = ({ data }) => (
           <View style={styles.skillsContainer}>
             {data.skills.map((skill, index) => (
               <Text key={index} style={styles.skillItem}>
-                {skill}
+                {skill.name}
               </Text>
             ))}
           </View>
@@ -276,9 +250,11 @@ export const AviatoTemplate: React.FC<AviatoTemplateProps> = ({ data }) => (
             <View key={index} style={styles.projectItem}>
               <Text style={styles.projectName}>{project.name}</Text>
               <Text style={styles.projectDescription}>{project.description}</Text>
-              <Text style={styles.technologies}>
-                Technologies: {project.technologies.join(', ')}
-              </Text>
+              {project.technologies && (
+                <Text style={styles.technologies}>
+                  Technologies: {project.technologies.join(', ')}
+                </Text>
+              )}
             </View>
           ))}
         </>

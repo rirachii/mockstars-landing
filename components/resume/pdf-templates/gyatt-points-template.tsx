@@ -1,6 +1,8 @@
 // Gyatt Points Template - Over-the-top emphasis
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { ResumeData } from '@/lib/resume/resume-data';
+import { TemplateCustomization } from '@/lib/resume/template-types';
 
 const styles = StyleSheet.create({
   page: {
@@ -36,16 +38,13 @@ const styles = StyleSheet.create({
   },
 });
 
-interface ResumeData {
-  personalInfo: { name: string; title: string; email: string; phone: string; location: string; linkedin?: string; website?: string; };
-  summary?: string;
-  experience: Array<{ title: string; company: string; startDate: string; endDate: string; description: string[]; location?: string; }>;
-  education: Array<{ degree: string; school: string; year: string; gpa?: string; }>;
-  skills: string[];
-  projects?: Array<{ name: string; description: string; technologies: string[]; }>;
+
+interface GyattPointsTemplateProps {
+  data: ResumeData;
+  customization?: TemplateCustomization
 }
 
-export const GyattPointsTemplate: React.FC<{data: ResumeData}> = ({ data }) => (
+export const GyattPointsTemplate: React.FC<GyattPointsTemplateProps> = ({ data }) => (
   <Document>
     <Page size="A4" style={styles.page}>
       <View style={styles.header}>

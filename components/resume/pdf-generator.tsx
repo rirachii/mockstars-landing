@@ -2,52 +2,27 @@ import React from 'react';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
 import { Button } from '@/components/ui/button';
 import { Download, Eye } from 'lucide-react';
-import { TemplateCustomization, TemplateId, getTemplate } from '@/lib/resume/resume-types';
-
-interface ResumeData {
-  personalInfo: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    location: string;
-    linkedin?: string;
-    website?: string;
-  };
-  summary?: string;
-  experience: Array<{
-    title: string;
-    company: string;
-    startDate: string;
-    endDate: string;
-    description: string[];
-    location?: string;
-  }>;
-  education: Array<{
-    degree: string;
-    school: string;
-    year: string;
-    gpa?: string;
-  }>;
-  skills: string[];
-  projects?: Array<{
-    name: string;
-    description: string;
-    technologies: string[];
-  }>;
-}
+import { DEFAULT_CUSTOMIZATION, TemplateCustomization, TemplateId, getTemplate } from '@/lib/resume/template-types';
+import { pdf as renderPdf } from '@react-pdf/renderer'
+import { Document as PdfDoc, Page, pdfjs } from 'react-pdf'
+import 'react-pdf/dist/Page/TextLayer.css'
+import 'react-pdf/dist/Page/AnnotationLayer.css'
+import { ResumeData } from '@/lib/resume/resume-data';
+import { DemoResume } from '@/lib/resume/resume-storage';
 
 interface PDFGeneratorProps {
   resumeData: ResumeData;
   template: TemplateId;
   showPreview?: boolean;
   customization: TemplateCustomization;
+  showButtons?: boolean;
 }
 
 export const PDFGenerator: React.FC<PDFGeneratorProps> = ({ 
   resumeData, 
   template,
   showPreview = false,
+  showButtons = false,
   customization
 }) => {
   // Select template component based on template prop
@@ -68,6 +43,7 @@ export const PDFGenerator: React.FC<PDFGeneratorProps> = ({
   return (
     <div className="space-y-4">
       {/* Download Button */}
+      {showButtons && (
       <div className="flex gap-4">
         <PDFDownloadLink
           document={getTemplateComponent()}
@@ -91,14 +67,15 @@ export const PDFGenerator: React.FC<PDFGeneratorProps> = ({
           className="border-blue text-blue hover:bg-blue/10"
         >
           <Eye className="w-4 h-4 mr-2" />
-          Preview
-        </Button>
-      </div>
+            Preview
+          </Button>
+        </div>
+      )}
 
       {/* PDF Preview */}
       {showPreview && (
         <div className="border border-gray-200 rounded-lg overflow-hidden">
-          <div className="h-[600px]">
+          <div className="h-[100vh]">
             <PDFViewer width="100%" height="100%">
               {getTemplateComponent()}
             </PDFViewer>
@@ -112,73 +89,10 @@ export const PDFGenerator: React.FC<PDFGeneratorProps> = ({
 // Example usage component
 export const ResumeBuilder: React.FC<{ template: TemplateId }> = ({ template } ) => {
   // Example customization - this would come from your customization state
-  const exampleCustomization: TemplateCustomization = {
-    primaryColor: '#397DC2',
-    fontSize: 'default',
-    fontFamily: 'Helvetica',
-    sectionSpacing: 16,
-    paragraphSpacing: 8,
-    lineSpacing: 1.4
-  };
+  
 
   // This would typically come from a form or state management
-  const sampleResumeData: ResumeData = {
-    personalInfo: {
-      name: "John Doe",
-      title: "Senior Software Engineer",
-      email: "john.doe@email.com",
-      phone: "(555) 123-4567",
-      location: "San Francisco, CA",
-      linkedin: "linkedin.com/in/johndoe",
-      website: "johndoe.dev"
-    },
-    summary: "Experienced software engineer with 5+ years developing scalable web applications. Specialized in React, Node.js, and cloud infrastructure.",
-    experience: [
-      {
-        title: "Senior Software Engineer",
-        company: "Tech Corp",
-        startDate: "Jan 2022",
-        endDate: "Present",
-        location: "San Francisco, CA",
-        description: [
-          "Led development of microservices architecture serving 1M+ users",
-          "Improved application performance by 40% through optimization",
-          "Mentored 3 junior developers and conducted code reviews"
-        ]
-      },
-      {
-        title: "Software Engineer",
-        company: "StartupXYZ",
-        startDate: "Jun 2020",
-        endDate: "Dec 2021",
-        location: "Remote",
-        description: [
-          "Built responsive web applications using React and TypeScript",
-          "Implemented CI/CD pipelines reducing deployment time by 60%",
-          "Collaborated with design team to improve user experience"
-        ]
-      }
-    ],
-    education: [
-      {
-        degree: "Bachelor of Science in Computer Science",
-        school: "University of California, Berkeley",
-        year: "2020",
-        gpa: "3.8"
-      }
-    ],
-    skills: [
-      "JavaScript", "TypeScript", "React", "Node.js", "Python", 
-      "AWS", "Docker", "MongoDB", "PostgreSQL", "Git"
-    ],
-    projects: [
-      {
-        name: "E-commerce Platform",
-        description: "Full-stack e-commerce solution with payment integration",
-        technologies: ["React", "Node.js", "Stripe", "MongoDB"]
-      }
-    ]
-  };
+  
 
   return (
     <div className="max-w-4xl mx-auto p-6">
@@ -194,10 +108,11 @@ export const ResumeBuilder: React.FC<{ template: TemplateId }> = ({ template } )
 
         {/* PDF Generator */}
         <PDFGenerator 
-          resumeData={sampleResumeData}
+          resumeData={DemoResume}
           template={template}
           showPreview={true}
-          customization={exampleCustomization}
+          customization={DEFAULT_CUSTOMIZATION}
+          showButtons={true}
         />
       </div>
     </div>

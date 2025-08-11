@@ -209,8 +209,7 @@ interface ResumeData {
     email: string;
     phone: string;
     location: string;
-    linkedin?: string;
-    website?: string;
+    links?: Array<{ id: string; label: string; url: string }>;
   };
   summary?: string;
   experience: Array<{
@@ -218,13 +217,14 @@ interface ResumeData {
     company: string;
     startDate: string;
     endDate: string;
-    description: string[];
+    bullets: Array<{ text: string }>;
     location?: string;
   }>;
   education: Array<{
     degree: string;
     school: string;
-    year: string;
+    startYear: string;
+    endYear: string;
     gpa?: string;
   }>;
   skills: string[];
@@ -260,15 +260,9 @@ export const PiedPiperTemplate: React.FC<PiedPiperTemplateProps> = ({ data }) =>
             <Text style={styles.contactItem}>•</Text>
             <Text style={styles.contactItem}>{data.personalInfo.phone}</Text>
             <Text style={styles.contactItem}>•</Text>
-            {data.personalInfo.linkedin && (
-              <>
-                <Text style={styles.contactItem}>{data.personalInfo.linkedin}</Text>
-                <Text style={styles.contactItem}>•</Text>
-              </>
-            )}
-            {data.personalInfo.website && (
-              <Text style={styles.contactItem}>{data.personalInfo.website}</Text>
-            )}
+            {(data.personalInfo.links || []).map((l) => (
+              <Text key={l.id} style={styles.contactItem}>{l.label}: {l.url}</Text>
+            ))}
           </View>
 
           <Text style={styles.jobTitle}>{data.personalInfo.title}</Text>
@@ -291,11 +285,10 @@ export const PiedPiperTemplate: React.FC<PiedPiperTemplateProps> = ({ data }) =>
             <Text style={styles.company}>{job.company}</Text>
             
             <View style={styles.bulletPoints}>
-              {job.description.map((bullet, bulletIndex) => (
-                <View key={bulletIndex} style={styles.bulletPoint}>
-                  <Text style={styles.bullet}>•</Text>
-                  <Text style={styles.bulletText}>{bullet}</Text>
-                </View>
+              {(job.bullets || []).map((b, bulletIndex) => (
+                <Text key={bulletIndex} style={styles.bullet}>
+                  • {b.text}
+                </Text>
               ))}
             </View>
           </View>
@@ -353,7 +346,7 @@ export const PiedPiperTemplate: React.FC<PiedPiperTemplateProps> = ({ data }) =>
                 <Text style={styles.degreeTitle}>{edu.degree}</Text>
                 <View style={styles.educationDetails}>
                   <Text style={styles.schoolName}>{edu.school}</Text>
-                  <Text style={styles.graduationDate}>{edu.year}</Text>
+                  <Text style={styles.graduationDate}>{[edu.startYear, edu.endYear].filter(Boolean).join(' - ')}</Text>
                 </View>
                 {edu.gpa && (
                   <View style={styles.concentrations}>

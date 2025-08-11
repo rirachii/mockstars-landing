@@ -1,54 +1,166 @@
 'use client'
 
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import NextLink from 'next/link'
 import NextDynamic from 'next/dynamic'
-import { PencilLine, Upload, FileText, ArrowRight, CheckCircle } from 'lucide-react'
-import { ParsedResumeData } from '@/lib/pdf/parser'
+import { PencilLine, Upload, FileText, ArrowRight, CheckCircle, GraduationCap, School, Building2, Ban } from 'lucide-react'
 import { ResumeStorage, DEFAULT_RESUME_DATA } from '@/lib/resume/resume-storage'
-import { ResumeData } from '@/lib/pdf'
+import { ResumeData } from '@/lib/resume/resume-data'
+import { DEFAULT_CUSTOMIZATION, Section } from '@/lib/resume/template-types'
 
 const PDFUpload = NextDynamic(() => import('@/components/resume/pdf-upload').then(m => m.PDFUpload), { ssr: false })
 
+type InSchool = 'HS' | 'UNI' | 'Other' | 'No'
+
+const FALLBACK_GOALS_BY_SCHOOL: Record<InSchool, string[]> = {
+  HS: [
+    'Club Leadership',
+    'First Job / Part-time',
+    'Internship / Summer Program',
+    'Scholarship / Competition',
+    'College Applications',
+  ],
+  UNI: [
+    'On-campus Leadership',
+    'Internship / Co-op',
+    'Research Assistant / Lab',
+    'Part-time / Campus Job',
+    'Scholarship / Fellowship',
+    'Grad School',
+  ],
+  Other: [
+    'Program Leadership / Mentor',
+    'Apprenticeship / Entry Role',
+    'Portfolio Review / Showcase',
+    'Certification Application',
+  ],
+  No: [
+    'First Job / Internship',
+    'Continue in Field',
+    'Switch Careers',
+    'Leadership / Management',
+  ],
+}
+
+const FALLBACK_MAPPING_TABLE: Array<{ inSchool: InSchool; goal: string; sectionOrder: Section[] }> = [
+  { inSchool: 'HS', goal: 'Club Leadership', sectionOrder: ['summary','education','experience','projects','skills','awards','volunteering','interests','languages'] },
+  { inSchool: 'HS', goal: 'First Job / Part-time', sectionOrder: ['summary','education','projects','skills','experience','awards','volunteering','languages','interests'] },
+  { inSchool: 'HS', goal: 'Internship / Summer Program', sectionOrder: ['summary','education','projects','skills','experience','awards','volunteering','languages','interests'] },
+  { inSchool: 'HS', goal: 'Scholarship / Competition', sectionOrder: ['summary','education','awards','volunteering','projects','skills','experience','interests','languages'] },
+  { inSchool: 'HS', goal: 'College Applications', sectionOrder: ['summary','education','awards','volunteering','projects','skills','experience','interests','languages'] },
+
+  { inSchool: 'UNI', goal: 'On-campus Leadership', sectionOrder: ['summary','education','experience','projects','skills','awards','volunteering','interests','languages'] },
+  { inSchool: 'UNI', goal: 'Internship / Co-op', sectionOrder: ['summary','education','projects','skills','experience','awards','volunteering','languages','interests'] },
+  { inSchool: 'UNI', goal: 'Research Assistant / Lab', sectionOrder: ['summary','education','projects','experience','skills','publications','awards','languages','interests'] },
+  { inSchool: 'UNI', goal: 'Part-time / Campus Job', sectionOrder: ['summary','education','projects','skills','experience','awards','volunteering','languages','interests'] },
+  { inSchool: 'UNI', goal: 'Scholarship / Fellowship', sectionOrder: ['summary','education','awards','volunteering','projects','skills','experience','interests','languages'] },
+  { inSchool: 'UNI', goal: 'Grad School', sectionOrder: ['summary','education','projects','experience','skills','publications','awards','languages','interests'] },
+
+  { inSchool: 'Other', goal: 'Program Leadership / Mentor', sectionOrder: ['summary','education','experience','projects','skills','awards','volunteering','interests','languages'] },
+  { inSchool: 'Other', goal: 'Apprenticeship / Entry Role', sectionOrder: ['summary','education','projects','skills','experience','certifications','awards','languages','interests'] },
+  { inSchool: 'Other', goal: 'Portfolio Review / Showcase', sectionOrder: ['summary','education','projects','skills','experience','awards','volunteering','languages','interests'] },
+  { inSchool: 'Other', goal: 'Certification Application', sectionOrder: ['summary','education','projects','skills','experience','certifications','awards','languages','interests'] },
+
+  { inSchool: 'No', goal: 'First Job / Internship', sectionOrder: ['summary','experience','projects','skills','education','awards','volunteering','languages','interests'] },
+  { inSchool: 'No', goal: 'Continue in Field', sectionOrder: ['summary','experience','projects','skills','education','certifications','awards','languages','interests'] },
+  { inSchool: 'No', goal: 'Switch Careers', sectionOrder: ['summary','projects','skills','experience','education','certifications','awards','languages','interests'] },
+  { inSchool: 'No', goal: 'Leadership / Management', sectionOrder: ['summary','experience','skills','projects','education','awards','certifications','languages','interests'] },
+]
+
 export default function UploadPage() {
   const router = useRouter()
-  const [uploadedData, setUploadedData] = useState<ParsedResumeData | null>(null)
+  const [flow, setFlow] = useState<any | null>(null)
+  const [flowError, setFlowError] = useState<string | null>(null)
+  const [uploadedData, setUploadedData] = useState<ResumeData | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [mode, setMode] = useState<'ask' | 'upload' | 'school'>('ask')
+  const searchParams = useSearchParams()
+  useEffect(() => {
+    const param = searchParams.get('mode')
+    if (param === 'upload' || param === 'school' || param === 'ask') {
+      setMode(param)
+    }
+  }, [searchParams])
+  useEffect(() => {
+    let isMounted = true
+    fetch('/api/resume-flow')
+      .then(res => res.json())
+      .then(json => {
+        if (!isMounted) return
+        if (json?.ok) {
+          setFlow(json.data)
+        } else {
+          setFlowError('Failed to load flow; using defaults')
+        }
+      })
+      .catch(() => {
+        if (!isMounted) return
+        setFlowError('Failed to load flow; using defaults')
+      })
+    return () => { isMounted = false }
+  }, [])
+  const [inSchool, setInSchool] = useState<InSchool | null>(null)
+  const [goal, setGoal] = useState<string | null>(null)
 
-  const handleParsed = async (data: ParsedResumeData) => {
+  const goals = useMemo(() => {
+    if (!inSchool) return []
+    try {
+      const root = flow?.root
+      if (!root) return FALLBACK_GOALS_BY_SCHOOL[inSchool]
+      const branches = root?.branches || {}
+      const branchKey = inSchool === 'No' ? 'No' : inSchool
+      const branch = branches[branchKey]
+      const opts: string[] = Array.isArray(branch?.options) ? branch.options : []
+      return opts.length ? opts : FALLBACK_GOALS_BY_SCHOOL[inSchool]
+    } catch {
+      return FALLBACK_GOALS_BY_SCHOOL[inSchool]
+    }
+  }, [inSchool, flow])
+
+  const goToEdit = (seed?: Partial<ResumeData>) => {
+    const next: ResumeData = { ...DEFAULT_RESUME_DATA, ...(seed || {}) }
+    ResumeStorage.saveResumeData(next)
+    ResumeStorage.saveProgress('upload', true)
+    router.push('/resume-builder/edit')
+  }
+
+  const handleParsed = async (data: ResumeData) => {
     setUploadedData(data)
     setIsProcessing(true)
 
     try {
-      // Extract basic information from parsed PDF
       const resumeData: ResumeData = {
         ...DEFAULT_RESUME_DATA,
         personalInfo: {
-          name: extractName(data.text) || '',
-          title: '',
-          email: extractEmail(data.text) || '',
-          phone: extractPhone(data.text) || '',
-          location: extractLocation(data.text) || '',
-          linkedin: '',
-          website: ''
+          name: data.personalInfo.name || '',
+          title: data.personalInfo.title || '',
+          email: data.personalInfo.email || '',
+          phone: data.personalInfo.phone || '',
+          location: data.personalInfo.location || '',
+          links: data.personalInfo.links || []
         },
-        summary: extractSection(data.text, ['summary', 'objective', 'profile']) || '',
-        experience: parseExperience(data.text),
-        education: parseEducation(data.text),
-        skills: parseSkills(data.text),
-        projects: []
+        summary: data.summary || '',
+        experience: data.experience || [],
+        education: data.education || [],
+        skills: data.skills || [],
+        projects: data.projects || [],
+        certifications: data.certifications || [],
+        awards: data.awards || [],
+        languages: data.languages || [],
+        volunteering: data.volunteering || [],
+        publications: data.publications || [],
+        interests: data.interests || [],
+        metadata: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
       }
 
-      // Save to localStorage
       ResumeStorage.saveResumeData(resumeData)
       ResumeStorage.saveProgress('upload', true)
 
-      // Small delay to show processing state
       setTimeout(() => {
         setIsProcessing(false)
         router.push('/resume-builder/edit')
-      }, 1500)
+      }, 1200)
 
     } catch (error) {
       console.error('Error processing resume:', error)
@@ -60,22 +172,54 @@ export default function UploadPage() {
     console.error('Upload error:', error)
   } 
 
+  const selectInSchool = (val: InSchool) => {
+    setInSchool(val)
+    setGoal(null)
+    ResumeStorage.saveOnboarding({ inSchool: val })
+  }
+
+  const selectGoal = (val: string) => {
+    if (!inSchool) return
+    setGoal(val)
+    ResumeStorage.saveOnboarding({ inSchool, goal: val })
+    let order: Section[] | undefined
+    try {
+      const root = flow?.root
+      const branches = root?.branches || {}
+      const branchKey = inSchool === 'No' ? 'No' : inSchool
+      const branch = branches[branchKey]
+      const paths = branch?.paths || {}
+      const goalPath = paths[val]
+      const presets = goalPath?.presets
+      const sectionOrder = presets?.sectionOrder
+      if (Array.isArray(sectionOrder) && sectionOrder.length) {
+        order = sectionOrder as Section[]
+      }
+    } catch {}
+    if (!order) {
+      const mapped = FALLBACK_MAPPING_TABLE.find(m => m.inSchool === inSchool && m.goal === val)
+      order = mapped?.sectionOrder || DEFAULT_CUSTOMIZATION.sectionOrder
+    }
+    ResumeStorage.saveRecommendedSectionOrder(order)
+    goToEdit()
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 text-gray-800 font-outfit">
       {/* Header */}
-      <div className="bg-white/30 border-b border-gray-200 backdrop-blur-sm sticky top-0 z-10">
+      <div className="bg-white/30 border-gray-200 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-xl md:text-2xl font-bold font-mattone">
                 <span className="text-blue">
-                  Upload Your Resume
+                  {mode === 'ask' ? 'Welcome' : 'Upload Your Resume'}
                 </span>
               </h1>
               <div className="flex items-center gap-4 mt-2">
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <div className="w-6 h-6 bg-white text-black rounded-full flex items-center justify-center text-xs font-bold">1</div>
-                  <span>Upload</span>
+                  <span>Start</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-gray-400" />
                 <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -95,22 +239,68 @@ export default function UploadPage() {
 
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {!uploadedData && !isProcessing && (
-          <>
-            {/* Upload Section */}
-            {/* <div className="text-center mb-12">
-              <div className="mb-6">
-                <Upload className="w-16 h-16 text-blue-600 mx-auto mb-4" />
-                <h2 className="text-3xl font-bold text-gray-900 font-mattone mb-4">
-                  Upload Your Existing Resume
-                </h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  Upload your current resume and we'll extract the information to help you create a professional, 
-                  ATS-friendly version with our modern templates.
-                </p>
+        {mode === 'ask' && (
+          <div className="space-y-6">
+            <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-xl p-8">
+              <h2 className="text-2xl font-bold text-gray-900 font-mattone mb-3 text-center">Do you have a resume to start with?</h2>
+              <p className="text-gray-600 text-center mb-6">Answer a couple of quick questions and we'll help you set up.</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <button onClick={() => setMode('upload')} className="p-6 rounded-xl border border-gray-200 bg-white hover:shadow-md transition text-left">
+                  <div className="flex items-center gap-3 mb-2"><Upload className="w-5 h-5 text-blue" /><span className="font-semibold">Yes, upload my resume</span></div>
+                  <p className="text-sm text-gray-600">We’ll extract your details so you can edit instantly.</p>
+                </button>
+                <button onClick={() => setMode('school')} className="p-6 rounded-xl border border-gray-200 bg-white hover:shadow-md transition text-left">
+                  <div className="flex items-center gap-3 mb-2"><FileText className="w-5 h-5 text-orange-600" /><span className="font-semibold">No, help me start</span></div>
+                  <p className="text-sm text-gray-600">Answer a couple of quick questions and we’ll get you set up.</p>
+                </button>
               </div>
-            </div> */}
+            </div>
+          </div>
+        )}
 
+        {mode === 'school' && (
+          <div className="space-y-6">
+            <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-xl p-8">
+              {!inSchool && (
+                <>
+                  <h2 className="text-2xl font-bold text-gray-900 font-mattone mb-3 text-center">Are you currently in school?</h2>
+                  <p className="text-gray-600 text-center mb-6">Choose the option that best describes you.</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <button onClick={() => selectInSchool('HS')} className="p-5 rounded-xl border border-gray-200 bg-white hover:shadow-md transition text-left">
+                      <div className="flex items-center gap-3"><School className="w-5 h-5 text-blue" /><span className="font-semibold">High School</span></div>
+                    </button>
+                    <button onClick={() => selectInSchool('UNI')} className="p-5 rounded-xl border border-gray-200 bg-white hover:shadow-md transition text-left">
+                      <div className="flex items-center gap-3"><GraduationCap className="w-5 h-5 text-blue" /><span className="font-semibold">College / University</span></div>
+                    </button>
+                    <button onClick={() => selectInSchool('Other')} className="p-5 rounded-xl border border-gray-200 bg-white hover:shadow-md transition text-left">
+                      <div className="flex items-center gap-3"><Building2 className="w-5 h-5 text-blue" /><span className="font-semibold">Other</span></div>
+                    </button>
+                    <button onClick={() => selectInSchool('No')} className="p-5 rounded-xl border border-gray-200 bg-white hover:shadow-md transition text-left">
+                      <div className="flex items-center gap-3"><Ban className="w-5 h-5 text-blue" /><span className="font-semibold">No</span></div>
+                    </button>
+                  </div>
+                </>
+              )}
+
+              {inSchool && (
+                <>
+                  <button className="text-sm text-blue-700 mb-4" onClick={() => setInSchool(null)}>&larr; Change answer</button>
+                  <h2 className="text-2xl font-bold text-gray-900 font-mattone mb-3 text-center">What's your current resume goal?</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {goals.map((g) => (
+                      <button key={g} onClick={() => selectGoal(g)} className="p-5 rounded-xl border border-gray-200 bg-white hover:shadow-md transition text-left">
+                        <div className="font-semibold">{g}</div>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
+        {mode === 'upload' && !uploadedData && !isProcessing && (
+          <>
             <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-xl p-8 mb-8">
               <PDFUpload 
                 onParsed={handleParsed} 
@@ -119,7 +309,6 @@ export default function UploadPage() {
               />
             </div>
 
-            {/* Divider */}
             <div className="relative mb-8">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-600 " />
@@ -131,7 +320,6 @@ export default function UploadPage() {
               </div>
             </div>
 
-            {/* Create from Scratch */}
             <div className="text-center">
               <NextLink href="/resume-builder/edit" aria-label="Create from scratch" className="group block">
                 <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-xl p-8 transition-shadow cursor-pointer group-hover:shadow-2xl">
@@ -142,10 +330,6 @@ export default function UploadPage() {
                   <p className="text-gray-600 mb-6 max-w-md mx-auto">
                     Start with a blank template and build your resume step-by-step with our guided form.
                   </p>
-                  {/* <div className="inline-flex items-center bg-orange-600 group-hover:bg-orange-700 text-gray-800 px-8 py-3 rounded-lg">
-                    <PencilLine className="w-5 h-5 mr-2" />
-                    Start Building
-                  </div> */}
                 </div>
               </NextLink>
             </div>
@@ -181,16 +365,20 @@ export default function UploadPage() {
               <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-600">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div>
-                    <div className="font-medium">Pages</div>
-                    <div>{uploadedData.pages.length}</div>
+                    <div className="font-medium">Name</div>
+                    <div>{uploadedData.personalInfo.name}</div>
                   </div>
                   <div>
-                    <div className="font-medium">Characters</div>
-                    <div>{uploadedData.text.length.toLocaleString()}</div>
+                    <div className="font-medium">Email</div>
+                    <div>{uploadedData.personalInfo.email}</div>
                   </div>
                   <div>
-                    <div className="font-medium">File Type</div>
-                    <div>PDF</div>
+                    <div className="font-medium">Phone</div>
+                    <div>{uploadedData.personalInfo.phone}</div>
+                  </div>
+                  <div>
+                    <div className="font-medium">Location</div>
+                    <div>{uploadedData.personalInfo.location}</div>
                   </div>
                   <div>
                     <div className="font-medium">Status</div>
@@ -201,39 +389,6 @@ export default function UploadPage() {
             </div>
           </div>
         )}
-
-        {/* Features */}
-        {/* {!uploadedData && !isProcessing && (
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Upload className="w-6 h-6" />
-              </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Smart Parsing</h4>
-              <p className="text-sm text-gray-600">
-                AI-powered extraction of your resume data with high accuracy
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <FileText className="w-6 h-6" />
-              </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Multiple Formats</h4>
-              <p className="text-sm text-gray-600">
-                Support for PDF, DOC, DOCX, and image files
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-6 h-6" />
-              </div>
-              <h4 className="font-semibold text-gray-900 mb-2">Professional Output</h4>
-              <p className="text-sm text-gray-600">
-                Generate ATS-friendly resumes with modern templates
-              </p>
-            </div>
-          </div>
-        )} */}
       </div>
     </div>
   )
@@ -263,7 +418,6 @@ function extractPhone(text: string): string | null {
 }
 
 function extractLocation(text: string): string | null {
-  // Look for city, state patterns
   const locationRegex = /([A-Z][a-zA-Z\s]+),\s*([A-Z]{2}|[A-Z][a-zA-Z\s]+)/
   return text.match(locationRegex)?.[0] || null
 }
@@ -286,29 +440,32 @@ function extractSection(text: string, keywords: string[]): string | null {
 }
 
 function parseExperience(text: string): ResumeData['experience'] {
-  // Basic experience parsing - can be enhanced
   const experienceSection = extractSection(text, ['experience', 'work history', 'employment'])
   if (!experienceSection) return []
-  
-  // This is a simplified parser - in practice, you'd want more sophisticated parsing
   return [{
+    id: '1',
+    order: 0,
     title: 'Previous Position',
     company: 'Company Name',
     startDate: '',
     endDate: '',
     location: '',
-    description: ['Please edit this placeholder with your actual experience']
+    bullets: [{ id: '1', text: 'Please edit this placeholder with your actual experience' }]
   }]
 }
 
 function parseEducation(text: string): ResumeData['education'] {
   const educationSection = extractSection(text, ['education', 'academic'])
   if (!educationSection) return []
-  
   return [{
+    id: '1',
     degree: 'Your Degree',
     school: 'Your School',
-    year: '',
+    startYear: '',
+    endYear: '',
+    coursework: [],
+    honors: [],
+    order: 0,
     gpa: ''
   }]
 }
@@ -316,7 +473,5 @@ function parseEducation(text: string): ResumeData['education'] {
 function parseSkills(text: string): string[] {
   const skillsSection = extractSection(text, ['skills', 'technical skills', 'competencies'])
   if (!skillsSection) return []
-  
-  // Basic skills extraction
-  return skillsSection.split(/[,\n]/).map(s => s.trim()).filter(Boolean).slice(0, 10)
+  return skillsSection.split(/[ ,\n]/).map(s => s.trim()).filter(Boolean).slice(0, 10)
 }

@@ -1,6 +1,8 @@
 // conejo-luxe-template.tsx
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { ResumeData } from '@/lib/resume/resume-data';
+import { TemplateCustomization } from '@/lib/resume/template-types';
 
 const styles = StyleSheet.create({
   page: {
@@ -91,41 +93,9 @@ const styles = StyleSheet.create({
   },
 });
 
-interface ResumeData {
-  personalInfo: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    location: string;
-    linkedin?: string;
-    website?: string;
-  };
-  summary?: string;
-  experience: Array<{
-    title: string;
-    company: string;
-    startDate: string;
-    endDate: string;
-    description: string[];
-    location?: string;
-  }>;
-  education: Array<{
-    degree: string;
-    school: string;
-    year: string;
-    gpa?: string;
-  }>;
-  skills: string[];
-  projects?: Array<{
-    name: string;
-    description: string;
-    technologies: string[];
-  }>;
-}
-
 interface ConejoLuxeTemplateProps {
   data: ResumeData;
+  customization?: TemplateCustomization
 }
 
 export const ConejoLuxeTemplate: React.FC<ConejoLuxeTemplateProps> = ({ data }) => (
@@ -146,11 +116,11 @@ export const ConejoLuxeTemplate: React.FC<ConejoLuxeTemplateProps> = ({ data }) 
           <View style={styles.contactItem}>
             <Text>{data.personalInfo.location}</Text>
           </View>
-          {data.personalInfo.linkedin && (
-            <View style={styles.contactItem}>
-              <Text>{data.personalInfo.linkedin}</Text>
+          {(data.personalInfo.links || []).map((l) => (
+            <View key={l.id} style={styles.contactItem}>
+              <Text>{l.label}: {l.url}</Text>
             </View>
-          )}
+          ))}
         </View>
 
         {/* Skills */}

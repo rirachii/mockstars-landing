@@ -74,7 +74,7 @@ export function BlogPostHeader({ post }: BlogPostHeaderProps) {
       )}
 
       {/* Meta information */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-8 border-b border-gray-200 dark:border-gray-700">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-8 border-gray-200 dark:border-gray-700">
         <div className="flex flex-wrap items-center gap-6 text-sm text-gray-600 dark:text-gray-400 font-outfit">
           {post.author && (
             <div className="flex items-center">

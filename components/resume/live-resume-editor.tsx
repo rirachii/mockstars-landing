@@ -20,9 +20,9 @@ import {
   Globe,
   Linkedin
 } from 'lucide-react'
-import { ResumeData } from '@/lib/pdf'
+import { ResumeData } from '@/lib/resume/resume-data'
 import { cn } from '@/lib/utils'
-import type { TemplateInfo, TemplateCustomization, TemplateId } from '@/lib/resume/resume-types'
+import type { TemplateCustomization, TemplateId } from '@/lib/resume/template-types'
 
 interface LiveResumeEditorProps {
   data: ResumeData
@@ -58,6 +58,8 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
     }
   }, [editingField])
 
+  const generateId = () => `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+
   const handleFieldClick = (section: string, field: string, index?: number, subIndex?: number) => {
     if (!isEditMode) return
     setEditingField({ section, field, index, subIndex })
@@ -76,23 +78,38 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
     } else if (section === 'experience' && typeof index === 'number') {
       const newExperience = [...newData.experience]
       if (field === 'description' && typeof subIndex === 'number') {
-        newExperience[index].description[subIndex] = value
+        const current = newExperience[index].bullets[subIndex]
+        newExperience[index].bullets[subIndex] = {
+          id: current?.id ?? generateId(),
+          text: value,
+          impact: current?.impact,
+        }
       } else {
-        newExperience[index] = { ...newExperience[index], [field]: value }
+        // generic field update for experience item
+        // field might be title/company/location/startDate/endDate
+        // @ts-expect-error dynamic assignment
+        newExperience[index][field] = value
       }
       newData.experience = newExperience
     } else if (section === 'education' && typeof index === 'number') {
       const newEducation = [...newData.education]
-      newEducation[index] = { ...newEducation[index], [field]: value }
+      // field might be degree/school/startYear/endYear/gpa
+      // @ts-expect-error dynamic assignment
+      newEducation[index][field] = value
       newData.education = newEducation
     } else if (section === 'skills') {
-      newData.skills = value.split(',').map(s => s.trim()).filter(Boolean)
+      newData.skills = value
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean)
+        .map(skill => ({ name: skill }))
     } else if (section === 'projects' && typeof index === 'number') {
       const newProjects = [...(newData.projects || [])]
       if (field === 'technologies') {
         newProjects[index].technologies = value.split(',').map(s => s.trim()).filter(Boolean)
       } else {
-        newProjects[index] = { ...newProjects[index], [field]: value }
+        // @ts-expect-error dynamic assignment
+        newProjects[index][field] = value
       }
       newData.projects = newProjects
     }
@@ -112,12 +129,15 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
   const addExperience = () => {
     const newData = { ...data }
     newData.experience.push({
+      id: generateId(),
       title: 'New Position',
       company: 'Company Name',
       startDate: 'Start Date',
-      endDate: 'End Date',
+      endDate: '',
       location: 'Location',
-      description: ['Add your achievements here']
+      isCurrent: false,
+      bullets: [{ id: generateId(), text: 'Add your achievements here' }],
+      order: newData.experience.length,
     })
     onChange(newData)
   }
@@ -125,21 +145,29 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
   const addEducation = () => {
     const newData = { ...data }
     newData.education.push({
+      id: generateId(),
       degree: 'Degree',
       school: 'School Name',
-      year: 'Year',
-      gpa: ''
+      startYear: 'Year',
+      endYear: '',
+      gpa: '',
+      order: newData.education.length,
     })
     onChange(newData)
   }
 
   const addProject = () => {
     const newData = { ...data }
-    newData.projects = [...(newData.projects || []), {
-      name: 'Project Name',
-      description: 'Project description',
-      technologies: ['Tech1', 'Tech2']
-    }]
+    newData.projects = [
+      ...(newData.projects || []),
+      {
+        id: generateId(),
+        name: 'Project Name',
+        description: 'Project description',
+        technologies: ['Tech1', 'Tech2'],
+        order: (newData.projects?.length || 0),
+      },
+    ]
     onChange(newData)
   }
 
@@ -163,13 +191,13 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
 
   const addDescriptionBullet = (expIndex: number) => {
     const newData = { ...data }
-    newData.experience[expIndex].description.push('New achievement')
+    newData.experience[expIndex].bullets.push({ id: generateId(), text: 'New achievement' })
     onChange(newData)
   }
 
   const removeDescriptionBullet = (expIndex: number, bulletIndex: number) => {
     const newData = { ...data }
-    newData.experience[expIndex].description = newData.experience[expIndex].description.filter((_, i) => i !== bulletIndex)
+    newData.experience[expIndex].bullets = newData.experience[expIndex].bullets.filter((_, i) => i !== bulletIndex)
     onChange(newData)
   }
 
@@ -194,7 +222,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
           onChange={(e) => onChange(e.target.value)}
           onBlur={() => setEditingField(null)}
           onKeyDown={handleKeyDown}
-          className={cn("min-h-[inherit] resize-none border-0 p-0 bg-transparent", className)}
+          className={cn('min-h-[inherit] resize-none border-0 p-0 bg-transparent', className)}
           placeholder={placeholder}
           rows={multiline ? 3 : undefined}
         />
@@ -204,8 +232,8 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
     return (
       <div
         className={cn(
-          "relative cursor-pointer transition-all duration-200",
-          isEditMode && "hover:bg-blue-50 hover:outline hover:outline-2 hover:outline-blue-300 hover:outline-offset-1 rounded",
+          'relative cursor-pointer transition-all duration-200',
+          isEditMode && 'hover:bg-blue-50 hover:outline hover:outline-2 hover:outline-blue-300 hover:outline-offset-1 rounded',
           className
         )}
         onClick={() => {
@@ -224,13 +252,13 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
   }
 
   return (
-    <div className={cn("bg-white shadow-lg rounded-lg overflow-hidden", className)}>
+    <div className={cn('bg-white shadow-lg rounded-lg overflow-hidden', className)}>
       {/* Toolbar */}
-      <div className="bg-gray-50 border-b border-gray-200 p-4 flex items-center justify-between">
+      <div className="bg-gray-50 border-gray-200 p-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
           <Button
             onClick={() => setIsEditMode(!isEditMode)}
-            variant={isEditMode ? "default" : "outline"}
+            variant={isEditMode ? 'default' : 'outline'}
             size="sm"
             className="flex items-center gap-2"
           >
@@ -261,7 +289,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
       {/* Resume Content */}
       <div className="p-8 max-w-4xl mx-auto">
         {/* Header */}
-        <div className="border-b-2 border-blue-600 pb-6 mb-8">
+        <div className="pb-6 mb-8">
           <EditableField
             value={data.personalInfo.name}
             onChange={(value) => handleFieldChange(value)}
@@ -291,7 +319,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
             <div className="flex items-center gap-2">
               <Phone className="w-4 h-4" />
               <EditableField
-                value={data.personalInfo.phone}
+                value={data.personalInfo.phone || ''}
                 onChange={(value) => handleFieldChange(value)}
                 placeholder="(555) 123-4567"
                 fieldKey="personalInfo-phone"
@@ -300,41 +328,19 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4" />
               <EditableField
-                value={data.personalInfo.location}
+                value={data.personalInfo.location || ''}
                 onChange={(value) => handleFieldChange(value)}
                 placeholder="City, State"
                 fieldKey="personalInfo-location"
               />
             </div>
-            {data.personalInfo.linkedin && (
-              <div className="flex items-center gap-2">
-                <Linkedin className="w-4 h-4" />
-                <EditableField
-                  value={data.personalInfo.linkedin}
-                  onChange={(value) => handleFieldChange(value)}
-                  placeholder="LinkedIn URL"
-                  fieldKey="personalInfo-linkedin"
-                />
-              </div>
-            )}
-            {data.personalInfo.website && (
-              <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4" />
-                <EditableField
-                  value={data.personalInfo.website}
-                  onChange={(value) => handleFieldChange(value)}
-                  placeholder="Website URL"
-                  fieldKey="personalInfo-website"
-                />
-              </div>
-            )}
           </div>
         </div>
 
         {/* Professional Summary */}
         {data.summary && (
           <div className="mb-8">
-            <h3 className="text-lg font-bold text-blue-600 mb-3 uppercase border-b border-blue-600 pb-1">
+            <h3 className="text-lg font-bold text-blue-600 mb-3 uppercase pb-1">
               Professional Summary
             </h3>
             <EditableField
@@ -351,7 +357,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
         {/* Experience */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-blue-600 uppercase border-b border-blue-600 pb-1">
+            <h3 className="text-lg font-bold text-blue-600 uppercase pb-1">
               Professional Experience
             </h3>
             {isEditMode && (
@@ -363,7 +369,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
           </div>
 
           {data.experience.map((exp, index) => (
-            <div key={index} className="mb-6 relative group">
+            <div key={exp.id || index} className="mb-6 relative group">
               {isEditMode && (
                 <Button
                   onClick={() => removeExperience(index)}
@@ -385,7 +391,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
                 />
                 <div className="text-sm text-gray-600">
                   <EditableField
-                    value={`${exp.startDate} - ${exp.endDate}`}
+                    value={`${exp.startDate} - ${exp.endDate || ''}`}
                     onChange={(value) => {
                       const [start, end] = value.split(' - ')
                       const newData = { ...data }
@@ -419,11 +425,11 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
               </div>
 
               <div className="space-y-2">
-                {exp.description.map((bullet, bulletIndex) => (
-                  <div key={bulletIndex} className="flex items-start gap-2 group/bullet">
+                {exp.bullets.map((bullet, bulletIndex) => (
+                  <div key={bullet.id || bulletIndex} className="flex items-start gap-2 group/bullet">
                     <span className="text-gray-800 mt-1">•</span>
                     <EditableField
-                      value={bullet}
+                      value={bullet.text}
                       onChange={(value) => handleFieldChange(value)}
                       className="text-gray-800 leading-relaxed flex-1"
                       multiline
@@ -440,7 +446,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
                         >
                           <Plus className="w-3 h-3" />
                         </Button>
-                        {exp.description.length > 1 && (
+                        {exp.bullets.length > 1 && (
                           <Button
                             onClick={() => removeDescriptionBullet(index, bulletIndex)}
                             size="sm"
@@ -461,8 +467,8 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
 
         {/* Education */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-blue-600 uppercase border-b border-blue-600 pb-1">
+          <div className="flex items_center justify-between mb-4">
+            <h3 className="text-lg font-bold text-blue-600 uppercase pb-1">
               Education
             </h3>
             {isEditMode && (
@@ -474,7 +480,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
           </div>
 
           {data.education.map((edu, index) => (
-            <div key={index} className="mb-4 relative group">
+            <div key={edu.id || index} className="mb-4 relative group">
               {isEditMode && data.education.length > 1 && (
                 <Button
                   onClick={() => removeEducation(index)}
@@ -489,7 +495,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
               <EditableField
                 value={edu.degree}
                 onChange={(value) => handleFieldChange(value)}
-                className="font-bold text-gray-800"
+                className="font-bold text_gray-800"
                 placeholder="Degree Name"
                 fieldKey={`education-degree-${index}`}
               />
@@ -500,39 +506,45 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
                 placeholder="School Name"
                 fieldKey={`education-school-${index}`}
               />
-              <div className="flex justify-between text-sm text-gray-600">
+              <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
                 <EditableField
-                  value={edu.year}
+                  value={edu.startYear || ''}
                   onChange={(value) => handleFieldChange(value)}
-                  placeholder="Graduation Year"
-                  fieldKey={`education-year-${index}`}
+                  placeholder="Start Year"
+                  fieldKey={`education-startYear-${index}`}
                 />
-                {edu.gpa && (
-                  <EditableField
-                    value={`GPA: ${edu.gpa}`}
-                    onChange={(value) => {
-                      const gpa = value.replace('GPA: ', '')
-                      const newData = { ...data }
-                      newData.education[index].gpa = gpa
-                      onChange(newData)
-                    }}
-                    placeholder="GPA: 3.8"
-                    fieldKey={`education-gpa-${index}`}
-                  />
-                )}
+                <EditableField
+                  value={edu.endYear || ''}
+                  onChange={(value) => handleFieldChange(value)}
+                  placeholder="End Year"
+                  fieldKey={`education-endYear-${index}`}
+                />
               </div>
+              {edu.gpa && (
+                <EditableField
+                  value={`GPA: ${edu.gpa}`}
+                  onChange={(value) => {
+                    const gpa = value.replace('GPA: ', '')
+                    const newData = { ...data }
+                    newData.education[index].gpa = gpa
+                    onChange(newData)
+                  }}
+                  placeholder="GPA: 3.8"
+                  fieldKey={`education-gpa-${index}`}
+                />
+              )}
             </div>
           ))}
         </div>
 
         {/* Skills */}
         <div className="mb-8">
-          <h3 className="text-lg font-bold text-blue-600 mb-3 uppercase border-b border-blue-600 pb-1">
+          <h3 className="text-lg font-bold text-blue-600 mb-3 uppercase pb-1">
             Technical Skills
           </h3>
           <div className="flex flex-wrap gap-2">
             <EditableField
-              value={data.skills.join(', ')}
+              value={data.skills.map(s => s.name).join(', ')}
               onChange={(value) => handleFieldChange(value)}
               className="text-gray-800"
               placeholder="Skill 1, Skill 2, Skill 3, ..."
@@ -540,9 +552,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
             />
           </div>
           {isEditMode && (
-            <p className="text-xs text-gray-500 mt-2">
-              Separate skills with commas
-            </p>
+            <p className="text-xs text-gray-500 mt-2">Separate skills with commas</p>
           )}
         </div>
 
@@ -550,7 +560,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
         {(data.projects && data.projects.length > 0) && (
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-blue-600 uppercase border-b border-blue-600 pb-1">
+              <h3 className="text-lg font-bold text-blue-600 uppercase pb-1">
                 Notable Projects
               </h3>
               {isEditMode && (
@@ -562,7 +572,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
             </div>
 
             {data.projects.map((project, index) => (
-              <div key={index} className="mb-6 relative group">
+              <div key={project.id || index} className="mb-6 relative group">
                 {isEditMode && (
                   <Button
                     onClick={() => removeProject(index)}
@@ -582,7 +592,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
                   fieldKey={`projects-name-${index}`}
                 />
                 <EditableField
-                  value={project.description}
+                  value={project.description || ''}
                   onChange={(value) => handleFieldChange(value)}
                   className="text-gray-800 leading-relaxed mb-2"
                   multiline
@@ -592,7 +602,7 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
                 <div className="text-gray-600 text-sm">
                   <strong>Technologies: </strong>
                   <EditableField
-                    value={project.technologies.join(', ')}
+                    value={(project.technologies || []).join(', ')}
                     onChange={(value) => handleFieldChange(value)}
                     placeholder="Technology 1, Technology 2, ..."
                     fieldKey={`projects-technologies-${index}`}

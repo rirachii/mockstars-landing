@@ -69,7 +69,7 @@ export const RESUME_FONTS: ResumeFont[] = [
     category: 'sans-serif',
     description: 'Modern, highly readable, designed for screens',
     bestFor: ['Tech', 'Startups', 'Modern companies'],
-    available: false // Set to true when font files are added
+    available: true // Set to true when font files are added
   },
   {
     name: 'Roboto',

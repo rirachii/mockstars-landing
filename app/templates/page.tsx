@@ -3,7 +3,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { resumeTemplates, getTemplatesByCategory, TemplateCategories, TemplateInfo } from '@/lib/resume/resume-types';
+import { resumeTemplates, getTemplatesByCategory, TemplateCategories, TemplateInfo } from '@/lib/resume/template-types';
 import { TemplateCard } from '@/components/resume/TemplateCard';
 import CTA from '@/components/common/CTA';
 
@@ -33,9 +33,9 @@ export default function TemplatesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen text-gray-800 font-outfit relative z-10">
       {/* Header */}
-      <div className="bg-white border-b">
+      <div className="">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-6xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 font-mattone">

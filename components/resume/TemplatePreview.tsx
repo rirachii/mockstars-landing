@@ -3,19 +3,19 @@ import React from 'react';
 
 interface TemplatePreviewProps {
   templateId: string;
-  color?: string;
+  color: string;
 }
 
 export const TemplatePreview: React.FC<TemplatePreviewProps> = ({ 
   templateId, 
-  color = '#397DC2' 
+  color 
 }) => {
   const renderPreview = () => {
     switch (templateId) {
       case 'elegant':
         return (
           <div className="h-full">
-            <div className="border-b-2 border-gray-200 pb-2 mb-3">
+            <div className="border-gray-200 pb-2 mb-3">
               <div className="text-center">
                 <div className="h-3 bg-gray-800 rounded mb-1"></div>
                 <div className="h-1 bg-gray-400 rounded w-2/3 mx-auto"></div>
@@ -47,7 +47,7 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
       case 'chicago':
         return (
           <div className="h-full">
-            <div className="text-center border-b border-gray-300 pb-2 mb-3">
+            <div className="text-center border-gray-300 pb-2 mb-3">
               <div className="h-3 rounded mb-1" style={{ backgroundColor: color }}></div>
               <div className="h-1 bg-gray-400 rounded w-1/2 mx-auto"></div>
             </div>
@@ -144,7 +144,7 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
       case 'corporate':
         return (
           <div className="h-full">
-            <div className="border-b-2 border-gray-800 pb-2 mb-3">
+            <div className="border-gray-800 pb-2 mb-3">
               <div className="h-3 bg-gray-800 rounded mb-1"></div>
               <div className="h-1 bg-gray-400 rounded w-2/3"></div>
             </div>

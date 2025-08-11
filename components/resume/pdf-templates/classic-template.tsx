@@ -1,41 +1,11 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-
-export interface ClassicResumeData {
-  personalInfo: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    location: string;
-    linkedin?: string;
-    website?: string;
-  };
-  summary?: string;
-  experience: Array<{
-    title: string;
-    company: string;
-    startDate: string;
-    endDate: string;
-    description: string[];
-    location?: string;
-  }>;
-  education: Array<{
-    degree: string;
-    school: string;
-    year: string;
-    gpa?: string;
-  }>;
-  skills: string[];
-  projects?: Array<{
-    name: string;
-    description: string;
-    technologies: string[];
-  }>;
-}
+import { ResumeData } from '@/lib/resume/resume-data';
+import { TemplateCustomization } from '@/lib/resume/template-types';
 
 interface ClassicTemplateProps {
-  data: ClassicResumeData;
+  data: ResumeData;
+  customization?: TemplateCustomization
 }
 
 const styles = StyleSheet.create({
@@ -147,11 +117,9 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => (
           <Text>
             {data.personalInfo.email} • {data.personalInfo.phone} • {data.personalInfo.location}
           </Text>
-          {(data.personalInfo.linkedin || data.personalInfo.website) && (
+          {(data.personalInfo.links || []).length > 0 && (
             <Text style={{ marginTop: 3 }}>
-              {data.personalInfo.linkedin && `LinkedIn: ${data.personalInfo.linkedin}`}
-              {data.personalInfo.linkedin && data.personalInfo.website && ' • '}
-              {data.personalInfo.website && `Website: ${data.personalInfo.website}`}
+              {(data.personalInfo.links || []).map((l, i) => `${l.label}: ${l.url}`).join(' • ')}
             </Text>
           )}
         </View>
@@ -175,9 +143,9 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => (
               <Text style={styles.dates}>{job.startDate} - {job.endDate}</Text>
             </View>
             <Text style={styles.company}>{job.company}{job.location && `, ${job.location}`}</Text>
-            {job.description.map((bullet, bulletIndex) => (
+            {(job.bullets || []).map((b, bulletIndex) => (
               <Text key={bulletIndex} style={styles.bulletPoint}>
-                • {bullet}
+                • {b.text}
               </Text>
             ))}
           </View>
@@ -193,7 +161,7 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => (
             <View key={index} style={{ marginBottom: 10 }}>
               <Text style={styles.jobTitle}>{edu.degree}</Text>
               <Text style={styles.company}>{edu.school}</Text>
-              <Text style={styles.dates}>{edu.year}</Text>
+              <Text style={styles.dates}>{[edu.startYear, edu.endYear].filter(Boolean).join(' - ')}</Text>
               {edu.gpa && <Text style={styles.dates}>GPA: {edu.gpa}</Text>}
             </View>
           ))}
@@ -204,7 +172,7 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => (
           <Text style={styles.sectionTitle}>Technical Skills</Text>
           <View style={styles.skillsGrid}>
             {data.skills.map((skill, index) => (
-              <Text key={index} style={styles.skill}>• {skill}</Text>
+              <Text key={index} style={styles.skill}>• {skill.name}</Text>
             ))}
           </View>
         </View>
@@ -218,7 +186,9 @@ export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => (
             <View key={index} style={styles.experienceItem}>
               <Text style={styles.jobTitle}>{project.name}</Text>
               <Text style={styles.description}>{project.description}</Text>
-              <Text style={[styles.description, { fontStyle: 'italic', marginTop: 3 }]}>Technologies: {project.technologies.join(', ')}</Text>
+              {project.technologies && (
+                <Text style={[styles.description, { fontStyle: 'italic', marginTop: 3 }]}>Technologies: {project.technologies.join(', ')}</Text>
+              )}
             </View>
           ))}
         </View>

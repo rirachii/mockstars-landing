@@ -1,13 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import type { ParsedResumeData } from '@/lib/pdf/parser';
 import { Button } from '@/components/ui/button';
 import { Upload, FileText, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { ResumeData } from '@/lib/resume/resume-data';
+// import { PDFParser } from '@/lib/resume/pdf-parser';
 
 interface PDFUploadProps {
-  onParsed?: (data: ParsedResumeData) => void;
+  onParsed?: (data: ResumeData) => void;
   onError?: (error: string) => void;
   className?: string;
 }
@@ -20,7 +21,7 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [parseResult, setParseResult] = useState<ParsedResumeData | null>(null);
+  const [parseResult, setParseResult] = useState<ResumeData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const allowedExtensions = ['pdf', 'doc', 'docx', 'txt', 'html', 'rtf', 'png', 'jpg', 'jpeg', 'webp'];
@@ -50,19 +51,30 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
     try {
       if (extension === 'pdf') {
         // Defer-load the heavy parser only when needed
-        const { PDFParser } = await import('@/lib/pdf/parser');
         const result = await PDFParser.parseFile(file);
         setParseResult(result);
         onParsed?.(result);
       } else {
         // For non-PDF types, allow upload and proceed without parsing
-        const minimal: ParsedResumeData = {
-          text: '',
-          pages: [],
-          metadata: { title: file.name }
-        };
-        setParseResult(minimal);
-        onParsed?.(minimal);
+        // const minimal: ResumeData = {
+        //   personalInfo: {
+        //     name: '',
+        //     title: '',
+        //     email: '',
+        //     phone: '',
+        //     location: '',
+        //     linkedin: '',
+        //     website: ''
+        //   },
+        //   summary: '',
+        //   experience: [],
+        //   education: [],
+        //   skills: [],
+        //   projects: [],
+        //   interests: [],
+        // };
+        // setParseResult(minimal);
+        // onParsed?.(minimal);
       }
     } catch (err) {
       const errorMsg = 'Failed to parse PDF. Please try another file.';
@@ -138,8 +150,8 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
             <div>
               <p className="text-lg font-medium text-gray-900">Resume uploaded successfully!</p>
               <p className="text-sm text-gray-600">
-                {parseResult.pages.length > 0
-                  ? <>Extracted {parseResult.text.length} characters from {parseResult.pages.length} page(s)</>
+                {parseResult.experience.length > 0
+                  ? <>Extracted {parseResult.experience.length} characters from {parseResult.experience.length} page(s)</>
                   : <>Uploaded {uploadedFile?.name}</>
                 }
               </p>
@@ -196,23 +208,23 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
           </div>
           
           <div className="space-y-3">
-            {parseResult.metadata?.title && (
+            {parseResult.personalInfo?.name && (
               <div>
                 <span className="text-sm font-medium text-gray-700">Title: </span>
-                <span className="text-sm text-gray-600">{parseResult.metadata.title}</span>
+                <span className="text-sm text-gray-600">{parseResult.personalInfo.name}</span>
               </div>
             )}
             
             <div>
               <span className="text-sm font-medium text-gray-700">Content Preview: </span>
               <p className="text-sm text-gray-600 mt-1 line-clamp-3">
-                {parseResult.text.substring(0, 300)}...
+                {parseResult.summary?.substring(0, 300)}...
               </p>
             </div>
 
             <div className="flex justify-between text-xs text-gray-500">
-              <span>Pages: {parseResult.pages.length}</span>
-              <span>Characters: {parseResult.text.length}</span>
+              <span>Pages: {parseResult.experience.length}</span>
+              <span>Characters: {parseResult.summary?.length}</span>
             </div>
           </div>
         </div>

@@ -1,85 +1,131 @@
-import { ResumeData } from '@/lib/pdf'
+import { ResumeData } from '@/lib/resume/resume-data'
+import { Section } from '@/lib/resume/template-types'
 
 export const STORAGE_KEYS = {
   RESUME_DATA: 'mockstars_resume_data',
   SELECTED_TEMPLATE: 'mockstars_selected_template',
   RESUME_PROGRESS: 'mockstars_resume_progress',
-  TEMP_TEXT_DATA: 'mockstars_temp_text_data'
+  TEMP_TEXT_DATA: 'mockstars_temp_text_data',
+  ONBOARDING: 'mockstars_onboarding',
+  RECOMMENDED_SECTION_ORDER: 'mockstars_recommended_section_order'
 } as const
 
 export const DEFAULT_RESUME_DATA: ResumeData = {
+  id: "default",
   personalInfo: {
-    name: '',
-    title: '',
-    email: '',
-    phone: '',
-    location: '',
-    linkedin: '',
-    website: ''
+    name: "",
+    title: "",
+    email: "",
+    location: "",
   },
-  summary: '',
+  summary: "",
   experience: [],
+  projects: [],
   education: [],
   skills: [],
-  projects: []
-}
-
-export const SAMPLE_RESUME_DATA: ResumeData = {
-  personalInfo: {
-    name: "Your Name",
-    title: "Your Professional Title",
-    email: "your.email@example.com",
-    phone: "(555) 123-4567",
-    location: "City, State",
-    linkedin: "linkedin.com/in/yourprofile",
-    website: "yourwebsite.com"
+  certifications: [],
+  awards: [],
+  languages: [],
+  interests: [],
+  metadata: {
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   },
-  summary: "Professional summary showcasing your experience, skills, and career objectives. This section should be 2-3 sentences highlighting your most relevant qualifications.",
+} 
+
+export const DemoResume: ResumeData = {
+  id: "demo",
+  personalInfo: {
+    name: "Alex Kim",
+    title: "Software Engineer",
+    email: "alex@example.com",
+    location: "New York, NY",
+    links: [
+      { id: "l1", label: "LinkedIn", url: "https://linkedin.com/in/example", order: 1 },
+      { id: "l2", label: "GitHub", url: "https://github.com/example", order: 2 },
+    ],
+  },
+  summary:
+    "Software engineer with 5+ years building data-intensive web apps. Led projects improving latency by 35% and onboarding by 20%. Passionate about clean architecture and mentoring.",
   experience: [
     {
-      title: "Your Job Title",
-      company: "Company Name",
-      startDate: "Jan 2022",
-      endDate: "Present",
-      location: "City, State",
-      description: [
-        "Quantified achievement that demonstrates impact and results",
-        "Technical accomplishment showing relevant skills and expertise",
-        "Leadership or collaboration example highlighting soft skills"
-      ]
+      id: "e1",
+      title: "Senior Software Engineer",
+      company: "Acme Co",
+      location: "Remote",
+      startDate: "2022-06",
+      isCurrent: true,
+      bullets: [
+        { id: "b1", text: "Designed and shipped event-driven ETL pipeline handling 1B+ events/mo", impact: { value: 1.2, unit: "s", baseline: 2.0 } },
+        { id: "b2", text: "Cut P95 latency by 35% through query tuning and caching" },
+        { id: "b3", text: "Mentored 3 engineers; introduced RFC process and code health KPIs" },
+      ],
+      technologies: ["TypeScript", "PostgreSQL", "Kafka", "GCP"],
+      order: 1,
     },
     {
-      title: "Previous Position",
-      company: "Previous Company",
-      startDate: "Jun 2020",
-      endDate: "Dec 2021",
-      location: "City, State",
-      description: [
-        "Measurable outcome or improvement you delivered",
-        "Process optimization or efficiency gain you implemented"
-      ]
-    }
-  ],
-  education: [
-    {
-      degree: "Bachelor of Science in Your Field",
-      school: "University Name",
-      year: "2020",
-      gpa: "3.8"
-    }
-  ],
-  skills: [
-    "Skill 1", "Skill 2", "Skill 3", "Skill 4", "Skill 5",
-    "Skill 6", "Skill 7", "Skill 8", "Skill 9", "Skill 10"
+      id: "e0",
+      title: "Software Engineer",
+      company: "Globex",
+      location: "NYC",
+      startDate: "2019-08",
+      endDate: "2022-05",
+      bullets: [
+        { id: "b4", text: "Built internal component library adopted by 6 teams" },
+        { id: "b5", text: "Improved onboarding docs reducing ramp time by 20%" },
+      ],
+      technologies: ["React", "Node.js", "GraphQL"],
+      order: 2,
+    },
   ],
   projects: [
     {
-      name: "Notable Project",
-      description: "Brief description of a significant project that demonstrates your skills and impact.",
-      technologies: ["Technology 1", "Technology 2", "Technology 3"]
-    }
-  ]
-}
+      id: "p1",
+      name: "Realtime Dashboard",
+      role: "Lead",
+      description: "Streaming metrics dashboard for ops teams",
+      highlights: [
+        "WebSocket fanout to 5k concurrent clients",
+        "Accessible and keyboard navigable components",
+      ],
+      technologies: ["Vite", "React", "WebSocket"],
+      links: [{ label: "Repo", url: "https://github.com/example/repo" }],
+      order: 1,
+    },
+  ],
+  education: [
+    {
+      id: "ed1",
+      degree: "B.S. Computer Science",
+      school: "State University",
+      startYear: "2015",
+      endYear: "2019",
+      gpa: "3.8/4.0",
+      honors: ["Dean's List"],
+      order: 1,
+    },
+  ],
+  skills: [
+    { name: "TypeScript", category: "Frontend" },
+    { name: "React", category: "Frontend" },
+    { name: "Node.js", category: "Backend" },
+    { name: "PostgreSQL", category: "Data" },
+    { name: "Kafka", category: "Data" },
+  ],
+  certifications: [
+    { id: "c1", name: "AWS SAA", issuer: "Amazon", date: "2024", order: 1 },
+  ],
+  awards: [
+    { id: "a1", name: "Engineering Excellence", issuer: "Acme Co", date: "2023", description: "For leading reliability improvements", order: 1 },
+  ],
+  languages: [
+    { name: "English", level: "Native" },
+    { name: "Spanish", level: "B2" },
+  ],
+  interests: ["Trail running", "Synthwave", "Coffee"],
+  metadata: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+};
+
 // Helper functions for localStorage operations
 export const ResumeStorage = {
   saveResumeData: (data: ResumeData) => {
@@ -138,6 +184,42 @@ export const ResumeStorage = {
     } catch (error) {
       console.warn('Failed to load progress:', error)
       return {}
+    }
+  },
+
+  saveOnboarding: (data: { inSchool: 'HS'|'UNI'|'Other'|'No'; goal?: string }) => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.ONBOARDING, JSON.stringify(data))
+    } catch (error) {
+      console.warn('Failed to save onboarding:', error)
+    }
+  },
+
+  loadOnboarding: (): { inSchool?: 'HS'|'UNI'|'Other'|'No'; goal?: string } => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEYS.ONBOARDING)
+      return stored ? JSON.parse(stored) : {}
+    } catch (error) {
+      console.warn('Failed to load onboarding:', error)
+      return {}
+    }
+  },
+
+  saveRecommendedSectionOrder: (order: Section[]) => {
+    try {
+      localStorage.setItem(STORAGE_KEYS.RECOMMENDED_SECTION_ORDER, JSON.stringify(order))
+    } catch (error) {
+      console.warn('Failed to save section order:', error)
+    }
+  },
+
+  loadRecommendedSectionOrder: (): Section[] | undefined => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEYS.RECOMMENDED_SECTION_ORDER)
+      return stored ? JSON.parse(stored) : undefined
+    } catch (error) {
+      console.warn('Failed to load section order:', error)
+      return undefined
     }
   },
 

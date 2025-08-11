@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: 'Mattone';
-  src: url('/Mattone-Bold.otf') format('opentype');
+  src: url('/fonts/Mattone/Mattone-Bold.otf') format('opentype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -12,8 +12,8 @@
 
 @font-face {
   font-family: 'Outfit';
-  src: url('/Outfit-Regular.ttf') format('truetype');
-  font-weight: 300 900;
+  src: url('/fonts/Outfit/Outfit-Regular.ttf') format('truetype');
+  font-weight: 300;
   font-style: normal;
   font-display: swap;
 } 
@@ -72,7 +72,7 @@ body {
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    --popover-foreground: 222.2 84% 4.9%;
     --primary: 0 0% 9%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
@@ -102,7 +102,7 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
     --font-outfit: var(--font-outfit);
   }
-  .dark {
+  /* .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
@@ -135,7 +135,7 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-  }
+  }  */
 }
 
 @layer base {

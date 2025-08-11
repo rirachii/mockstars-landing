@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, ArrowLeft, Save, Eye } from 'lucide-react'
 import { ResumeForm } from '@/components/resume/resume-form'
 import { useLocalStorage } from '@/lib/hooks/useLocalStorage'
-import { ResumeStorage, DEFAULT_RESUME_DATA, SAMPLE_RESUME_DATA } from '@/lib/resume/resume-storage'
-import { ResumeData } from '@/lib/pdf'
+  import { ResumeStorage, DEFAULT_RESUME_DATA, DemoResume } from '@/lib/resume/resume-storage'
+import { ResumeData } from '@/lib/resume/resume-data'
 
 export default function EditPage() {
   const router = useRouter()
@@ -18,9 +18,9 @@ export default function EditPage() {
   // Load sample data if no data exists
   useEffect(() => {
     if (isLoaded && (!resumeData.personalInfo.name && !resumeData.personalInfo.email)) {
-      setResumeData(SAMPLE_RESUME_DATA)
+      setResumeData(DemoResume)
     }
-  }, [isLoaded, resumeData, setResumeData])
+}, [isLoaded, resumeData, setResumeData])
 
   const handleDataChange = (newData: ResumeData) => {
     setResumeData(newData)
@@ -46,6 +46,11 @@ export default function EditPage() {
       handleSave()
     }
     router.push('/resume-builder/templates')
+  }
+
+  const handlePrefillDemo = () => {
+    setResumeData(DemoResume)
+    setHasUnsavedChanges(true)
   }
 
   const calculateCompleteness = (): number => {
@@ -105,7 +110,7 @@ export default function EditPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 text-gray-800 font-outfit">
       {/* Header */}
-      <div className="bg-white/30 border-b border-gray-200 backdrop-blur-sm sticky top-0 z-10">
+      <div className="bg-white/30 border-gray-200 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
@@ -155,9 +160,15 @@ export default function EditPage() {
               
               <div className="flex gap-2">
                 <Button 
+                  onClick={handlePrefillDemo}
+                  variant="outline"
+                >
+                  Prefill Demo
+                </Button>
+                <Button 
                   onClick={handleSave}
                   variant="outline"
-                  className={hasUnsavedChanges ? 'border-orange-500 text-orange-600' : ''}
+                  className={hasUnsavedChanges ? 'text-orange-600' : ''}
                   disabled={!hasUnsavedChanges}
                 >
                   <Save className="w-4 h-4 mr-2" />
@@ -176,7 +187,7 @@ export default function EditPage() {
       {/* Main Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Instructions */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-8">
+        <div className="bg-blue-50  rounded-xl p-6 mb-8">
           <h2 className="text-lg font-semibold text-blue-900 mb-2">Complete Your Resume Information</h2>
           <p className="text-blue-800 mb-4">
             Fill out all sections below to create a comprehensive resume. Don't worry about perfection—you can always edit later.
@@ -205,7 +216,7 @@ export default function EditPage() {
         />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-gray-200">
+        <div className="flex justify-between items-center mt-12 pt-8 border-gray-200">
           <Button 
             onClick={() => router.push('/resume-builder/upload')}
             variant="outline"

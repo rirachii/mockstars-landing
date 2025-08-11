@@ -13,7 +13,7 @@ const navigationCategories = [
 
 export function HorizontalNavigation({ currentCategory }: { currentCategory?: string }) {
     return (
-      <div className="bg-white/30 backdrop-blur-sm border-b border-gray-200">
+      <div className="bg-white/30 backdrop-blur-sm border-gray-200">
         <div className="container mx-auto px-4">
           {/* Mobile Layout: Stack vertically */}
           <div className="lg:hidden">

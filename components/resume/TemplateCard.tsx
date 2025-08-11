@@ -1,6 +1,6 @@
 // components/resume/TemplateCard.tsx
 import React from 'react';
-import { TemplateInfo } from '@/lib/resume/resume-types';
+import { TemplateInfo } from '@/lib/resume/template-types';
 import TemplatePreview from './TemplatePreview';
 
 interface TemplateCardProps {

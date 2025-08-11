@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Plus, Trash2, User, Briefcase, GraduationCap, Code2, FileText } from 'lucide-react'
-import { ResumeData } from '@/lib/pdf'
+import { ResumeData } from '@/lib/resume/resume-data'
 
 interface ResumeFormProps {
   data: ResumeData
@@ -20,7 +20,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
   onSave,
   className = '' 
 }) => {
-  const updatePersonalInfo = (field: string, value: string) => {
+  const updatePersonalInfo = (field: string, value: string | Array<{ id: string; label: string; url: string; icon?: string; order: number }>) => {
     onChange({
       ...data,
       personalInfo: { ...data.personalInfo, [field]: value }
@@ -43,12 +43,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
       experience: [
         ...data.experience,
         {
+          id: `e${Date.now()}`,
           title: '',
           company: '',
           startDate: '',
           endDate: '',
           location: '',
-          description: ['']
+          bullets: [{ id: `b${Date.now()}`, text: '' }],
+          order: (data.experience.length || 0) + 1,
         }
       ]
     })
@@ -72,7 +74,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
       ...data,
       education: [
         ...data.education,
-        { degree: '', school: '', year: '', gpa: '' }
+        { id: `ed${Date.now()}`, degree: '', school: '', startYear: '', endYear: '', gpa: '', coursework: [], honors: [], order: (data.education.length || 0) + 1 }
       ]
     })
   }
@@ -85,7 +87,11 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
   }
 
   const updateSkills = (value: string) => {
-    const skills = value.split(',').map(s => s.trim()).filter(Boolean)
+    const skills = value
+      .split(',')
+      .map(s => s.trim())
+      .filter(Boolean)
+      .map(name => ({ name }))
     onChange({ ...data, skills })
   }
 
@@ -107,7 +113,7 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
       ...data,
       projects: [
         ...(data.projects || []),
-        { name: '', description: '', technologies: [] }
+        { id: `p${Date.now()}`, name: '', description: '', technologies: [], highlights: [], order: ((data.projects || []).length) + 1 }
       ]
     })
   }
@@ -119,21 +125,26 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
     })
   }
 
-  const addDescriptionBullet = (expIndex: number) => {
+  const addBullet = (expIndex: number) => {
     const newExperience = [...data.experience]
-    newExperience[expIndex].description.push('')
+    const next = [...(newExperience[expIndex].bullets || [])]
+    next.push({ id: `b${Date.now()}`, text: '' })
+    newExperience[expIndex].bullets = next
     onChange({ ...data, experience: newExperience })
   }
 
-  const updateDescriptionBullet = (expIndex: number, bulletIndex: number, value: string) => {
+  const updateBullet = (expIndex: number, bulletIndex: number, value: string) => {
     const newExperience = [...data.experience]
-    newExperience[expIndex].description[bulletIndex] = value
+    const bullets = [...(newExperience[expIndex].bullets || [])]
+    if (bullets[bulletIndex]) bullets[bulletIndex] = { ...bullets[bulletIndex], text: value }
+    newExperience[expIndex].bullets = bullets
     onChange({ ...data, experience: newExperience })
   }
 
-  const removeDescriptionBullet = (expIndex: number, bulletIndex: number) => {
+  const removeBullet = (expIndex: number, bulletIndex: number) => {
     const newExperience = [...data.experience]
-    newExperience[expIndex].description = newExperience[expIndex].description.filter((_, i) => i !== bulletIndex)
+    const bullets = [...(newExperience[expIndex].bullets || [])].filter((_, i) => i !== bulletIndex)
+    newExperience[expIndex].bullets = bullets
     onChange({ ...data, experience: newExperience })
   }
 
@@ -173,18 +184,16 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
             onChange={(e) => updatePersonalInfo('location', e.target.value)}
           />
           <Input
-            placeholder="LinkedIn URL (optional)"
-            value={data.personalInfo.linkedin || ''}
-            onChange={(e) => updatePersonalInfo('linkedin', e.target.value)}
+            placeholder="Links (comma-separated URLs)"
+            value={(data.personalInfo.links || []).map(link => link.url).join(', ')}
+            onChange={(e) => {
+              const urls = e.target.value.split(',').map(s => s.trim()).filter(Boolean)
+              const links = urls.map((url, i) => ({ id: `l${i+1}`, label: url, url, order: i + 1 }))
+              updatePersonalInfo('links', links)
+            }}  
           />
         </div>
-        <div className="mt-4">
-          <Input
-            placeholder="Website URL (optional)"
-            value={data.personalInfo.website || ''}
-            onChange={(e) => updatePersonalInfo('website', e.target.value)}
-          />
-        </div>
+        
       </div>
 
       
@@ -328,9 +337,14 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
                 onChange={(e) => updateEducation(index, 'school', e.target.value)}
               />
               <Input
-                placeholder="Graduation Year"
-                value={edu.year}
-                onChange={(e) => updateEducation(index, 'year', e.target.value)}
+                placeholder="Start Year"
+                value={edu.startYear || ''}
+                onChange={(e) => updateEducation(index, 'startYear', e.target.value)}
+              />
+              <Input
+                placeholder="End Year"
+                value={edu.endYear || ''}
+                onChange={(e) => updateEducation(index, 'endYear', e.target.value)}
               />
               <Input
                 placeholder="GPA (optional)"

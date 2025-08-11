@@ -229,8 +229,7 @@ interface ResumeData {
     email: string;
     phone: string;
     location: string;
-    linkedin?: string;
-    website?: string;
+    links?: Array<{ id: string; label: string; url: string }>;
   };
   summary?: string;
   experience: Array<{
@@ -238,13 +237,14 @@ interface ResumeData {
     company: string;
     startDate: string;
     endDate: string;
-    description: string[];
+    bullets: Array<{ text: string }>;
     location?: string;
   }>;
   education: Array<{
     degree: string;
     school: string;
-    year: string;
+    startYear: string;
+    endYear: string;
     gpa?: string;
   }>;
   skills: string[];
@@ -294,18 +294,12 @@ export const SiliconIvyTemplate: React.FC<SiliconIvyTemplateProps> = ({ data }) 
                 <Text style={styles.contactIcon}>📍</Text>
                 <Text>{data.personalInfo.location}</Text>
               </View>
-              {data.personalInfo.linkedin && (
-                <View style={styles.contactItem}>
+              {(data.personalInfo.links || []).map((l) => (
+                <View key={l.id} style={styles.contactItem}>
                   <Text style={styles.contactIcon}>💼</Text>
-                  <Text>{data.personalInfo.linkedin}</Text>
+                  <Text>{l.label}: {l.url}</Text>
                 </View>
-              )}
-              {data.personalInfo.website && (
-                <View style={styles.contactItem}>
-                  <Text style={styles.contactIcon}>🌐</Text>
-                  <Text>{data.personalInfo.website}</Text>
-                </View>
-              )}
+              ))}
             </View>
 
             {/* Education Section */}
@@ -314,7 +308,7 @@ export const SiliconIvyTemplate: React.FC<SiliconIvyTemplateProps> = ({ data }) 
               <View key={index} style={styles.educationItem}>
                 <Text style={styles.degree}>{edu.degree}</Text>
                 <Text style={styles.school}>{edu.school}</Text>
-                <Text style={styles.educationDate}>{edu.year}</Text>
+                <Text style={styles.educationDate}>{[edu.startYear, edu.endYear].filter(Boolean).join(' - ')}</Text>
                 {edu.gpa && <Text style={styles.gpa}>GPA: {edu.gpa}</Text>}
               </View>
             ))}
@@ -348,10 +342,10 @@ export const SiliconIvyTemplate: React.FC<SiliconIvyTemplateProps> = ({ data }) 
                 </Text>
                 
                 <View style={styles.bulletPoints}>
-                  {job.description.map((bullet, bulletIndex) => (
+                  {(job.bullets || []).map((b, bulletIndex) => (
                     <View key={bulletIndex} style={styles.bulletPoint}>
                       <Text style={getBulletStyle(bulletIndex)}>●</Text>
-                      <Text style={styles.bulletText}>{bullet}</Text>
+                      <Text style={styles.bulletText}>{b.text}</Text>
                     </View>
                   ))}
                 </View>

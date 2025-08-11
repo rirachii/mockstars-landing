@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { resumeTemplates } from '@/lib/resume/resume-types';
+import { resumeTemplates } from '@/lib/resume/template-types';
 import { TemplateCard } from './TemplateCard';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { useRouter } from 'next/navigation';
 
 export const TemplateShowcase: React.FC = () => {
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
-
+  const router = useRouter();
   return (
     <section className="py-16 bg-white/30 backdrop-blur-sm">
       <div className="container mx-auto px-4">
@@ -26,7 +27,7 @@ export const TemplateShowcase: React.FC = () => {
               for your career journey. Each design is crafted with personality and optimized for ATS systems.
             </p>
             <button 
-              onClick={() => console.log('View more templates')}
+              onClick={() => router.push('/templates')}
               className="mt-6 px-6 py-3 border-2 border-gray-300 rounded-lg hover:border-blue hover:text-blue transition-colors font-outfit"
             >
               Explore All Templates

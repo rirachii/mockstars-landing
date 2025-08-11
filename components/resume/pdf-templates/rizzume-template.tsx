@@ -126,8 +126,7 @@ interface ResumeData {
     email: string;
     phone: string;
     location: string;
-    linkedin?: string;
-    website?: string;
+    links?: Array<{ id: string; label: string; url: string }>;
   };
   summary?: string;
   experience: Array<{
@@ -135,13 +134,14 @@ interface ResumeData {
     company: string;
     startDate: string;
     endDate: string;
-    description: string[];
+    bullets: Array<{ text: string }>;
     location?: string;
   }>;
   education: Array<{
     degree: string;
     school: string;
-    year: string;
+    startYear: string;
+    endYear: string;
     gpa?: string;
   }>;
   skills: string[];
@@ -169,12 +169,9 @@ export const RizzumeTemplate: React.FC<RizzumeTemplateProps> = ({ data }) => (
           <Text style={styles.contactItem}>{data.personalInfo.phone}</Text>
           <Text style={styles.contactItem}>|</Text>
           <Text style={styles.contactItem}>{data.personalInfo.location}</Text>
-          {data.personalInfo.linkedin && (
-            <>
-              <Text style={styles.contactItem}>|</Text>
-              <Text style={styles.contactItem}>{data.personalInfo.linkedin}</Text>
-            </>
-          )}
+          {(data.personalInfo.links || []).map((l) => (
+            <Text key={l.id} style={styles.contactItem}>{l.label}: {l.url}</Text>
+          ))}
         </View>
       </View>
 
@@ -194,10 +191,10 @@ export const RizzumeTemplate: React.FC<RizzumeTemplateProps> = ({ data }) => (
           <Text style={styles.companyInfo}>
             {job.company} • {job.location || 'Remote'} • {job.startDate} - {job.endDate}
           </Text>
-          {job.description.map((bullet, bulletIndex) => (
+          {(job.bullets || []).map((b, bulletIndex) => (
             <View key={bulletIndex} style={styles.bulletPoint}>
               <Text style={styles.bullet}>•</Text>
-              <Text style={styles.bulletText}>{bullet}</Text>
+              <Text style={styles.bulletText}>{b.text}</Text>
             </View>
           ))}
         </View>
@@ -222,7 +219,7 @@ export const RizzumeTemplate: React.FC<RizzumeTemplateProps> = ({ data }) => (
           {data.education.map((edu, index) => (
             <View key={index} style={styles.experienceItem}>
               <Text style={styles.jobTitle}>{edu.degree}</Text>
-              <Text style={styles.companyInfo}>{edu.school} • {edu.year}</Text>
+              <Text style={styles.companyInfo}>{edu.school} • {[edu.startYear, edu.endYear].filter(Boolean).join(' - ')}</Text>
               {edu.gpa && <Text style={styles.companyInfo}>GPA: {edu.gpa}</Text>}
             </View>
           ))}

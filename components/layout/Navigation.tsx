@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import type React from 'react'
 import { Button } from '@/components/ui/button'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
@@ -16,6 +17,27 @@ import {
 
 export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  // Close mobile menu when clicking outside or pressing escape
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileMenuOpen(false)
+    }
+    
+    if (mobileMenuOpen) {
+      document.addEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'hidden' // Prevent background scroll
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+      document.body.style.overflow = 'unset'
+    }
+  }, [mobileMenuOpen])
+
+  const closeMobileMenu = () => setMobileMenuOpen(false)
 
   return (
     <header className="bg-white/5 backdrop-blur-sm sticky top-0 z-50 font-mattone">
@@ -36,6 +58,8 @@ export default function Navigation() {
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-colors"
             onClick={() => setMobileMenuOpen(true)}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             <span className="sr-only">Open main menu</span>
             <Menu className="h-6 w-6" aria-hidden="true" />
@@ -57,7 +81,7 @@ export default function Navigation() {
                           className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
                           href="/templates"
                         >
-                          <div className="mt-4 mb-2 text-sm font-sm">Templates</div>
+                          <div className="mt-4 mb-2 text-lg font-medium ">Templates</div>
                           <p className="text-muted-foreground text-sm leading-tight text-outfit">
                             Browse ATS-friendly resume templates built for results.
                           </p>
@@ -184,68 +208,109 @@ export default function Navigation() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu overlay */}
       {mobileMenuOpen && (
-        <div className="lg:hidden" role="dialog" aria-modal="true">
+        <>
           {/* Backdrop */}
-          <div className="fixed inset-0 z-40 bg-black bg-opacity-25" onClick={() => setMobileMenuOpen(false)}></div>
+          <div 
+            className="fixed inset-0 z-[9998] bg-black/50 lg:hidden" 
+            onClick={closeMobileMenu}
+          />
+          
           {/* Menu Panel */}
-          <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 shadow-xl">
-            <div className="flex items-center justify-between">
-              <Link href="/" className="-m-1.5 p-1.5" onClick={() => setMobileMenuOpen(false)}>
-                <span className="text-xl sm:text-2xl font-bold text-blue flex items-center gap-2">
-                  <Image src="/logo.png" alt="Mockstars" width={40} height={40} />
+          <div 
+            className="fixed top-0 right-0 bottom-0 z-[9999] w-full max-w-sm bg-white shadow-xl lg:hidden overflow-y-auto"
+            role="dialog" 
+            aria-modal="true" 
+          >
+            <div className="p-6">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-8">
+                <Link href="/" onClick={closeMobileMenu}>
+                  <span className="text-xl font-bold text-blue flex items-center gap-2">
+                    <Image src="/logo.png" alt="Mockstars" width={32} height={32} />
                   Mockstars
                 </span>
               </Link>
               <button
                 type="button"
-                className="-m-2.5 rounded-md p-2.5 text-gray-700 hover:bg-gray-100 transition-colors"
-                onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100"
+                  onClick={closeMobileMenu}
               >
                 <span className="sr-only">Close menu</span>
-                <X className="h-6 w-6" aria-hidden="true" />
+                  <X className="h-6 w-6" />
               </button>
             </div>
-            <div className="mt-6 space-y-4">
-              <div>
-                <div className="text-xs font-semibold text-gray-500 uppercase mb-2">Resumes</div>
-                <div className="flex flex-col gap-1">
-                  <Link href="/templates" onClick={() => setMobileMenuOpen(false)} className="text-gray-900 hover:underline">Browse Templates</Link>
-                  <Link href="/resume-builder/upload" onClick={() => setMobileMenuOpen(false)} className="text-gray-900 hover:underline">Build a Resume</Link>
-                  <Link href="/resume-builder/templates" onClick={() => setMobileMenuOpen(false)} className="text-gray-900 hover:underline">Choose Template</Link>
+
+              {/* Navigation Content */}
+              <div className="space-y-6">
+                {/* Resumes Section */}
+                <div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Resumes</div>
+                  <div className="space-y-2">
+                    <Link href="/templates" onClick={closeMobileMenu} className="block text-base font-medium text-gray-900 hover:text-blue">
+                      Browse Templates
+                    </Link>
+                    <Link href="/resume-builder/upload" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
+                      Build a Resume
+                    </Link>
+                    <Link href="/resume-builder/templates" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
+                      Choose Template
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Cover Letters Section */}
+                <div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Cover Letters</div>
+                  <div className="space-y-2">
+                    <Link href="/resources/cover-letters" onClick={closeMobileMenu} className="block text-base font-medium text-gray-900 hover:text-blue">
+                      Examples
+                    </Link>
+                    <Link href="/resources/cover-letters/how-to" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
+                      How to Write
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Interview Questions Section */}
+                <div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Interview Questions</div>
+                  <div className="space-y-2">
+                    <Link href="/blog/category/interview" onClick={closeMobileMenu} className="block text-base font-medium text-gray-900 hover:text-blue">
+                      Guides
+                    </Link>
+                    <Link href="/blog/search?query=behavioral" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
+                      Behavioral Questions
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Resources Section */}
+                <div>
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Resources</div>
+                  <div className="space-y-2">
+                    <Link href="/blog" onClick={closeMobileMenu} className="block text-base font-medium text-gray-900 hover:text-blue">
+                      All Articles
+                    </Link>
+                    <Link href="/blog/category/career" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
+                      Career Advice
+                    </Link>
+                  </div>
+                </div>
+
+                {/* CTA Button */}
+                <div className="pt-6 border-t border-gray-200">
+                  <Button asChild className="w-full bg-blue hover:bg-blue/90 text-white">
+                    <Link href="/resume-builder" onClick={closeMobileMenu}>
+                      Get Started
+                    </Link>
+                  </Button>
                 </div>
               </div>
-              <div>
-                <div className="text-xs font-semibold text-gray-500 uppercase mb-2">Cover Letters</div>
-                <div className="flex flex-col gap-1">
-                  <Link href="/resources/cover-letters" onClick={() => setMobileMenuOpen(false)} className="text-gray-900 hover:underline">Examples</Link>
-                  <Link href="/resources/cover-letters/how-to" onClick={() => setMobileMenuOpen(false)} className="text-gray-900 hover:underline">How to Write</Link>
-                </div>
-              </div>
-              <div>
-                <div className="text-xs font-semibold text-gray-500 uppercase mb-2">Interview Questions</div>
-                <div className="flex flex-col gap-1">
-                  <Link href="/blog/category/interview" onClick={() => setMobileMenuOpen(false)} className="text-gray-900 hover:underline">Guides</Link>
-                  <Link href="/blog/search?query=behavioral" onClick={() => setMobileMenuOpen(false)} className="text-gray-900 hover:underline">Behavioral</Link>
-                </div>
-              </div>
-              <div>
-                <div className="text-xs font-semibold text-gray-500 uppercase mb-2">Resources</div>
-                <div className="flex flex-col gap-1">
-                  <Link href="/blog" onClick={() => setMobileMenuOpen(false)} className="text-gray-900 hover:underline">All Articles</Link>
-                  <Link href="/blog/category/career" onClick={() => setMobileMenuOpen(false)} className="text-gray-900 hover:underline">Career Advice</Link>
-                  <Link href="/blog/search" onClick={() => setMobileMenuOpen(false)} className="text-gray-900 hover:underline">Search</Link>
-                </div>
-              </div>
-              <Button asChild className="w-full bg-blue hover:bg-gray-10 text-blue">
-                <Link href="/resume-builder" onClick={() => setMobileMenuOpen(false)}>
-                  Get Started
-                </Link>
-              </Button>
             </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   )

@@ -12,11 +12,11 @@ export default function Home() {
 
 
   const handleCreateResumeClick = () => {
-    router.push('/resume-builder')
+    router.push('/resume-builder/upload')
   }
 
   const handleUploadResumeClick = () => {
-    router.push('/resume-builder')
+    router.push('/resume-builder/upload?mode=upload')
   }
 
   return (
@@ -37,9 +37,9 @@ export default function Home() {
               </h1>
 
               <div className="mb-6 lg:mb-8">
-                <p className="text-base sm:text-lg mb-4 font-outfit"> No more rejection, no more unemployment. </p>
+                <p className="text-base sm:text-lg mb-4 font-outfit"> No more rejections, no more unemployment. </p>
                 <p className="text-gray-600 font-outfit text-sm sm:text-base">
-                  Use our battle-tested template, generate cover letters that don't sound like chatbots, and craft interview stories that land you the offer. 
+                  Use our battle-tested templates, generate cover letters that don't sound like chatbots, and craft interview stories that land you the offer. 
                 </p>
               </div>
 
@@ -60,7 +60,7 @@ export default function Home() {
             </div>
 
             {/* Get Interview Ready */}
-            <div className="relative order-2 lg:order-2 sm:mt-0 lg:mt-8 lg:pl-8 xl:pl-12">
+            <div className="relative order-2 lg:order-2 sm:mt-0 lg:pl-8 xl:pl-12">
               <div className="relative z-10 mx-auto max-w-md lg:mx-0 animate-float sm:h-[200px] md:h-[350px] lg:h-[400px]">
                 <div className="bg-white/95 backdrop-blur-sm p-6 lg:p-8 relative overflow-hidden multi-color-border w-full shadow-xl border border-gray-200 rounded-2xl">
                   <div className="absolute top-0 left-0 w-40 h-40 bg-purple-200 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
@@ -157,12 +157,12 @@ export default function Home() {
       {/* Resume Templates Showcase */}
       <TemplateShowcase />
 
-       {/* What You Actually Get */}
-       <section className="py-16">
+      {/* What You Actually Get */}
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-12">
-              <div className="text-2xs uppercase tracking-widest text-teal-600 mb-4 font-mattone">WHAT YOU GET</div>
+              <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">WHAT YOU GET</div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">Your Complete Career Toolkit</h2>
               <p className="text-lg text-gray-600 font-outfit max-w-3xl mx-auto">
                 Everything you need to go from "just another applicant" to "the obvious choice" - all personalized to your unique background.
@@ -375,7 +375,7 @@ export default function Home() {
           <div className="max-w-7xl mx-auto">
             {/* Header */}
             <div className="text-center mb-12">
-              <div className="text-2xs uppercase tracking-widest text-teal-600 mb-4 font-mattone">PROVEN RESULTS</div>
+              <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">PROVEN RESULTS</div>
               <h2 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">The most effective strategy for your job search</h2>
               <p className="text-lg mb-4 font-outfit">
                 <span className="font-semibold">Loved by over 10,000+ job seekers</span>
@@ -436,7 +436,7 @@ export default function Home() {
                 <p className="text-gray-700 font-outfit mb-4 text-sm leading-relaxed">
                   "The resume builder tool is incredible! I can customize my resume and cover letter for any job posting in minutes. The ATS optimization means I actually get interviews now instead of my applications disappearing into the void."
                 </p>
-                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gradient-to-r from-blue to-teal-600 rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">AF</span>
                   </div>
@@ -446,7 +446,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-
+              
               {/* Review 2 */}
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg">
                 <div className="flex gap-1 mb-3">
@@ -467,8 +467,8 @@ export default function Home() {
                     <div className="text-sm font-semibold text-gray-800 font-mattone">Brittany Archard</div>
                     <div className="text-xs text-gray-600 font-outfit">Product Manager</div>
                   </div>
-                </div>
-              </div>
+                    </div>
+                    </div>
 
               {/* Review 3 */}
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg">
@@ -478,20 +478,20 @@ export default function Home() {
                       <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
                     </svg>
                   ))}
-                </div>
+                    </div>
                 <p className="text-gray-700 font-outfit mb-4 text-sm leading-relaxed">
                   "Having my entire resume and cover letter library organized by job is so helpful. I can track which applications I've submitted and where I am in each process. Plus the speak mode practice made me way more confident!"
                 </p>
-                <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-gradient-to-r from-purple to-pink rounded-full flex items-center justify-center">
                     <span className="text-white text-sm font-bold">MT</span>
                   </div>
                   <div>
                     <div className="text-sm font-semibold text-gray-800 font-mattone">Meg Thomas</div>
                     <div className="text-xs text-gray-600 font-outfit">Business Analyst</div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
               {/* Review 4 */}
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl p-6 shadow-lg">
@@ -566,8 +566,8 @@ export default function Home() {
                     </p>
                   </div>
                 </details>
-              </div>
-
+                  </div>
+                  
               {/* FAQ 2 */}
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
                 <details className="group">
@@ -588,9 +588,9 @@ export default function Home() {
                       formatted, ATS-optimized resume. You can also start fresh if you prefer. Either way, you'll have a polished 
                       resume ready in minutes.
                     </p>
-                  </div>
+                    </div>
                 </details>
-              </div>
+                    </div>
 
               {/* FAQ 3 */}
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
@@ -614,8 +614,8 @@ export default function Home() {
                     </p>
                   </div>
                 </details>
-              </div>
-
+                  </div>
+                  
               {/* FAQ 4 */}
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
                 <details className="group">
@@ -638,8 +638,8 @@ export default function Home() {
                     </p>
                   </div>
                 </details>
-              </div>
-
+                  </div>
+                  
               {/* FAQ 5 */}
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
                 <details className="group">
@@ -660,9 +660,9 @@ export default function Home() {
                       our templates. It's enough time to transform your job search materials and see real results. After the trial, 
                       plans start at just $6.99/week.
                     </p>
-                  </div>
+                    </div>
                 </details>
-              </div>
+                    </div>
 
               {/* FAQ 6 */}
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
@@ -707,9 +707,9 @@ export default function Home() {
                       or contracts. Whether you choose our weekly, monthly, or annual plan, you have complete flexibility. Many users 
                       find they land their dream job quickly and only need Mockstars for a short period during their active job search.
                     </p>
-                  </div>
+                    </div>
                 </details>
-              </div>
+                    </div>
 
               {/* FAQ 8 */}
               <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-xl shadow-lg">
@@ -733,8 +733,8 @@ export default function Home() {
                     </p>
                   </div>
                 </details>
-              </div>
-            </div>
+                  </div>
+                </div>
 
             {/* Still have questions CTA */}
             <div className="mt-12 text-center bg-white/80 border border-gray-200 rounded-2xl p-8">
@@ -760,6 +760,7 @@ export default function Home() {
 
       {/* CTA Section with Pricing */}
       
+      <section className="p-4"></section>
 
       {/* Final CTA */}
       <CTA 
@@ -769,6 +770,7 @@ export default function Home() {
         secondaryButtonText="Download App"
         showSecondaryButton={false}
       />
+      <section className="p-4"></section>
 
     </div>
   )

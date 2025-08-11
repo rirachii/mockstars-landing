@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { resumeTemplates, TemplateId, TemplateInfo } from '@/lib/resume/resume-types';
+import { resumeTemplates, TemplateId, TemplateInfo } from '@/lib/resume/template-types';
 import { Button } from '@/components/ui/button';
 import { Check } from 'lucide-react';
 import { cn } from '@/lib/utils';

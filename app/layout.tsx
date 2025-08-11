@@ -2,6 +2,7 @@ import type React from "react"
 import "@/styles/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { PostHogProvider } from "@/components/common/posthog-provider"
+import { AnalyticsProvider } from "@/components/common/analytics-provider"
 import MaybeNavigation from "@/components/layout/MaybeNavigation"
 import Footer from "@/components/layout/Footer"
 import JsonLd from "@/components/JsonLd"
@@ -66,8 +67,9 @@ export default function RootLayout({
         <JsonLd data={jsonLd} />
       </head>
       <body className="min-h-screen flex flex-col">
-        <PostHogProvider>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <AnalyticsProvider>
+          <PostHogProvider>
+            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
             <MaybeNavigation />
             <main role="main" className="flex-1">
               {children}
@@ -75,6 +77,7 @@ export default function RootLayout({
             <Footer />
           </ThemeProvider>
         </PostHogProvider>
+        </AnalyticsProvider>
       </body>
     </html>
   )

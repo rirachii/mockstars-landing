@@ -1,45 +1,8 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
-import { TemplateCustomization } from '@/lib/resume/resume-types';
+import { DEFAULT_CUSTOMIZATION, TemplateCustomization } from '@/lib/resume/template-types';
+import { ResumeData } from '@/lib/resume/resume-data';
 
-// Register fonts (you'll need to add font files to your public folder)
-// Font.register({
-//   family: 'Inter',
-//   src: '/fonts/Inter-Regular.ttf',
-// });
-
-interface ResumeData {
-  personalInfo: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    location: string;
-    linkedin?: string;
-    website?: string;
-  };
-  summary?: string;
-  experience: Array<{
-    title: string;
-    company: string;
-    startDate: string;
-    endDate: string;
-    description: string[];
-    location?: string;
-  }>;
-  education: Array<{
-    degree: string;
-    school: string;
-    year: string;
-    gpa?: string;
-  }>;
-  skills: string[];
-  projects?: Array<{
-    name: string;
-    description: string;
-    technologies: string[];
-  }>;
-}
 
 interface MockstarsTemplateProps {
   data: ResumeData;
@@ -48,14 +11,7 @@ interface MockstarsTemplateProps {
 
 export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({ 
   data, 
-  customization = {
-    color: '#397DC2',
-    fontSize: 'default',
-    fontFamily: 'Helvetica',
-    sectionSpacing: 16,
-    paragraphSpacing: 8,
-    lineSpacing: 1.4
-  }
+  customization = DEFAULT_CUSTOMIZATION
 }) => {
   // Calculate font sizes based on customization
   const getFontSize = (baseSize: number) => {
@@ -166,15 +122,16 @@ export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" style={styles.page}
+      >
         {/* Header Section */}
         <View style={styles.header}>
           <Text style={styles.name}>{data.personalInfo.name}</Text>
           <Text style={styles.title}>{data.personalInfo.title}</Text>
           <View style={styles.contact}>
             <Text>{data.personalInfo.email}</Text>
-            <Text>{data.personalInfo.phone}</Text>
-            <Text>{data.personalInfo.location}</Text>
+            <Text>{data.personalInfo.phone || ''}</Text>
+            <Text>{data.personalInfo.location || ''}</Text>
           </View>
         </View>
 
@@ -189,15 +146,13 @@ export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({
         {/* Experience Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Professional Experience</Text>
-          {data.experience.map((job, index) => (
-            <View key={index} style={styles.experienceItem}>
+          {data.experience.map((job) => (
+            <View key={job.id} style={styles.experienceItem}>
               <Text style={styles.jobTitle}>{job.title}</Text>
-              <Text style={styles.company}>{job.company} | {job.location}</Text>
-              <Text style={styles.dates}>{job.startDate} - {job.endDate}</Text>
-              {job.description.map((bullet, bulletIndex) => (
-                <Text key={bulletIndex} style={styles.bulletPoint}>
-                  • {bullet}
-                </Text>
+              <Text style={styles.company}>{job.company}{job.location ? ` | ${job.location}` : ''}</Text>
+              <Text style={styles.dates}>{job.startDate} {job.endDate ? `- ${job.endDate}` : ''}</Text>
+              {job.bullets && job.bullets.length > 0 && job.bullets.map((b) => (
+                <Text key={b.id} style={styles.bulletPoint}>• {b.text}</Text>
               ))}
             </View>
           ))}
@@ -206,11 +161,13 @@ export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({
         {/* Education Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Education</Text>
-          {data.education.map((edu, index) => (
-            <View key={index} style={styles.experienceItem}>
+          {data.education.map((edu) => (
+            <View key={edu.id} style={styles.experienceItem}>
               <Text style={styles.jobTitle}>{edu.degree}</Text>
               <Text style={styles.company}>{edu.school}</Text>
-              <Text style={styles.dates}>{edu.year}</Text>
+              <Text style={styles.dates}>
+                {(edu.startYear || '')}{(edu.startYear || edu.endYear) ? ' - ' : ''}{edu.endYear || ''}
+              </Text>
               {edu.gpa && <Text style={styles.description}>GPA: {edu.gpa}</Text>}
             </View>
           ))}
@@ -221,7 +178,7 @@ export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({
           <Text style={styles.sectionTitle}>Technical Skills</Text>
           <View style={styles.skillsContainer}>
             {data.skills.map((skill, index) => (
-              <Text key={index} style={styles.skill}>{skill}</Text>
+              <Text key={`${skill.name}-${index}`} style={styles.skill}>{skill.name}</Text>
             ))}
           </View>
         </View>
@@ -230,13 +187,17 @@ export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({
         {data.projects && data.projects.length > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Projects</Text>
-            {data.projects.map((project, index) => (
-              <View key={index} style={styles.experienceItem}>
+            {data.projects.map((project) => (
+              <View key={project.id} style={styles.experienceItem}>
                 <Text style={styles.jobTitle}>{project.name}</Text>
-                <Text style={styles.description}>{project.description}</Text>
-                <Text style={styles.company}>
-                  Technologies: {project.technologies.join(', ')}
-                </Text>
+                {project.description && (
+                  <Text style={styles.description}>{project.description}</Text>
+                )}
+                {project.technologies && project.technologies.length > 0 && (
+                  <Text style={styles.company}>
+                    Technologies: {project.technologies.join(', ')}
+                  </Text>
+                )}
               </View>
             ))}
           </View>

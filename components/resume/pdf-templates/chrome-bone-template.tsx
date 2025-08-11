@@ -1,5 +1,7 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer';
+import { ResumeData } from '@/lib/resume/resume-data';
+import { TemplateCustomization } from '@/lib/resume/template-types';
 
 const styles = StyleSheet.create({
   page: {
@@ -198,42 +200,11 @@ const styles = StyleSheet.create({
   },
 });
 
-interface ResumeData {
-  personalInfo: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    location: string;
-    linkedin?: string;
-    website?: string;
-  };
-  summary?: string;
-  experience: Array<{
-    title: string;
-    company: string;
-    startDate: string;
-    endDate: string;
-    description: string[];
-    location?: string;
-  }>;
-  education: Array<{
-    degree: string;
-    school: string;
-    year: string;
-    gpa?: string;
-  }>;
-  skills: string[];
-  projects?: Array<{
-    name: string;
-    description: string;
-    technologies: string[];
-  }>;
-}
 
 interface ChromeBoneTemplateProps {
   data: ResumeData;
-}
+  customization?: TemplateCustomization
+} 
 
 export const ChromeBoneTemplate: React.FC<ChromeBoneTemplateProps> = ({ data }) => (
   <Document>
@@ -258,18 +229,12 @@ export const ChromeBoneTemplate: React.FC<ChromeBoneTemplateProps> = ({ data }) 
               <Text style={styles.contactIcon}>●</Text>
               <Text>{data.personalInfo.location}</Text>
             </View>
-            {data.personalInfo.linkedin && (
-              <View style={styles.contactItem}>
+            {(data.personalInfo.links || []).map((l) => (
+              <View key={l.id} style={styles.contactItem}>
                 <Text style={styles.contactIcon}>●</Text>
-                <Text>{data.personalInfo.linkedin}</Text>
+                <Text>{l.label}: {l.url}</Text>
               </View>
-            )}
-            {data.personalInfo.website && (
-              <View style={styles.contactItem}>
-                <Text style={styles.contactIcon}>●</Text>
-                <Text>{data.personalInfo.website}</Text>
-              </View>
-            )}
+            ))}
           </View>
         </View>
 
@@ -278,10 +243,10 @@ export const ChromeBoneTemplate: React.FC<ChromeBoneTemplateProps> = ({ data }) 
           <>
             <Text style={styles.firstLeftSectionTitle}>Skills</Text>
             <View style={styles.skillsList}>
-              {data.skills.map((skill, index) => (
+              {(data.skills || []).map((skill, index) => (
                 <View key={index} style={styles.skillItem}>
                   <Text style={styles.skillBullet}>▸</Text>
-                  <Text>{skill}</Text>
+                  <Text>{skill.name}</Text>
                 </View>
               ))}
             </View>
@@ -296,7 +261,7 @@ export const ChromeBoneTemplate: React.FC<ChromeBoneTemplateProps> = ({ data }) 
               <View key={index} style={styles.educationItem}>
                 <Text style={styles.degree}>{edu.degree}</Text>
                 <Text style={styles.school}>{edu.school}</Text>
-                <Text style={styles.educationDate}>{edu.year}</Text>
+                <Text style={styles.educationDate}>{[edu.startYear, edu.endYear].filter(Boolean).join(' - ')}</Text>
                 {edu.gpa && <Text style={styles.educationDate}>GPA: {edu.gpa}</Text>}
               </View>
             ))}
@@ -326,11 +291,10 @@ export const ChromeBoneTemplate: React.FC<ChromeBoneTemplateProps> = ({ data }) 
             </View>
             
             <View style={styles.bulletPoints}>
-              {job.description.map((bullet, bulletIndex) => (
-                <View key={bulletIndex} style={styles.bulletPoint}>
-                  <Text style={styles.bullet}>▪</Text>
-                  <Text style={styles.bulletText}>{bullet}</Text>
-                </View>
+              {(job.bullets || []).map((b, bulletIndex) => (
+                <Text key={bulletIndex} style={styles.bullet}>
+                  • {b.text}
+                </Text>
               ))}
             </View>
           </View>
@@ -344,9 +308,11 @@ export const ChromeBoneTemplate: React.FC<ChromeBoneTemplateProps> = ({ data }) 
               <View key={index} style={styles.projectItem}>
                 <Text style={styles.projectName}>{project.name}</Text>
                 <Text style={styles.projectDescription}>{project.description}</Text>
-                <Text style={styles.technologies}>
-                  Technologies: {project.technologies.join(', ')}
-                </Text>
+                {project.technologies && (
+                  <Text style={styles.technologies}>
+                    Technologies: {project.technologies.join(', ')}
+                  </Text>
+                )}
               </View>
             ))}
           </>

@@ -119,12 +119,12 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </thead>
     ),
     th: ({ children, ...props }) => (
-      <th {...props} className="px-3 py-2 text-sm font-semibold text-gray-800 dark:text-gray-200 border-b">
+      <th {...props} className="px-3 py-2 text-sm font-semibold text-gray-800 dark:text-gray-200">
         {children}
       </th>
     ),
     td: ({ children, ...props }) => (
-      <td {...props} className="px-3 py-2 text-sm text-gray-700 dark:text-gray-300 border-b align-top">
+      <td {...props} className="px-3 py-2 text-sm text-gray-700 dark:text-gray-300 align-top">
         {children}
       </td>
     ),

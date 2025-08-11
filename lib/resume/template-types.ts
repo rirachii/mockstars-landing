@@ -9,7 +9,7 @@ import {
   SiliconIvyTemplate,
   IpoReadyTemplate,
   ChromeBoneTemplate,
-  PaulAllenCardTemplate,
+  PaulAllenTemplate,
   LavenderDuskTemplate,
   VeranoGlowTemplate,
   ConejoLuxeTemplate,
@@ -21,12 +21,14 @@ import {
   OneHundredHPTemplate,
   NPCEnergyTemplate,
   GyattPointsTemplate,
+  WorldBestResumeTemplate,
 } from '@/components/resume/pdf-templates';
 
 export type TemplateId = 
   | 'mockstars'
   | 'owen'
   | 'no-cap'
+  | 'world-best-resume'
   | '100-hp'
   | 'npc-energy'
   | 'rizzume'
@@ -42,18 +44,29 @@ export type TemplateId =
   | 'silicon-ivy'
   | 'ipo-ready'
   | 'chrome-bone'
-  | 'paul-allen-card'
+  | 'paul-allen'
   | 'lavender-dusk'
   | 'conejo-luxe'
+  
+
+export type Section = "summary" | "experience" | "projects" | "education" | "skills" | "certifications" | "awards" | "languages" | "publications" | "volunteering" | "interests";
 
 
 export interface TemplateCustomization {
   primaryColor: string;
+  accentColor?: string; // CSS color
   fontFamily: string;
   fontSize: 'small' | 'default' | 'large'
+  density: "compact" | "cozy";
+  columns: 1 | 2;
   sectionSpacing: number
   paragraphSpacing: number
   lineSpacing: number
+  sectionOrder: Section[]; // ["summary","experience","projects","education","skills",...]
+  page: {
+    size?: "letter" | "a4";
+    margin?: string; // e.g., '0.5in'
+  };
 }
 
 export const DEFAULT_CUSTOMIZATION: TemplateCustomization = {
@@ -63,6 +76,13 @@ export const DEFAULT_CUSTOMIZATION: TemplateCustomization = {
   sectionSpacing: 16,
   paragraphSpacing: 8,
   lineSpacing: 1.4,
+  sectionOrder: ['summary', 'experience', 'projects', 'education', 'skills', 'certifications', 'publications', 'volunteering', 'interests'],
+  page: {
+    size: 'letter',
+    margin: '0.5in',
+  },
+  density: 'compact',
+  columns: 1,
 } 
 
 
@@ -135,6 +155,21 @@ export const resumeTemplates: TemplateInfo[] = [
     idealFor: ['Product Managers', 'Operations', 'Business Analysts', 'Consultants'],
     preview: '/template-previews/owen.png',
     component: OwenTemplate,
+    category: 'corporate',
+    customization: DEFAULT_CUSTOMIZATION,
+    layout: 'single-column',
+    features: ['Clean typography', 'Logical flow', 'Results-focused', 'ATS-optimized'],
+    isPro: false,
+  },
+  {
+    id: 'world-best-resume',
+    name: 'World Best Resume',
+    tagline: 'Professional, corporate, and corporate-y',
+    description: 'A professional, corporate, and corporate-y template.',
+    personality: 'Professional, corporate, and corporate-y',
+    idealFor: ['Product Managers', 'Operations', 'Business Analysts', 'Consultants'],
+    preview: '/template-previews/world-best-resume.png',
+    component: WorldBestResumeTemplate,
     category: 'corporate',
     customization: DEFAULT_CUSTOMIZATION,
     layout: 'single-column',
@@ -413,14 +448,14 @@ export const resumeTemplates: TemplateInfo[] = [
     isPro: false,
   },
   {
-    id: 'paul-allen-card',
-    name: "Paul Allen's Card",
+    id: 'paul-allen',
+    name: "Paul Allen",
     tagline: 'White, classy, embossed feel',
     description: "Look at that subtle off-white coloring. The tasteful thickness. Oh my God, it even has a watermark.",
     personality: 'Luxurious, refined, exclusive',
     idealFor: ['Private Equity', 'Luxury Brand Managers', 'Art Directors', 'High-end Consultants'],
-    preview: '/template-previews/paul-allen-card.png',
-    component: PaulAllenCardTemplate,
+    preview: '/template-previews/paul-allen.png',
+    component: PaulAllenTemplate,
     category: 'corporate',
     customization: DEFAULT_CUSTOMIZATION,
     layout: 'single-column',

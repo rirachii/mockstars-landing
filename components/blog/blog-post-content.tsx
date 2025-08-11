@@ -18,7 +18,7 @@ export function BlogPostContent({ post }: BlogPostContentProps) {
             </h1>
           ),
           h2: ({ children }) => (
-            <h2 className="text-1xl font-semibold mb-6 mt-12 text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-2 font-mattone">
+            <h2 className="text-1xl font-semibold mb-6 mt-12 text-gray-900 dark:text-gray-100 border-gray-200 dark:border-gray-700 pb-2 font-mattone">
               {children}
             </h2>
           ),

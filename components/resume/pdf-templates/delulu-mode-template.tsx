@@ -1,39 +1,8 @@
 import React from 'react'
 import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
-import { TemplateCustomization } from '@/lib/resume/resume-types'
+import { TemplateCustomization } from '@/lib/resume/template-types'
+import { ResumeData } from '@/lib/resume/resume-data'
 
-interface ResumeData {
-  personalInfo: {
-    name: string
-    title: string
-    email: string
-    phone: string
-    location: string
-    linkedin?: string
-    website?: string
-  }
-  summary?: string
-  experience: Array<{
-    title: string
-    company: string
-    startDate: string
-    endDate: string
-    description: string[]
-    location?: string
-  }>
-  education: Array<{
-    degree: string
-    school: string
-    year: string
-    gpa?: string
-  }>
-  skills: string[]
-  projects?: Array<{
-    name: string
-    description: string
-    technologies: string[]
-  }>
-}
 
 interface DeluluModeTemplateProps {
   data: ResumeData
@@ -200,9 +169,9 @@ export const DeluluModeTemplate: React.FC<DeluluModeTemplateProps> = ({
               <Text style={styles.dates}>
                 {job.startDate} - {job.endDate}
               </Text>
-              {job.description.map((bullet, j) => (
+              {(job.bullets || []).map((b, j) => (
                 <Text key={j} style={styles.bulletPoint}>
-                  ✦ {bullet}
+                  • {b.text}
                 </Text>
               ))}
             </View>
@@ -216,7 +185,7 @@ export const DeluluModeTemplate: React.FC<DeluluModeTemplateProps> = ({
             <View key={i} style={styles.experienceItem}>
               <Text style={styles.jobTitle}>{edu.degree}</Text>
               <Text style={styles.company}>{edu.school}</Text>
-              <Text style={styles.dates}>{edu.year}</Text>
+              <Text style={styles.dates}>{[edu.startYear, edu.endYear].filter(Boolean).join(' - ')}</Text>
               {edu.gpa && <Text style={styles.description}>GPA: {edu.gpa}</Text>}
             </View>
           ))}
@@ -227,7 +196,7 @@ export const DeluluModeTemplate: React.FC<DeluluModeTemplateProps> = ({
           <Text style={styles.sectionTitle}>Skills ⚡</Text>
           <View style={styles.pillRow}>
             {data.skills.map((skill, i) => (
-              <Text key={i} style={styles.pill}>{skill}</Text>
+              <Text key={i} style={styles.pill}>{skill.name}</Text>
             ))}
           </View>
         </View>
@@ -240,7 +209,9 @@ export const DeluluModeTemplate: React.FC<DeluluModeTemplateProps> = ({
               <View key={i} style={styles.experienceItem}>
                 <Text style={styles.jobTitle}>{project.name}</Text>
                 <Text style={styles.description}>{project.description}</Text>
-                <Text style={styles.company}>Tech: {project.technologies.join(', ')}</Text>
+                {project.technologies && (
+                  <Text style={styles.company}>Tech: {project.technologies.join(', ')}</Text>
+                )}
               </View>
             ))}
           </View>
