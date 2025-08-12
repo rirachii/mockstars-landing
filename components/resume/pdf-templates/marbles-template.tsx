@@ -289,7 +289,7 @@ export const MarblesTemplate: React.FC<MarblesTemplateProps> = ({ data }) => (
               {data.skills.map((skill, index) => (
                 <View key={index} style={styles.skillItem}>
                   <Text style={styles.skillBullet}>•</Text>
-                  <Text style={styles.skillText}>{skill}</Text>
+                  <Text style={styles.skillText}>{typeof skill === 'string' ? skill : (skill as any).name}</Text>
                 </View>
               ))}
             </View>

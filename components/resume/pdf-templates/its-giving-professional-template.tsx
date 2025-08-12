@@ -88,40 +88,6 @@ const styles = StyleSheet.create({
   },
 });
 
-interface ResumeData {
-  personalInfo: {
-    name: string;
-    title: string;
-    email: string;
-    phone: string;
-    location: string;
-    linkedin?: string;
-    website?: string;
-  };
-  summary?: string;
-  experience: Array<{
-    title: string;
-    company: string;
-    startDate: string;
-    endDate: string;
-    description: string[];
-    location?: string;
-  }>;
-  education: Array<{
-    degree: string;
-    school: string;
-    year: string;
-    gpa?: string;
-  }>;
-  skills: string[];
-  projects?: Array<{
-    name: string;
-    description: string;
-    technologies: string[];
-  }>;
-}
-
-
 interface ItsGivingProfessionalTemplateProps {
   data: ResumeData;
   customization?: TemplateCustomization
@@ -141,10 +107,10 @@ export const ItsGivingProfessionalTemplate: React.FC<ItsGivingProfessionalTempla
           <Text style={styles.contactItem}>{data.personalInfo.phone}</Text>
           <Text style={styles.contactItem}>✦</Text>
           <Text style={styles.contactItem}>{data.personalInfo.location}</Text>
-          {data.personalInfo.linkedin && (
+          {data.personalInfo.links && data.personalInfo.links.length > 0 && (
             <>
               <Text style={styles.contactItem}>✦</Text>
-              <Text style={styles.contactItem}>{data.personalInfo.linkedin}</Text>
+              <Text style={styles.contactItem}>{data.personalInfo.links[0].url}</Text>
             </>
           )}
         </View>

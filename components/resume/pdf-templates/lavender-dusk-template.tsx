@@ -74,6 +74,25 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     fontStyle: 'italic',
   },
+  // Added education styles
+  educationItem: {
+    marginBottom: 10,
+  },
+  educationTitle: {
+    fontSize: 12,
+    fontFamily: 'Helvetica-Bold',
+    color: '#4C1D95',
+    marginBottom: 2,
+  },
+  educationDate: {
+    fontSize: 10,
+    color: '#6B7280',
+    marginBottom: 2,
+  },
+  educationInstitution: {
+    fontSize: 10,
+    color: '#4B5563',
+  },
 })
 
 interface LavenderDuskTemplateProps {
@@ -127,7 +146,7 @@ export const LavenderDuskTemplate: React.FC<LavenderDuskTemplateProps> = ({ data
             <View key={edu.id} style={styles.educationItem}>
               <Text style={styles.educationTitle}>{edu.degree}</Text>
               <Text style={styles.educationDate}>{[edu.startYear, edu.endYear].filter(Boolean).join(' - ')}</Text>
-              <Text style={styles.educationInstitution}>{edu.institution}</Text>
+              <Text style={styles.educationInstitution}>{edu.school}</Text>
             </View>
           ))}
         </>

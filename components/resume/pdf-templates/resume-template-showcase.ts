@@ -1,18 +1,9 @@
 // Resume Template Showcase - Demo Component
 import React from 'react';
-import { FilledClassicTemplate } from './filled-classic-template';
-import { FilledModernTemplate } from './filled-modern-template';
-import { FilledPiedPiperTemplate } from './filled-pied-piper-template';
-import { FilledGyattPointsTemplate } from './filled-gyatt-points-template';
 import { mockProfile, mockProfiles } from './mock-profile';
 
-// Export all the filled templates for easy use
-export const resumeTemplateShowcase = {
-  classic: FilledClassicTemplate,
-  modern: FilledModernTemplate,
-  piedPiper: FilledPiedPiperTemplate,
-  gyattPoints: FilledGyattPointsTemplate,
-};
+// Export placeholders for demo (filled templates are not included in repo)
+export const resumeTemplateShowcase = {} as Record<string, React.FC<any>>;
 
 // Template descriptions for documentation
 export const templateDescriptions = {
@@ -55,7 +46,7 @@ export const profileOptions = {
   marketing_manager: mockProfiles.marketingManager,
 };
 
-// Usage examples for developers
+// Usage examples for developers (documentation only)
 export const usageExamples = `
 // Import templates
 import { resumeTemplateShowcase, templateDescriptions } from './resume-template-showcase';
@@ -87,9 +78,7 @@ function TemplatePreview({ templateKey }) {
     <div>
       <h3>{description.name}</h3>
       <p>{description.description}</p>
-      <PDFViewer>
-        <TemplateComponent />
-      </PDFViewer>
+      {/* PDFViewer demo removed in docs-only file */}
     </div>
   );
 }
@@ -127,42 +116,4 @@ export const templateComparison = {
   }
 };
 
-// Color schemes used across templates
-export const colorSchemes = {
-  classic: {
-    primary: '#000000',
-    secondary: '#666666',
-    background: '#ffffff',
-    accent: '#000000'
-  },
-  modern: {
-    primary: '#397DC2',  // MockStars main color
-    secondary: '#666666',
-    background: '#FBF5E2', // MockStars background
-    accent: '#D3D0CE'    // MockStars dark grey
-  },
-  rizzume: {
-    primary: '#212529',
-    secondary: '#6C757D',
-    background: '#F8F9FA',
-    accent: '#0D6EFD'
-  },
-  piedPiper: {
-    primary: '#00A651',  // Pied Piper green
-    secondary: '#666666',
-    background: '#FAFAFA',
-    accent: '#333333'
-  },
-  gyattPoints: {
-    primary: '#FF1493',  // Deep pink
-    secondary: '#FF4500', // Orange red
-    background: '#FF69B4', // Hot pink
-    accent: '#FFD700'    // Gold
-  }
-};
-
-console.log('Resume Template Showcase initialized with:');
-console.log('- 5 filled templates with mock data');
-console.log('- Template descriptions and comparisons');
-console.log('- Multiple mock profiles for testing');
-console.log('- Usage examples and documentation');
+console.log('Resume Template Showcase initialized');

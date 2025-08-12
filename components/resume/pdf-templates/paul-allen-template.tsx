@@ -255,10 +255,10 @@ export const PaulAllenTemplate: React.FC<PaulAllenTemplateProps> = ({ data }) =>
             </View>
             
             <View style={styles.bulletPoints}>
-              {job.description.map((bullet, bulletIndex) => (
+              {job.bullets.map((b, bulletIndex) => (
                 <Text key={bulletIndex} style={styles.bulletPoint}>
                   <Text style={styles.bulletPrefix}>◦</Text>
-                  {bullet}
+                  {b.text}
                 </Text>
               ))}
             </View>
@@ -271,7 +271,7 @@ export const PaulAllenTemplate: React.FC<PaulAllenTemplateProps> = ({ data }) =>
             <Text style={styles.sectionTitle}>Core Competencies</Text>
             <View style={styles.skillsContainer}>
               {data.skills.map((skill, index) => (
-                <Text key={index} style={styles.skillItem}>{skill}</Text>
+                <Text key={index} style={styles.skillItem}>{skill.name}</Text>
               ))}
             </View>
           </>
@@ -287,7 +287,7 @@ export const PaulAllenTemplate: React.FC<PaulAllenTemplateProps> = ({ data }) =>
                   <Text style={styles.degree}>{edu.degree}</Text>
                   <Text style={styles.school}>{edu.school}</Text>
                   <Text style={styles.educationDate}>
-                    {edu.year} {edu.gpa && `• Magna Cum Laude • GPA: ${edu.gpa}`}
+                    {[edu.startYear, edu.endYear].filter(Boolean).join(' - ')} {edu.gpa && `• Magna Cum Laude • GPA: ${edu.gpa}`}
                   </Text>
                 </View>
               ))}
@@ -304,9 +304,11 @@ export const PaulAllenTemplate: React.FC<PaulAllenTemplateProps> = ({ data }) =>
                 <View key={index} style={styles.projectItem}>
                   <Text style={styles.projectName}>{project.name}</Text>
                   <Text style={styles.projectDescription}>{project.description}</Text>
-                  <Text style={styles.technologies}>
-                    {project.technologies.join(' • ')}
-                  </Text>
+                  {project.technologies && project.technologies.length > 0 && (
+                    <Text style={styles.technologies}>
+                      {project.technologies.join(' • ')}
+                    </Text>
+                  )}
                 </View>
               ))}
             </View>

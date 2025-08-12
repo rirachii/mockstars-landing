@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import NextLink from 'next/link'
 import NextDynamic from 'next/dynamic'
@@ -28,33 +28,10 @@ type FlowPresets = {
 }
 
 const FALLBACK_GOALS_BY_SCHOOL: Record<InSchool, string[]> = {
-  HS: [
-    'Club Leadership',
-    'First Job / Part-time',
-    'Internship / Summer Program',
-    'Scholarship / Competition',
-    'College Applications',
-  ],
-  UNI: [
-    'On-campus Leadership',
-    'Internship / Co-op',
-    'Research Assistant / Lab',
-    'Part-time / Campus Job',
-    'Scholarship / Fellowship',
-    'Grad School',
-  ],
-  Other: [
-    'Program Leadership / Mentor',
-    'Apprenticeship / Entry Role',
-    'Portfolio Review / Showcase',
-    'Certification Application',
-  ],
-  No: [
-    'First Job / Internship',
-    'Continue in Field',
-    'Switch Careers',
-    'Leadership / Management',
-  ],
+  HS: ['Club Leadership','First Job / Part-time','Internship / Summer Program','Scholarship / Competition','College Applications'],
+  UNI: ['On-campus Leadership','Internship / Co-op','Research Assistant / Lab','Part-time / Campus Job','Scholarship / Fellowship','Grad School'],
+  Other: ['Program Leadership / Mentor','Apprenticeship / Entry Role','Portfolio Review / Showcase','Certification Application'],
+  No: ['First Job / Internship','Continue in Field','Switch Careers','Leadership / Management'],
 }
 
 const FALLBACK_MAPPING_TABLE: Array<{ inSchool: InSchool; goal: string; sectionOrder: Section[] }> = [
@@ -63,26 +40,23 @@ const FALLBACK_MAPPING_TABLE: Array<{ inSchool: InSchool; goal: string; sectionO
   { inSchool: 'HS', goal: 'Internship / Summer Program', sectionOrder: ['summary','education','projects','skills','experience','awards','volunteering','languages','interests'] },
   { inSchool: 'HS', goal: 'Scholarship / Competition', sectionOrder: ['summary','education','awards','volunteering','projects','skills','experience','interests','languages'] },
   { inSchool: 'HS', goal: 'College Applications', sectionOrder: ['summary','education','awards','volunteering','projects','skills','experience','interests','languages'] },
-
   { inSchool: 'UNI', goal: 'On-campus Leadership', sectionOrder: ['summary','education','experience','projects','skills','awards','volunteering','interests','languages'] },
   { inSchool: 'UNI', goal: 'Internship / Co-op', sectionOrder: ['summary','education','projects','skills','experience','awards','volunteering','languages','interests'] },
   { inSchool: 'UNI', goal: 'Research Assistant / Lab', sectionOrder: ['summary','education','projects','experience','skills','publications','awards','languages','interests'] },
   { inSchool: 'UNI', goal: 'Part-time / Campus Job', sectionOrder: ['summary','education','projects','skills','experience','awards','volunteering','languages','interests'] },
   { inSchool: 'UNI', goal: 'Scholarship / Fellowship', sectionOrder: ['summary','education','awards','volunteering','projects','skills','experience','interests','languages'] },
   { inSchool: 'UNI', goal: 'Grad School', sectionOrder: ['summary','education','projects','experience','skills','publications','awards','languages','interests'] },
-
   { inSchool: 'Other', goal: 'Program Leadership / Mentor', sectionOrder: ['summary','education','experience','projects','skills','awards','volunteering','interests','languages'] },
   { inSchool: 'Other', goal: 'Apprenticeship / Entry Role', sectionOrder: ['summary','education','projects','skills','experience','certifications','awards','languages','interests'] },
   { inSchool: 'Other', goal: 'Portfolio Review / Showcase', sectionOrder: ['summary','education','projects','skills','experience','awards','volunteering','languages','interests'] },
   { inSchool: 'Other', goal: 'Certification Application', sectionOrder: ['summary','education','projects','skills','experience','certifications','awards','languages','interests'] },
-
   { inSchool: 'No', goal: 'First Job / Internship', sectionOrder: ['summary','experience','projects','skills','education','awards','volunteering','languages','interests'] },
   { inSchool: 'No', goal: 'Continue in Field', sectionOrder: ['summary','experience','projects','skills','education','certifications','awards','languages','interests'] },
   { inSchool: 'No', goal: 'Switch Careers', sectionOrder: ['summary','projects','skills','experience','education','certifications','awards','languages','interests'] },
   { inSchool: 'No', goal: 'Leadership / Management', sectionOrder: ['summary','experience','skills','projects','education','awards','certifications','languages','interests'] },
 ]
 
-export default function UploadPage() {
+function UploadPageInner() {
   const router = useRouter()
   const [flow, setFlow] = useState<any | null>(null)
   const [flowError, setFlowError] = useState<string | null>(null)
@@ -102,22 +76,13 @@ export default function UploadPage() {
       .then(res => res.json())
       .then(json => {
         if (!isMounted) return
-        if (json?.ok) {
-          setFlow(json.data)
-        } else {
-          setFlowError('Failed to load flow; using defaults')
-        }
+        if (json?.ok) { setFlow(json.data) } else { setFlowError('Failed to load flow; using defaults') }
       })
-      .catch(() => {
-        if (!isMounted) return
-        setFlowError('Failed to load flow; using defaults')
-      })
+      .catch(() => { if (!isMounted) return; setFlowError('Failed to load flow; using defaults') })
     return () => { isMounted = false }
   }, [])
   const [inSchool, setInSchool] = useState<InSchool | null>(null)
   const [goal, setGoal] = useState<string | null>(null)
-
-  // Stepper state for deeper questions
   const [sequence, setSequence] = useState<FlowQuestion[]>([])
   const [presets, setPresets] = useState<FlowPresets | null>(null)
   const [currentStep, setCurrentStep] = useState<number>(0)
@@ -134,9 +99,7 @@ export default function UploadPage() {
       const branch = branches[branchKey]
       const opts: string[] = Array.isArray(branch?.options) ? branch.options : []
       return opts.length ? opts : FALLBACK_GOALS_BY_SCHOOL[inSchool]
-    } catch {
-      return FALLBACK_GOALS_BY_SCHOOL[inSchool]
-    }
+    } catch { return FALLBACK_GOALS_BY_SCHOOL[inSchool] }
   }, [inSchool, flow])
 
   const goToEdit = (seed?: Partial<ResumeData>) => {
@@ -151,37 +114,12 @@ export default function UploadPage() {
     setIsProcessing(true)
 
     try {
-      const resumeData: ResumeData = {
-        ...DEFAULT_RESUME_DATA,
-        personalInfo: {
-          name: data.personalInfo.name || '',
-          title: data.personalInfo.title || '',
-          email: data.personalInfo.email || '',
-          phone: data.personalInfo.phone || '',
-          location: data.personalInfo.location || '',
-          links: data.personalInfo.links || []
-        },
-        summary: data.summary || '',
-        experience: data.experience || [],
-        education: data.education || [],
-        skills: data.skills || [],
-        projects: data.projects || [],
-        certifications: data.certifications || [],
-        awards: data.awards || [],
-        languages: data.languages || [],
-        volunteering: data.volunteering || [],
-        publications: data.publications || [],
-        interests: data.interests || [],
-        metadata: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() }
-      }
+      const resumeData: ResumeData = { ...DEFAULT_RESUME_DATA, personalInfo: { name: data.personalInfo.name || '', title: data.personalInfo.title || '', email: data.personalInfo.email || '', phone: data.personalInfo.phone || '', location: data.personalInfo.location || '', links: data.personalInfo.links || [] }, summary: data.summary || '', experience: data.experience || [], education: data.education || [], skills: data.skills || [], projects: data.projects || [], certifications: data.certifications || [], awards: data.awards || [], languages: data.languages || [], volunteering: data.volunteering || [], publications: data.publications || [], interests: data.interests || [], metadata: { createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() } }
 
       ResumeStorage.saveResumeData(resumeData)
       ResumeStorage.saveProgress('upload', true)
 
-      setTimeout(() => {
-        setIsProcessing(false)
-        router.push('/resume-builder/edit')
-      }, 1200)
+      setTimeout(() => { setIsProcessing(false); router.push('/resume-builder/edit') }, 1200)
 
     } catch (error) {
       console.error('Error processing resume:', error)
@@ -189,9 +127,7 @@ export default function UploadPage() {
     }
   }
 
-  const handleError = (error: string) => {
-    console.error('Upload error:', error)
-  } 
+  const handleError = (error: string) => { console.error('Upload error:', error) }
 
   const selectInSchool = (val: InSchool) => {
     setInSchool(val)
@@ -215,9 +151,7 @@ export default function UploadPage() {
       const seq: FlowQuestion[] = Array.isArray(goalPath?.sequence) ? goalPath.sequence : []
       const presetsObj: FlowPresets | null = goalPath?.presets || null
       return { seq, presetsObj }
-    } catch {
-      return { seq: [], presetsObj: null }
-    }
+    } catch { return { seq: [], presetsObj: null } }
   }
 
   const selectGoal = (val: string) => {
@@ -233,7 +167,6 @@ export default function UploadPage() {
       ResumeStorage.saveOnboarding({ inSchool, goal: val })
       return
     }
-    // Fallback: no sequence available → compute order and proceed
     let order: Section[] | undefined
     const mapped = FALLBACK_MAPPING_TABLE.find(m => m.inSchool === inSchool && m.goal === val)
     order = mapped?.sectionOrder || DEFAULT_CUSTOMIZATION.sectionOrder
@@ -245,13 +178,8 @@ export default function UploadPage() {
   const onSelectSingle = (q: FlowQuestion, value: string) => {
     const newAnswers = { ...answers, [q.id]: value }
     setAnswers(newAnswers)
-    // handle followup
     const f = q.followups?.[value]
-    if (f) {
-      setActiveFollowup(f)
-      return
-    }
-    // advance to next base question
+    if (f) { setActiveFollowup(f); return }
     setCurrentStep(prev => prev + 1)
   }
 
@@ -262,41 +190,16 @@ export default function UploadPage() {
     setAnswers({ ...answers, [q.id]: next })
   }
 
-  const onNextFromMulti = () => {
-    setCurrentStep(prev => prev + 1)
-  }
+  const onNextFromMulti = () => { setCurrentStep(prev => prev + 1) }
 
   const onBack = () => {
     if (!inSchool) return
-    // If answering a followup, go back to the base question
-    if (activeFollowup) {
-      setActiveFollowup(null)
-      return
-    }
-    // If within the base sequence, step back one, or if at first question, go back to goal selection
+    if (activeFollowup) { setActiveFollowup(null); return }
     if (goal && sequence.length > 0) {
-      if (currentStep > 0) {
-        setCurrentStep(s => s - 1)
-        return
-      }
-      // currentStep === 0 → back to goal selection
-      setGoal(null)
-      setSequence([])
-      setAnswers({})
-      setPresets(null)
-      setCurrentStep(0)
-      return
+      if (currentStep > 0) { setCurrentStep(s => s - 1); return }
+      setGoal(null); setSequence([]); setAnswers({}); setPresets(null); setCurrentStep(0); return
     }
-    // If at goal selection, go back to the root school question
-    if (inSchool && !goal) {
-      setInSchool(null)
-      setSequence([])
-      setAnswers({})
-      setPresets(null)
-      setCurrentStep(0)
-      setActiveFollowup(null)
-      return
-    }
+    if (inSchool && !goal) { setInSchool(null); setSequence([]); setAnswers({}); setPresets(null); setCurrentStep(0); setActiveFollowup(null); return }
   }
 
   const onAnswerFollowup = (fq: FlowQuestion, value: string) => {
@@ -308,25 +211,17 @@ export default function UploadPage() {
 
   const onComplete = () => {
     if (!inSchool || !goal) return
-    // Determine order
     let order: Section[] | undefined
     try {
       const sectionOrder = presets?.sectionOrder
-      if (Array.isArray(sectionOrder) && sectionOrder.length) {
-        order = sectionOrder as Section[]
-      }
+      if (Array.isArray(sectionOrder) && sectionOrder.length) { order = sectionOrder as Section[] }
     } catch {}
     if (!order) {
       const mapped = FALLBACK_MAPPING_TABLE.find(m => m.inSchool === inSchool && m.goal === goal)
       order = mapped?.sectionOrder || DEFAULT_CUSTOMIZATION.sectionOrder
     }
     ResumeStorage.saveRecommendedSectionOrder(order)
-    ResumeStorage.saveOnboarding({
-      inSchool,
-      goal,
-      steps: Object.entries(answers).map(([id, answer]) => ({ id, answer })),
-      lengthHint: presets?.length_hint,
-    })
+    ResumeStorage.saveOnboarding({ inSchool, goal, steps: Object.entries(answers).map(([id, answer]) => ({ id, answer })), lengthHint: presets?.length_hint })
     router.push('/resume-builder/templates')
   }
 
@@ -559,6 +454,14 @@ export default function UploadPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function UploadPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <UploadPageInner />
+    </Suspense>
   )
 }
 

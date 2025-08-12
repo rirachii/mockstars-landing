@@ -263,7 +263,7 @@ export const IpoReadyTemplate: React.FC<IpoReadyTemplateProps> = ({ data }) => {
             <Text style={styles.sectionTitle}>Core Competencies</Text>
             <View style={styles.skillsContainer}>
               {data.skills.map((skill, index) => (
-                <Text key={index} style={styles.skillItem}>{skill}</Text>
+                <Text key={index} style={styles.skillItem}>{skill.name}</Text>
               ))}
             </View>
           </>
@@ -295,12 +295,16 @@ export const IpoReadyTemplate: React.FC<IpoReadyTemplateProps> = ({ data }) => {
               <View key={index} style={styles.projectItem}>
                 <View style={styles.projectHeader}>
                   <Text style={styles.projectName}>{project.name}</Text>
-                  <Text style={styles.projectDate}>{project.technologies[0] || 'Recent'}</Text>
+                  <Text style={styles.projectDate}>{(project.technologies && project.technologies[0]) || 'Recent'}</Text>
                 </View>
-                <Text style={styles.projectDescription}>{project.description}</Text>
-                <Text style={styles.technologies}>
-                  Technologies: {project.technologies.join(', ')}
-                </Text>
+                {project.description && (
+                  <Text style={styles.projectDescription}>{project.description}</Text>
+                )}
+                {project.technologies && project.technologies.length > 0 && (
+                  <Text style={styles.technologies}>
+                    Technologies: {project.technologies.join(', ')}
+                  </Text>
+                )}
               </View>
             ))}
           </>

@@ -126,7 +126,7 @@ export default function TemplateSelectionPage() {
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <div className="hidden md:flex items-center gap-3">
                 <div className="text-sm">
                   <div className="text-gray-600">Resume</div>
@@ -160,7 +160,7 @@ export default function TemplateSelectionPage() {
                   Live Editor
                 </Button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -211,7 +211,7 @@ export default function TemplateSelectionPage() {
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-t border-gray-200">
+        <div className="flex justify-between items-center mt-12 pt-8">
           <Button 
             onClick={() => router.push('/resume-builder/upload?mode=school')}
             variant="outline"
@@ -221,7 +221,7 @@ export default function TemplateSelectionPage() {
             Back to Questions
           </Button>
 
-          <div className="flex gap-3">
+          {/* <div className="flex gap-3">
             <Button 
               onClick={() => router.push('/resume-builder/live-edit')}
               variant="outline"
@@ -229,7 +229,7 @@ export default function TemplateSelectionPage() {
               <Eye className="w-4 h-4 mr-2" />
               Live Editor
             </Button>
-          </div>
+          </div> */}
         </div>
 
         {/* Features */}

@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, ArrowLeft, Download, Eye, Edit, RefreshCw, Palette, Type, Space } from 'lucide-react'
@@ -14,29 +14,14 @@ import { getAvailableFonts, getFontOptions } from '@/lib/resume/resume-fonts'
 import { TemplateCustomization, DEFAULT_CUSTOMIZATION } from '@/lib/resume/template-types'
 
 const PREDEFINED_COLORS = [
-  '#397DC2', // Mockstars Blue
-  '#2563eb', // Blue
-  '#059669', // Green
-  '#dc2626', // Red
-  '#7c3aed', // Purple
-  '#ea580c', // Orange
-  '#0891b2', // Cyan
-  '#be185d', // Pink
-  '#374151', // Gray
-  '#1f2937', // Dark Gray
-  '#92400e', // Brown
-  '#065f46', // Dark Green
-  '#7c2d12', // Dark Orange
-  '#581c87', // Dark Purple
-  '#991b1b', // Dark Red
-  '#0c4a6e', // Dark Blue
+  '#397DC2', '#2563eb', '#059669', '#dc2626', '#7c3aed', '#ea580c', '#0891b2', '#be185d', '#374151', '#1f2937', '#92400e', '#065f46', '#7c2d12', '#581c87', '#991b1b', '#0c4a6e',
 ]
 
 // Get available fonts dynamically
 const availableFonts = getAvailableFonts()
 const fontOptions = getFontOptions()
 
-export default function TemplatePreviewPage() {
+function TemplatePreviewPageInner() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const templateParam = searchParams.get('template')
@@ -53,51 +38,33 @@ export default function TemplatePreviewPage() {
         const savedTemplate = ResumeStorage.loadTemplate()
         setSelectedTemplate(savedTemplate as TemplateId)
       }
-      
-      // Load saved customization
       const savedCustomization = localStorage.getItem('mockstars_template_customization')
       if (savedCustomization) {
-        try {
-          setCustomization(JSON.parse(savedCustomization))
-        } catch (error) {
-          console.error('Failed to load customization:', error)
-        }
+        try { setCustomization(JSON.parse(savedCustomization)) } catch {}
       }
     }
   }, [isLoaded, templateParam])
 
-  // Save customization changes automatically
   useEffect(() => {
     localStorage.setItem('mockstars_template_customization', JSON.stringify(customization))
   }, [customization])
 
   const calculateCompleteness = (): number => {
     let score = 0
-    
-    // Personal info (20 points)
     if (resumeData.personalInfo.name) score += 5
     if (resumeData.personalInfo.email) score += 5
     if (resumeData.personalInfo.phone) score += 5
     if (resumeData.personalInfo.location) score += 5
-    
-    // Summary (15 points)
     if (resumeData.summary && resumeData.summary.length > 50) score += 15
-    
-    // Experience (30 points)
     if (resumeData.experience.length > 0) {
       score += 10
       if (resumeData.experience[0].title && resumeData.experience[0].company) score += 10
     }
-    
-    // Education (15 points)  
     if (resumeData.education.length > 0 && resumeData.education[0].degree && resumeData.education[0].school) {
       score += 15
     }
-    
-    // Skills (20 points)
     if (resumeData.skills.length >= 3) score += 10
     if (resumeData.skills.length >= 6) score += 10
-    
     return score
   }
 
@@ -562,5 +529,13 @@ export default function TemplatePreviewPage() {
         }
       `}</style>
     </div>
+  )
+}
+
+export default function TemplatePreviewPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
+      <TemplatePreviewPageInner />
+    </Suspense>
   )
 }

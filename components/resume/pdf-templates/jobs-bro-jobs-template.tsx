@@ -250,7 +250,7 @@ export const JobsBroJobsTemplate: React.FC<JobsBroJobsTemplateProps> = ({ data }
             
             <View style={styles.skillsContainer}>
               {data.skills.map((skill, index) => (
-                <Text key={index} style={styles.skillItem}>{skill}</Text>
+                <Text key={index} style={styles.skillItem}>{skill.name}</Text>
               ))}
             </View>
           </>

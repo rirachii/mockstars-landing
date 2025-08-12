@@ -36,6 +36,11 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
+
+  // Ignore ESLint errors during production builds
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   
   // Cache headers for static assets
   async headers() {

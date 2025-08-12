@@ -317,7 +317,7 @@ export const SiliconIvyTemplate: React.FC<SiliconIvyTemplateProps> = ({ data }) 
             <Text style={styles.leftSectionTitle}>Skills</Text>
             <View style={styles.skillsSection}>
               {data.skills.map((skill, index) => (
-                <Text key={index} style={styles.skillItem}>{skill}</Text>
+                <Text key={index} style={styles.skillItem}>{typeof skill === 'string' ? skill : (skill as any).name}</Text>
               ))}
             </View>
           </View>

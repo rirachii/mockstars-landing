@@ -1,9 +1,7 @@
 import { getAllBlogPosts, getBlogPostsByCategory, getAllCategories, getAllTags } from '@/lib/blog'
-import { BlogCard } from '@/components/blog/blog-card'
-import { HeroSearchBar } from '@/components/layout/hero-search-bar'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { BookOpen, Users, Clock } from 'lucide-react'
+import { BookOpen, Clock } from 'lucide-react'
 import { HorizontalNavigation } from '@/components/layout/HorizontalNavigation'
 
 interface CategoryPageProps {

@@ -22,7 +22,7 @@ import {
   NPCEnergyTemplate,
   GyattPointsTemplate,
   WorldBestResumeTemplate,
-} from '@/components/resume/pdf-templates';
+} from '@/pdf-templates';
 
 export type TemplateId = 
   | 'mockstars'

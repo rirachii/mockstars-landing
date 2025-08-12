@@ -3,12 +3,12 @@ import React from 'react';
 
 interface TemplatePreviewProps {
   templateId: string;
-  color: string;
+  color?: string;
 }
 
 export const TemplatePreview: React.FC<TemplatePreviewProps> = ({ 
   templateId, 
-  color 
+  color = '#1d4ed8' // default blue
 }) => {
   const renderPreview = () => {
     switch (templateId) {
