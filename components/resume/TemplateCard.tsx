@@ -7,12 +7,14 @@ interface TemplateCardProps {
   template: TemplateInfo;
   onSelect: (templateId: string) => void;
   isSelected?: boolean;
+  recommendedLabel?: string;
 }
 
 export const TemplateCard: React.FC<TemplateCardProps> = ({ 
   template, 
   onSelect, 
-  isSelected = false 
+  isSelected = false,
+  recommendedLabel,
 }) => {
   return (
     <div className="group cursor-pointer" onClick={() => onSelect(template.id)}>
@@ -40,7 +42,14 @@ export const TemplateCard: React.FC<TemplateCardProps> = ({
             </div>
           )}
 
-          {/* Popular Badge */}
+          {/* Recommended Badge */}
+          {recommendedLabel && (
+            <div className="absolute top-2 left-2 bg-blue text-white text-xs px-2 py-1 rounded-full font-outfit">
+              {recommendedLabel}
+            </div>
+          )}
+
+          {/* Pro Badge */}
           {template.isPro && (
             <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-outfit">
               Pro

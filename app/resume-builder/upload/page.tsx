@@ -13,6 +13,20 @@ const PDFUpload = NextDynamic(() => import('@/components/resume/pdf-upload').the
 
 type InSchool = 'HS' | 'UNI' | 'Other' | 'No'
 
+type FlowQuestion = {
+  id: string
+  question: string
+  type: 'single' | 'multi'
+  options: string[]
+  followups?: Record<string, FlowQuestion>
+}
+
+type FlowPresets = {
+  sectionOrder?: string[]
+  theme?: string
+  length_hint?: string
+}
+
 const FALLBACK_GOALS_BY_SCHOOL: Record<InSchool, string[]> = {
   HS: [
     'Club Leadership',
@@ -103,6 +117,13 @@ export default function UploadPage() {
   const [inSchool, setInSchool] = useState<InSchool | null>(null)
   const [goal, setGoal] = useState<string | null>(null)
 
+  // Stepper state for deeper questions
+  const [sequence, setSequence] = useState<FlowQuestion[]>([])
+  const [presets, setPresets] = useState<FlowPresets | null>(null)
+  const [currentStep, setCurrentStep] = useState<number>(0)
+  const [activeFollowup, setActiveFollowup] = useState<FlowQuestion | null>(null)
+  const [answers, setAnswers] = useState<Record<string, string | string[]>>({})
+
   const goals = useMemo(() => {
     if (!inSchool) return []
     try {
@@ -175,34 +196,142 @@ export default function UploadPage() {
   const selectInSchool = (val: InSchool) => {
     setInSchool(val)
     setGoal(null)
+    setSequence([])
+    setCurrentStep(0)
+    setActiveFollowup(null)
+    setAnswers({})
+    setPresets(null)
     ResumeStorage.saveOnboarding({ inSchool: val })
+  }
+
+  const hydratePathFromFlow = (school: InSchool, goalValue: string) => {
+    try {
+      const root = flow?.root
+      const branches = root?.branches || {}
+      const branchKey = school === 'No' ? 'No' : school
+      const branch = branches[branchKey]
+      const paths = branch?.paths || {}
+      const goalPath = paths[goalValue]
+      const seq: FlowQuestion[] = Array.isArray(goalPath?.sequence) ? goalPath.sequence : []
+      const presetsObj: FlowPresets | null = goalPath?.presets || null
+      return { seq, presetsObj }
+    } catch {
+      return { seq: [], presetsObj: null }
+    }
   }
 
   const selectGoal = (val: string) => {
     if (!inSchool) return
     setGoal(val)
+    const { seq, presetsObj } = hydratePathFromFlow(inSchool, val)
+    if (seq.length) {
+      setSequence(seq)
+      setCurrentStep(0)
+      setActiveFollowup(null)
+      setAnswers({})
+      setPresets(presetsObj)
+      ResumeStorage.saveOnboarding({ inSchool, goal: val })
+      return
+    }
+    // Fallback: no sequence available → compute order and proceed
+    let order: Section[] | undefined
+    const mapped = FALLBACK_MAPPING_TABLE.find(m => m.inSchool === inSchool && m.goal === val)
+    order = mapped?.sectionOrder || DEFAULT_CUSTOMIZATION.sectionOrder
+    ResumeStorage.saveRecommendedSectionOrder(order)
     ResumeStorage.saveOnboarding({ inSchool, goal: val })
+    router.push('/resume-builder/templates')
+  }
+
+  const onSelectSingle = (q: FlowQuestion, value: string) => {
+    const newAnswers = { ...answers, [q.id]: value }
+    setAnswers(newAnswers)
+    // handle followup
+    const f = q.followups?.[value]
+    if (f) {
+      setActiveFollowup(f)
+      return
+    }
+    // advance to next base question
+    setCurrentStep(prev => prev + 1)
+  }
+
+  const onToggleMulti = (q: FlowQuestion, value: string) => {
+    const prev = (answers[q.id] as string[] | undefined) || []
+    const exists = prev.includes(value)
+    const next = exists ? prev.filter(v => v !== value) : [...prev, value]
+    setAnswers({ ...answers, [q.id]: next })
+  }
+
+  const onNextFromMulti = () => {
+    setCurrentStep(prev => prev + 1)
+  }
+
+  const onBack = () => {
+    if (!inSchool) return
+    // If answering a followup, go back to the base question
+    if (activeFollowup) {
+      setActiveFollowup(null)
+      return
+    }
+    // If within the base sequence, step back one, or if at first question, go back to goal selection
+    if (goal && sequence.length > 0) {
+      if (currentStep > 0) {
+        setCurrentStep(s => s - 1)
+        return
+      }
+      // currentStep === 0 → back to goal selection
+      setGoal(null)
+      setSequence([])
+      setAnswers({})
+      setPresets(null)
+      setCurrentStep(0)
+      return
+    }
+    // If at goal selection, go back to the root school question
+    if (inSchool && !goal) {
+      setInSchool(null)
+      setSequence([])
+      setAnswers({})
+      setPresets(null)
+      setCurrentStep(0)
+      setActiveFollowup(null)
+      return
+    }
+  }
+
+  const onAnswerFollowup = (fq: FlowQuestion, value: string) => {
+    const newAnswers = { ...answers, [fq.id]: value }
+    setAnswers(newAnswers)
+    setActiveFollowup(null)
+    setCurrentStep(prev => prev + 1)
+  }
+
+  const onComplete = () => {
+    if (!inSchool || !goal) return
+    // Determine order
     let order: Section[] | undefined
     try {
-      const root = flow?.root
-      const branches = root?.branches || {}
-      const branchKey = inSchool === 'No' ? 'No' : inSchool
-      const branch = branches[branchKey]
-      const paths = branch?.paths || {}
-      const goalPath = paths[val]
-      const presets = goalPath?.presets
       const sectionOrder = presets?.sectionOrder
       if (Array.isArray(sectionOrder) && sectionOrder.length) {
         order = sectionOrder as Section[]
       }
     } catch {}
     if (!order) {
-      const mapped = FALLBACK_MAPPING_TABLE.find(m => m.inSchool === inSchool && m.goal === val)
+      const mapped = FALLBACK_MAPPING_TABLE.find(m => m.inSchool === inSchool && m.goal === goal)
       order = mapped?.sectionOrder || DEFAULT_CUSTOMIZATION.sectionOrder
     }
     ResumeStorage.saveRecommendedSectionOrder(order)
-    goToEdit()
+    ResumeStorage.saveOnboarding({
+      inSchool,
+      goal,
+      steps: Object.entries(answers).map(([id, answer]) => ({ id, answer })),
+      lengthHint: presets?.length_hint,
+    })
+    router.push('/resume-builder/templates')
   }
+
+  const totalSteps = sequence.length + (activeFollowup ? 1 : 0)
+  const currentQuestion: FlowQuestion | null = activeFollowup || sequence[currentStep] || null
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 text-gray-800 font-outfit">
@@ -224,12 +353,12 @@ export default function UploadPage() {
                 <ArrowRight className="w-4 h-4 text-gray-400" />
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <div className="w-6 h-6 bg-white text-black rounded-full flex items-center justify-center text-xs font-bold">2</div>
-                  <span>Edit</span>
+                  <span>Template</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-gray-400" />
                 <div className="flex items-center gap-2 text-sm">
                   <div className="w-6 h-6 bg-white text-black rounded-full flex items-center justify-center text-xs font-bold">3</div>
-                  <span className="font-medium text-blue-600">Template</span>
+                  <span className="font-medium text-blue-600">Edit</span>
                 </div>
               </div>
             </div>
@@ -282,9 +411,9 @@ export default function UploadPage() {
                 </>
               )}
 
-              {inSchool && (
+              {inSchool && !goal && (
                 <>
-                  <button className="text-sm text-blue-700 mb-4" onClick={() => setInSchool(null)}>&larr; Change answer</button>
+                  <button className="text-sm text-blue mb-4" onClick={onBack}>&larr; Back</button>
                   <h2 className="text-2xl font-bold text-gray-900 font-mattone mb-3 text-center">What's your current resume goal?</h2>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {goals.map((g) => (
@@ -294,6 +423,45 @@ export default function UploadPage() {
                     ))}
                   </div>
                 </>
+              )}
+
+              {/* Deeper sequence after goal selection */}
+              {inSchool && goal && currentQuestion && (
+                <div className="mt-2">
+                  <button className="text-sm text-blue mb-4" onClick={onBack}>&larr; Back</button>
+                  <div className="flex items-center justify-between mb-2">
+                    <h3 className="text-xl font-bold font-mattone">{currentQuestion.question}</h3>
+                    <div className="text-sm text-gray-600">Step {Math.min(currentStep + 1, sequence.length)} of {sequence.length}</div>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {currentQuestion.type === 'single' && currentQuestion.options.map(opt => (
+                      <button
+                        key={opt}
+                        onClick={() => (activeFollowup ? onAnswerFollowup(currentQuestion, opt) : onSelectSingle(currentQuestion, opt))}
+                        className={`p-4 rounded-xl border transition text-left ${answers[currentQuestion.id] === opt ? 'border-blue-600 bg-blue-50' : 'border-gray-200 bg-white hover:shadow-md'}`}
+                      >
+                        <span className="font-medium">{opt}</span>
+                      </button>
+                    ))}
+                    {currentQuestion.type === 'multi' && currentQuestion.options.map(opt => {
+                      const selected = Array.isArray(answers[currentQuestion.id]) && (answers[currentQuestion.id] as string[]).includes(opt)
+                      return (
+                        <button
+                          key={opt}
+                          onClick={() => onToggleMulti(currentQuestion, opt)}
+                          className={`p-4 rounded-xl border transition text-left ${selected ? 'border-blue-600 bg-blue-50' : 'border-gray-200 bg-white hover:shadow-md'}`}
+                        >
+                          <span className="font-medium">{opt}</span>
+                        </button>
+                      )
+                    })}
+                  </div>
+                  {currentQuestion.type === 'multi' && (
+                    <div className="mt-4 flex justify-end">
+                      <button onClick={onComplete} className="px-4 py-2 rounded-lg bg-blue text-white font-semibold">Start</button>
+                    </div>
+                  )}
+                </div>
               )}
             </div>
           </div>

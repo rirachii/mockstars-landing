@@ -10,6 +10,21 @@ export const STORAGE_KEYS = {
   RECOMMENDED_SECTION_ORDER: 'mockstars_recommended_section_order'
 } as const
 
+export type InSchool = 'HS' | 'UNI' | 'Other' | 'No'
+
+export type OnboardingStepAnswer = {
+  id: string
+  answer: string | string[]
+}
+
+export type OnboardingData = {
+  inSchool?: InSchool
+  goal?: string
+  steps?: OnboardingStepAnswer[]
+  recommendedSectionOrder?: Section[]
+  lengthHint?: string
+}
+
 export const DEFAULT_RESUME_DATA: ResumeData = {
   id: "default",
   personalInfo: {
@@ -187,18 +202,20 @@ export const ResumeStorage = {
     }
   },
 
-  saveOnboarding: (data: { inSchool: 'HS'|'UNI'|'Other'|'No'; goal?: string }) => {
+  saveOnboarding: (data: Partial<OnboardingData> & { inSchool?: InSchool; goal?: string }) => {
     try {
-      localStorage.setItem(STORAGE_KEYS.ONBOARDING, JSON.stringify(data))
+      const existing = ResumeStorage.loadOnboarding()
+      const merged: OnboardingData = { ...existing, ...data }
+      localStorage.setItem(STORAGE_KEYS.ONBOARDING, JSON.stringify(merged))
     } catch (error) {
       console.warn('Failed to save onboarding:', error)
     }
   },
 
-  loadOnboarding: (): { inSchool?: 'HS'|'UNI'|'Other'|'No'; goal?: string } => {
+  loadOnboarding: (): OnboardingData => {
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.ONBOARDING)
-      return stored ? JSON.parse(stored) : {}
+      return stored ? JSON.parse(stored) as OnboardingData : {}
     } catch (error) {
       console.warn('Failed to load onboarding:', error)
       return {}

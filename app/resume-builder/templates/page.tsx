@@ -10,10 +10,31 @@ import { ResumeStorage, DEFAULT_RESUME_DATA } from '@/lib/resume/resume-storage'
 import { ResumeData } from '@/lib/resume/resume-data'
 import { TemplateCard } from '@/components/resume/TemplateCard'
 
+function getRecommendedTemplate(onboarding: ReturnType<typeof ResumeStorage.loadOnboarding>): TemplateInfo | undefined {
+  const goal = onboarding?.goal || ''
+  const inSchool = onboarding?.inSchool || ''
+  // Very simple heuristic mapping for now
+  // Can expand based on steps/answers later
+  if (goal.includes('Leadership')) return resumeTemplates.find(t => t.id === 'paul-allen')
+  if (goal.includes('Research') || goal.includes('Grad School')) return resumeTemplates.find(t => t.id === 'the-gilfoyle')
+  if (goal.includes('Internship') || goal.includes('Co-op') || goal.includes('First Job')) return resumeTemplates.find(t => t.id === 'mockstars')
+  if (goal.includes('Portfolio')) return resumeTemplates.find(t => t.id === 'rizzume')
+  if (goal.includes('Certification')) return resumeTemplates.find(t => t.id === 'no-cap')
+  if (inSchool === 'HS') return resumeTemplates.find(t => t.id === '100-hp')
+  return resumeTemplates[0]
+}
+
 export default function TemplateSelectionPage() {
   const router = useRouter()
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateId | undefined>(undefined)
   const [resumeData, setResumeData, , isLoaded] = useLocalStorage<ResumeData>('mockstars_resume_data', DEFAULT_RESUME_DATA)
+  const [recommended, setRecommended] = useState<TemplateInfo | undefined>(undefined)
+
+  useEffect(() => {
+    const onboarding = ResumeStorage.loadOnboarding()
+    const rec = getRecommendedTemplate(onboarding)
+    setRecommended(rec)
+  }, [])
 
   // Load template preference from localStorage
   useEffect(() => {
@@ -23,12 +44,11 @@ export default function TemplateSelectionPage() {
     }
   }, [isLoaded])
 
-  // Handle template selection and navigation to preview
+  // Handle template selection and navigation to editor directly
   const handleTemplateSelect = (template: TemplateInfo) => {
     setSelectedTemplate(template.id as TemplateId)
     ResumeStorage.saveTemplate(template.id as TemplateId)
-    // Navigate to the preview page with the selected template
-    router.push(`/resume-builder/templates/preview?template=${template.id}`)
+    router.push(`/resume-builder/edit`)
   }
 
   const calculateCompleteness = (): number => {
@@ -72,6 +92,11 @@ export default function TemplateSelectionPage() {
     )
   }
 
+  // Prepare ordered list: recommended first (if present), then the rest excluding it
+  const orderedTemplates: TemplateInfo[] = recommended
+    ? [recommended, ...resumeTemplates.filter(t => t.id !== recommended.id)]
+    : resumeTemplates
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 text-gray-800 font-outfit">
       {/* Header */}
@@ -85,17 +110,17 @@ export default function TemplateSelectionPage() {
               <div className="flex items-center gap-4 mt-2">
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <div className="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-xs font-bold">✓</div>
-                  <span>Upload</span>
+                  <span>Start</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-gray-400" />
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <div className="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-xs font-bold">✓</div>
-                  <span>Edit</span>
+                  <div className="w-6 h-6 bg-white text-black rounded-full flex items-center justify-center text-xs font-bold">2</div>
+                  <span className="font-medium text-blue-600">Template</span>
                 </div>
                 <ArrowRight className="w-4 h-4 text-gray-400" />
                 <div className="flex items-center gap-2 text-sm">
                   <div className="w-6 h-6 bg-white text-black rounded-full flex items-center justify-center text-xs font-bold">3</div>
-                  <span className="font-medium text-blue-600">Template</span>
+                  <span>Edit</span>
                 </div>
               </div>
             </div>
@@ -148,46 +173,39 @@ export default function TemplateSelectionPage() {
               Select Your Professional Template
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Choose from our collection of ATS-friendly, recruiter-approved templates. 
-              Each template is designed to highlight your experience effectively.
+              We picked one based on your answers. You can choose a different one if you want.
             </p>
           </div>
 
           <div className="bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl shadow-lg p-8">
+            {recommended && (
+              <div className="mb-8">
+                <h3 className="text-lg font-semibold mb-3">Recommended for you</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  <TemplateCard
+                    template={recommended}
+                    isSelected={selectedTemplate === recommended.id}
+                    onSelect={() => handleTemplateSelect(recommended)}
+                    recommendedLabel="Recommended"
+                  />
+                </div>
+              </div>
+            )}
+
+            <h3 className="text-lg font-semibold mb-3">All templates</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {resumeTemplates.map((template: TemplateInfo) => (
+              {orderedTemplates.map((template: TemplateInfo) => (
                 <TemplateCard
                   key={template.id}
                   template={template}
                   isSelected={selectedTemplate === template.id}
-                  onSelect={(templateId) => {
-                    if (templateId === template.id) {
-                      handleTemplateSelect(template)
-                    }
-                  }}
+                  onSelect={() => handleTemplateSelect(template)}
                 />
               ))}
             </div>
+
             <div className="mt-6 text-center space-y-4">
-              <p className="text-sm text-gray-600">Click any template to preview and customize your resume</p>
-              <div className="flex justify-center gap-3">
-                <Button 
-                  onClick={() => router.push('/resume-builder/live-edit')} 
-                  variant="outline"
-                >
-                  <Eye className="w-4 h-4 mr-2" />
-                  Try Live Editor Instead
-                </Button>
-                {selectedTemplate && (
-                  <Button 
-                    onClick={() => router.push(`/resume-builder/templates/preview?template=${selectedTemplate}`)}
-                    className="bg-blue hover:bg-blue/90"
-                  >
-                    Preview Selected Template
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </Button>
-                )}
-              </div>
+              <p className="text-sm text-gray-600">Pick a template to continue to the editor</p>
             </div>
           </div>
         </div>
@@ -195,12 +213,12 @@ export default function TemplateSelectionPage() {
         {/* Navigation */}
         <div className="flex justify-between items-center mt-12 pt-8 border-t border-gray-200">
           <Button 
-            onClick={() => router.push('/resume-builder/edit')}
+            onClick={() => router.push('/resume-builder/upload?mode=school')}
             variant="outline"
             className="flex items-center gap-2"
           >
             <ArrowLeft className="w-4 h-4" />
-            Back to Edit
+            Back to Questions
           </Button>
 
           <div className="flex gap-3">

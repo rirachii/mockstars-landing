@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { PostHogProvider } from "@/components/common/posthog-provider"
 import { AnalyticsProvider } from "@/components/common/analytics-provider"
 import MaybeNavigation from "@/components/layout/MaybeNavigation"
-import Footer from "@/components/layout/Footer"
+import MaybeFooter from "@/components/layout/MaybeFooter" 
 import JsonLd from "@/components/JsonLd"
 import type { Metadata } from 'next'
 
@@ -74,7 +74,7 @@ export default function RootLayout({
             <main role="main" className="flex-1">
               {children}
             </main>
-            <Footer />
+            <MaybeFooter />
           </ThemeProvider>
         </PostHogProvider>
         </AnalyticsProvider>

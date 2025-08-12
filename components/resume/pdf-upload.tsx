@@ -5,23 +5,25 @@ import { Button } from '@/components/ui/button';
 import { Upload, FileText, Loader2, CheckCircle, AlertCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ResumeData } from '@/lib/resume/resume-data';
-// import { PDFParser } from '@/lib/resume/pdf-parser';
 
 interface PDFUploadProps {
   onParsed?: (data: ResumeData) => void;
   onError?: (error: string) => void;
+  onApiResponse?: (resp: unknown) => void;
   className?: string;
 }
 
 export const PDFUpload: React.FC<PDFUploadProps> = ({ 
   onParsed, 
   onError, 
+  onApiResponse,
   className 
 }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
-  const [parseResult, setParseResult] = useState<ResumeData | null>(null);
+  const [parsedText, setParsedText] = useState<string | null>(null);
+  const [pagesCount, setPagesCount] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const allowedExtensions = ['pdf', 'doc', 'docx', 'txt', 'html', 'rtf', 'png', 'jpg', 'jpeg', 'webp'];
@@ -49,38 +51,46 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
     setUploadedFile(file);
 
     try {
+      const formData = new FormData();
+      let fileToSend: File = file;
+
       if (extension === 'pdf') {
         // Defer-load the heavy parser only when needed
+        const { PDFParser } = await import('@/lib/files/pdf-parser');
         const result = await PDFParser.parseFile(file);
-        setParseResult(result);
-        onParsed?.(result);
+        const text = result.text || '';
+        setParsedText(text);
+        setPagesCount(result.pages?.length || null);
+
+        // Convert parsed text to a .txt file for upload
+        const txtBlob = new Blob([text], { type: 'text/plain' });
+        const base = file.name.replace(/\.[^/.]+$/, '');
+        const convertedName = `${base}.txt`;
+        fileToSend = new File([txtBlob], convertedName, { type: 'text/plain' });
       } else {
-        // For non-PDF types, allow upload and proceed without parsing
-        // const minimal: ResumeData = {
-        //   personalInfo: {
-        //     name: '',
-        //     title: '',
-        //     email: '',
-        //     phone: '',
-        //     location: '',
-        //     linkedin: '',
-        //     website: ''
-        //   },
-        //   summary: '',
-        //   experience: [],
-        //   education: [],
-        //   skills: [],
-        //   projects: [],
-        //   interests: [],
-        // };
-        // setParseResult(minimal);
-        // onParsed?.(minimal);
+        // For non-PDF files, send as-is; backend may convert
+        setParsedText(null);
+        setPagesCount(null);
       }
+
+      formData.append('resume', fileToSend);
+
+      const endpoint = process.env.NEXT_PUBLIC_RESUME_UPLOAD_ENDPOINT || 'http://localhost:3001/api/v1/guest/resume/upload-and-parse';
+      const resp = await fetch(endpoint, { method: 'POST', body: formData });
+      const json = await resp.json().catch(() => null);
+
+      if (!resp.ok) {
+        const msg = (json && (json.message || json.error)) || 'Upload failed';
+        throw new Error(msg);
+      }
+
+      onApiResponse?.(json);
+      // Optional: if callers still expect onParsed, we won't fabricate ResumeData here per instruction
     } catch (err) {
-      const errorMsg = 'Failed to parse PDF. Please try another file.';
+      const errorMsg = err instanceof Error ? err.message : 'Failed to upload/parse resume. Please try another file.';
       setError(errorMsg);
       onError?.(errorMsg);
-      console.error('PDF parsing error:', err);
+      console.error('Resume upload error:', err);
     } finally {
       setIsUploading(false);
     }
@@ -121,7 +131,7 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
           "border-2 border-dashed rounded-lg p-8 text-center transition-colors",
           isDragging ? "border-blue bg-blue/5" : "border-gray-300",
           error ? "border-red-300 bg-red-50" : "",
-          parseResult ? "border-green-300 bg-green-50" : ""
+          parsedText ? "border-green-300 bg-green-50" : ""
         )}
         onDrop={handleDrop}
         onDragOver={handleDragOver}
@@ -140,26 +150,24 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
           <div className="flex flex-col items-center space-y-4">
             <Loader2 className="w-12 h-12 text-blue animate-spin" />
             <div>
-              <p className="text-lg font-medium text-gray-900">Parsing your resume...</p>
-              <p className="text-sm text-gray-600">This may take a few moments</p>
+              <p className="text-lg font-medium text-gray-900">Processing your resume...</p>
+              <p className="text-sm text-gray-600">Converting and sending for parsing</p>
             </div>
           </div>
-        ) : parseResult ? (
+        ) : parsedText ? (
           <div className="flex flex-col items-center space-y-4">
             <CheckCircle className="w-12 h-12 text-green-600" />
             <div>
-              <p className="text-lg font-medium text-gray-900">Resume uploaded successfully!</p>
+              <p className="text-lg font-medium text-gray-900">Resume sent successfully!</p>
               <p className="text-sm text-gray-600">
-                {parseResult.experience.length > 0
-                  ? <>Extracted {parseResult.experience.length} characters from {parseResult.experience.length} page(s)</>
-                  : <>Uploaded {uploadedFile?.name}</>
-                }
+                {pagesCount ? <>Extracted {pagesCount} page(s) from {uploadedFile?.name}</> : <>Uploaded {uploadedFile?.name}</>}
               </p>
             </div>
             <Button
               variant="outline"
               onClick={() => {
-                setParseResult(null);
+                setParsedText(null);
+                setPagesCount(null);
                 setUploadedFile(null);
                 setError(null);
               }}
@@ -200,31 +208,24 @@ export const PDFUpload: React.FC<PDFUploadProps> = ({
       </div>
 
       {/* Parsed Content Preview */}
-      {parseResult && (
+      {parsedText && (
         <div className="border border-gray-200 rounded-lg p-4">
           <div className="flex items-center space-x-2 mb-3">
             <FileText className="w-5 h-5 text-blue" />
-            <h3 className="text-lg font-medium text-gray-900">Parsed Content</h3>
+            <h3 className="text-lg font-medium text-gray-900">Extracted Text Preview</h3>
           </div>
           
           <div className="space-y-3">
-            {parseResult.personalInfo?.name && (
-              <div>
-                <span className="text-sm font-medium text-gray-700">Title: </span>
-                <span className="text-sm text-gray-600">{parseResult.personalInfo.name}</span>
-              </div>
-            )}
-            
             <div>
               <span className="text-sm font-medium text-gray-700">Content Preview: </span>
               <p className="text-sm text-gray-600 mt-1 line-clamp-3">
-                {parseResult.summary?.substring(0, 300)}...
+                {parsedText.substring(0, 300)}...
               </p>
             </div>
 
             <div className="flex justify-between text-xs text-gray-500">
-              <span>Pages: {parseResult.experience.length}</span>
-              <span>Characters: {parseResult.summary?.length}</span>
+              <span>Pages: {pagesCount ?? '-'}</span>
+              <span>Characters: {parsedText.length}</span>
             </div>
           </div>
         </div>
