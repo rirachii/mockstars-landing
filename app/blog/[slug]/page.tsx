@@ -102,7 +102,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       : null
 
   return (
-    <div className="flex flex-col min-h-screen text-gray-800 font-outfit relative z-10">
+    <div className="flex flex-col min-h-screen font-outfit relative z-10">
       {/* Main Content with Sidebar */}
       <div className="flex relative">
         {/* Main Article Content */}
@@ -110,7 +110,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto xl:mx-8 xl:ml-12">
               {/* Article Header */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 mb-8">
+              <div className="bg-white/80 text-gray-800 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 mb-8">
                 <BlogPostHeader post={post} />
               </div>
               
@@ -120,7 +120,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               {/* FAQ Section (visible content) */}
-              {hasFaqs && (
+              {/* {hasFaqs && (
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 md:p-10 mb-8">
                   <h2 className="text-2xl font-bold mb-4 font-mattone text-gray-900">FAQs</h2>
                   <div className="space-y-3 text-gray-700">
@@ -137,7 +137,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     ))}
                   </div>
                 </div>
-              )}
+              )} */}
 
               
               {/* Navigation */}
@@ -167,7 +167,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         {index + 1}
                       </span>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-semibold text-gray-800 group-hover:text-blue transition-colors line-clamp-2 font-mattone">
+                        <h4 className="text-sm font-semibold group-hover:text-blue transition-colors line-clamp-2 font-mattone">
                           {popularPost.title}
                         </h4>
                         <p className="text-xs text-gray-500 mt-1 font-outfit">

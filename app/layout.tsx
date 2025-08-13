@@ -69,7 +69,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col">
         <AnalyticsProvider>
           <PostHogProvider>
-            <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+            <ThemeProvider attribute="class" defaultTheme="light" forcedTheme="light" disableTransitionOnChange>
             <MaybeNavigation />
             <main role="main" className="flex-1">
               {children}

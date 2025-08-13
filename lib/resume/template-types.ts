@@ -177,6 +177,21 @@ export const resumeTemplates: TemplateInfo[] = [
     isPro: false,
   },
   {
+    id: 'paul-allen',
+    name: "Paul Allen",
+    tagline: 'White, classy, embossed feel',
+    description: "Look at that subtle off-white coloring. The tasteful thickness. Oh my God, it even has a watermark.",
+    personality: 'Luxurious, refined, exclusive',
+    idealFor: ['Private Equity', 'Luxury Brand Managers', 'Art Directors', 'High-end Consultants'],
+    preview: '/template-previews/paul-allen.png',
+    component: PaulAllenTemplate,
+    category: 'corporate',
+    customization: DEFAULT_CUSTOMIZATION,
+    layout: 'single-column',
+    features: ['Luxury aesthetic', 'Premium typography', 'Subtle elegance', 'Exclusive feel'],
+    isPro: false,
+  },
+  {
     id: 'its-giving-professional',
     name: "It's Giving Professional",
     tagline: 'Playful but polished',
@@ -446,22 +461,8 @@ export const resumeTemplates: TemplateInfo[] = [
     layout: 'two-column',
     features: ['Modern-classic fusion', 'Elegant typography', 'Balanced design', 'Sophisticated palette'],
     isPro: false,
-  },
-  {
-    id: 'paul-allen',
-    name: "Paul Allen",
-    tagline: 'White, classy, embossed feel',
-    description: "Look at that subtle off-white coloring. The tasteful thickness. Oh my God, it even has a watermark.",
-    personality: 'Luxurious, refined, exclusive',
-    idealFor: ['Private Equity', 'Luxury Brand Managers', 'Art Directors', 'High-end Consultants'],
-    preview: '/template-previews/paul-allen.png',
-    component: PaulAllenTemplate,
-    category: 'corporate',
-    customization: DEFAULT_CUSTOMIZATION,
-    layout: 'single-column',
-    features: ['Luxury aesthetic', 'Premium typography', 'Subtle elegance', 'Exclusive feel'],
-    isPro: false,
   }
+  
 ];
 
 // Helper Functions

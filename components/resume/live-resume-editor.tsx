@@ -23,6 +23,7 @@ import {
 import { ResumeData } from '@/lib/resume/resume-data'
 import { cn } from '@/lib/utils'
 import type { TemplateCustomization, TemplateId } from '@/lib/resume/template-types'
+import { getTemplate } from '@/lib/resume/template-types'
 
 interface LiveResumeEditorProps {
   data: ResumeData
@@ -50,6 +51,11 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
   const [isEditMode, setIsEditMode] = useState(true)
   const [hoveredField, setHoveredField] = useState<string | null>(null)
   const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null)
+
+  const templateInfo = template ? getTemplate(template) : undefined
+  const primaryColor = customization?.primaryColor || '#397DC2'
+  const fontFamily = customization?.fontFamily || 'Helvetica'
+  const isTwoColumn = templateInfo?.layout === 'two-column' || templateInfo?.layout === 'sidebar'
 
   // Focus input when editing starts
   useEffect(() => {
@@ -252,7 +258,10 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
   }
 
   return (
-    <div className={cn('bg-white shadow-lg rounded-lg overflow-hidden', className)}>
+    <div
+      className={cn('bg-white shadow-lg rounded-lg overflow-hidden', className)}
+      style={{ fontFamily }}
+    >
       {/* Toolbar */}
       <div className="bg-gray-50 border-gray-200 p-4 flex items-center justify-between">
         <div className="flex items-center gap-4">
@@ -293,7 +302,9 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
           <EditableField
             value={data.personalInfo.name}
             onChange={(value) => handleFieldChange(value)}
-            className="text-4xl font-bold text-blue-600 mb-3"
+            className="text-4xl font-bold mb-3"
+            // @ts-expect-error inline style for dynamic color
+            style={{ color: primaryColor }}
             placeholder="Your Name"
             fieldKey="personalInfo-name"
           />
@@ -337,293 +348,310 @@ export const LiveResumeEditor: React.FC<LiveResumeEditorProps> = ({
           </div>
         </div>
 
-        {/* Professional Summary */}
-        {data.summary && (
-          <div className="mb-8">
-            <h3 className="text-lg font-bold text-blue-600 mb-3 uppercase pb-1">
-              Professional Summary
-            </h3>
-            <EditableField
-              value={data.summary}
-              onChange={(value) => handleFieldChange(value)}
-              className="text-gray-800 leading-relaxed"
-              multiline
-              placeholder="Write a compelling summary of your professional experience..."
-              fieldKey="summary-summary"
-            />
-          </div>
-        )}
-
-        {/* Experience */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-bold text-blue-600 uppercase pb-1">
-              Professional Experience
-            </h3>
-            {isEditMode && (
-              <Button onClick={addExperience} size="sm" variant="outline">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Position
-              </Button>
-            )}
-          </div>
-
-          {data.experience.map((exp, index) => (
-            <div key={exp.id || index} className="mb-6 relative group">
-              {isEditMode && (
-                <Button
-                  onClick={() => removeExperience(index)}
-                  size="sm"
-                  variant="ghost"
-                  className="absolute -right-2 -top-2 opacity-0 group-hover:opacity-100 text-red-600 hover:text-red-700"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              )}
-              
-              <div className="flex justify-between items-start mb-2">
-                <EditableField
-                  value={exp.title}
-                  onChange={(value) => handleFieldChange(value)}
-                  className="font-bold text-gray-800 text-lg"
-                  placeholder="Job Title"
-                  fieldKey={`experience-title-${index}`}
-                />
-                <div className="text-sm text-gray-600">
-                  <EditableField
-                    value={`${exp.startDate} - ${exp.endDate || ''}`}
-                    onChange={(value) => {
-                      const [start, end] = value.split(' - ')
-                      const newData = { ...data }
-                      newData.experience[index].startDate = start || ''
-                      newData.experience[index].endDate = end || ''
-                      onChange(newData)
-                    }}
-                    placeholder="Start Date - End Date"
-                    fieldKey={`experience-dates-${index}`}
-                  />
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center mb-3">
-                <EditableField
-                  value={exp.company}
-                  onChange={(value) => handleFieldChange(value)}
-                  className="text-gray-700 font-medium"
-                  placeholder="Company Name"
-                  fieldKey={`experience-company-${index}`}
-                />
-                {exp.location && (
-                  <EditableField
-                    value={exp.location}
-                    onChange={(value) => handleFieldChange(value)}
-                    className="text-sm text-gray-600"
-                    placeholder="Location"
-                    fieldKey={`experience-location-${index}`}
-                  />
-                )}
-              </div>
-
-              <div className="space-y-2">
-                {exp.bullets.map((bullet, bulletIndex) => (
-                  <div key={bullet.id || bulletIndex} className="flex items-start gap-2 group/bullet">
-                    <span className="text-gray-800 mt-1">•</span>
-                    <EditableField
-                      value={bullet.text}
-                      onChange={(value) => handleFieldChange(value)}
-                      className="text-gray-800 leading-relaxed flex-1"
-                      multiline
-                      placeholder="Describe your achievement with specific metrics..."
-                      fieldKey={`experience-description-${index}-${bulletIndex}`}
-                    />
-                    {isEditMode && (
-                      <div className="opacity-0 group-hover/bullet:opacity-100 flex gap-1">
-                        <Button
-                          onClick={() => addDescriptionBullet(index)}
-                          size="sm"
-                          variant="ghost"
-                          className="p-1 h-6 w-6"
-                        >
-                          <Plus className="w-3 h-3" />
-                        </Button>
-                        {exp.bullets.length > 1 && (
-                          <Button
-                            onClick={() => removeDescriptionBullet(index, bulletIndex)}
-                            size="sm"
-                            variant="ghost"
-                            className="p-1 h-6 w-6 text-red-600"
-                          >
-                            <Trash2 className="w-3 h-3" />
-                          </Button>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Education */}
-        <div className="mb-8">
-          <div className="flex items_center justify-between mb-4">
-            <h3 className="text-lg font-bold text-blue-600 uppercase pb-1">
-              Education
-            </h3>
-            {isEditMode && (
-              <Button onClick={addEducation} size="sm" variant="outline">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Education
-              </Button>
-            )}
-          </div>
-
-          {data.education.map((edu, index) => (
-            <div key={edu.id || index} className="mb-4 relative group">
-              {isEditMode && data.education.length > 1 && (
-                <Button
-                  onClick={() => removeEducation(index)}
-                  size="sm"
-                  variant="ghost"
-                  className="absolute -right-2 -top-2 opacity-0 group-hover:opacity-100 text-red-600 hover:text-red-700"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              )}
-              
-              <EditableField
-                value={edu.degree}
-                onChange={(value) => handleFieldChange(value)}
-                className="font-bold text_gray-800"
-                placeholder="Degree Name"
-                fieldKey={`education-degree-${index}`}
-              />
-              <EditableField
-                value={edu.school}
-                onChange={(value) => handleFieldChange(value)}
-                className="text-gray-700"
-                placeholder="School Name"
-                fieldKey={`education-school-${index}`}
-              />
-              <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
-                <EditableField
-                  value={edu.startYear || ''}
-                  onChange={(value) => handleFieldChange(value)}
-                  placeholder="Start Year"
-                  fieldKey={`education-startYear-${index}`}
-                />
-                <EditableField
-                  value={edu.endYear || ''}
-                  onChange={(value) => handleFieldChange(value)}
-                  placeholder="End Year"
-                  fieldKey={`education-endYear-${index}`}
-                />
-              </div>
-              {edu.gpa && (
-                <EditableField
-                  value={`GPA: ${edu.gpa}`}
-                  onChange={(value) => {
-                    const gpa = value.replace('GPA: ', '')
-                    const newData = { ...data }
-                    newData.education[index].gpa = gpa
-                    onChange(newData)
-                  }}
-                  placeholder="GPA: 3.8"
-                  fieldKey={`education-gpa-${index}`}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Skills */}
-        <div className="mb-8">
-          <h3 className="text-lg font-bold text-blue-600 mb-3 uppercase pb-1">
-            Technical Skills
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            <EditableField
-              value={data.skills.map(s => s.name).join(', ')}
-              onChange={(value) => handleFieldChange(value)}
-              className="text-gray-800"
-              placeholder="Skill 1, Skill 2, Skill 3, ..."
-              fieldKey="skills-skills"
-            />
-          </div>
-          {isEditMode && (
-            <p className="text-xs text-gray-500 mt-2">Separate skills with commas</p>
-          )}
-        </div>
-
-        {/* Projects */}
-        {(data.projects && data.projects.length > 0) && (
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold text-blue-600 uppercase pb-1">
-                Notable Projects
+        {/* Compute main sections to compose different layouts */}
+        {(() => {
+          const Summary = data.summary ? (
+            <div className="mb-8">
+              <h3 className="text-lg font-bold mb-3 uppercase pb-1" style={{ color: primaryColor }}>
+                Professional Summary
               </h3>
-              {isEditMode && (
-                <Button onClick={addProject} size="sm" variant="outline">
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Project
-                </Button>
-              )}
+              <EditableField
+                value={data.summary}
+                onChange={(value) => handleFieldChange(value)}
+                className="text-gray-800 leading-relaxed"
+                multiline
+                placeholder="Write a compelling summary of your professional experience..."
+                fieldKey="summary-summary"
+              />
             </div>
+          ) : null
 
-            {data.projects.map((project, index) => (
-              <div key={project.id || index} className="mb-6 relative group">
+          const Experience = (
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold uppercase pb-1" style={{ color: primaryColor }}>
+                  Professional Experience
+                </h3>
                 {isEditMode && (
-                  <Button
-                    onClick={() => removeProject(index)}
-                    size="sm"
-                    variant="ghost"
-                    className="absolute -right-2 -top-2 opacity-0 group-hover:opacity-100 text-red-600 hover:text-red-700"
-                  >
-                    <Trash2 className="w-4 h-4" />
+                  <Button onClick={addExperience} size="sm" variant="outline">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Position
                   </Button>
                 )}
-                
-                <EditableField
-                  value={project.name}
-                  onChange={(value) => handleFieldChange(value)}
-                  className="font-bold text-gray-800 mb-2"
-                  placeholder="Project Name"
-                  fieldKey={`projects-name-${index}`}
-                />
-                <EditableField
-                  value={project.description || ''}
-                  onChange={(value) => handleFieldChange(value)}
-                  className="text-gray-800 leading-relaxed mb-2"
-                  multiline
-                  placeholder="Project description highlighting your role and impact..."
-                  fieldKey={`projects-description-${index}`}
-                />
-                <div className="text-gray-600 text-sm">
-                  <strong>Technologies: </strong>
+              </div>
+
+              {data.experience.map((exp, index) => (
+                <div key={exp.id || index} className="mb-6 relative group">
+                  {isEditMode && (
+                    <Button
+                      onClick={() => removeExperience(index)}
+                      size="sm"
+                      variant="ghost"
+                      className="absolute -right-2 -top-2 opacity-0 group-hover:opacity-100 text-red-600 hover:text-red-700"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  )}
+                  
+                  <div className="flex justify-between items-start mb-2">
+                    <EditableField
+                      value={exp.title}
+                      onChange={(value) => handleFieldChange(value)}
+                      className="font-bold text-gray-800 text-lg"
+                      placeholder="Job Title"
+                      fieldKey={`experience-title-${index}`}
+                    />
+                    <div className="text-sm text-gray-600">
+                      <EditableField
+                        value={`${exp.startDate} - ${exp.endDate || ''}`}
+                        onChange={(value) => {
+                          const [start, end] = value.split(' - ')
+                          const newData = { ...data }
+                          newData.experience[index].startDate = start || ''
+                          newData.experience[index].endDate = end || ''
+                          onChange(newData)
+                        }}
+                        placeholder="Start Date - End Date"
+                        fieldKey={`experience-dates-${index}`}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between items-center mb-3">
+                    <EditableField
+                      value={exp.company}
+                      onChange={(value) => handleFieldChange(value)}
+                      className="text-gray-700 font-medium"
+                      placeholder="Company Name"
+                      fieldKey={`experience-company-${index}`}
+                    />
+                    {exp.location && (
+                      <EditableField
+                        value={exp.location}
+                        onChange={(value) => handleFieldChange(value)}
+                        className="text-sm text-gray-600"
+                        placeholder="Location"
+                        fieldKey={`experience-location-${index}`}
+                      />
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    {exp.bullets.map((bullet, bulletIndex) => (
+                      <div key={bullet.id || bulletIndex} className="flex items-start gap-2 group/bullet">
+                        <span className="text-gray-800 mt-1">•</span>
+                        <EditableField
+                          value={bullet.text}
+                          onChange={(value) => handleFieldChange(value)}
+                          className="text-gray-800 leading-relaxed flex-1"
+                          multiline
+                          placeholder="Describe your achievement with specific metrics..."
+                          fieldKey={`experience-description-${index}-${bulletIndex}`}
+                        />
+                        {isEditMode && (
+                          <div className="opacity-0 group-hover/bullet:opacity-100 flex gap-1">
+                            <Button
+                              onClick={() => addDescriptionBullet(index)}
+                              size="sm"
+                              variant="ghost"
+                              className="p-1 h-6 w-6"
+                            >
+                              <Plus className="w-3 h-3" />
+                            </Button>
+                            {exp.bullets.length > 1 && (
+                              <Button
+                                onClick={() => removeDescriptionBullet(index, bulletIndex)}
+                                size="sm"
+                                variant="ghost"
+                                className="p-1 h-6 w-6 text-red-600"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )
+
+          const Education = (
+            <div className="mb-8">
+              <div className="flex items_center justify-between mb-4">
+                <h3 className="text-lg font-bold uppercase pb-1" style={{ color: primaryColor }}>
+                  Education
+                </h3>
+                {isEditMode && (
+                  <Button onClick={addEducation} size="sm" variant="outline">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Education
+                  </Button>
+                )}
+              </div>
+              {data.education.map((edu, index) => (
+                <div key={edu.id || index} className="mb-4 relative group">
+                  {isEditMode && data.education.length > 1 && (
+                    <Button
+                      onClick={() => removeEducation(index)}
+                      size="sm"
+                      variant="ghost"
+                      className="absolute -right-2 -top-2 opacity-0 group-hover:opacity-100 text-red-600 hover:text-red-700"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  )}
+                  
                   <EditableField
-                    value={(project.technologies || []).join(', ')}
+                    value={edu.degree}
                     onChange={(value) => handleFieldChange(value)}
-                    placeholder="Technology 1, Technology 2, ..."
-                    fieldKey={`projects-technologies-${index}`}
+                    className="font-bold text_gray-800"
+                    placeholder="Degree Name"
+                    fieldKey={`education-degree-${index}`}
                   />
+                  <EditableField
+                    value={edu.school}
+                    onChange={(value) => handleFieldChange(value)}
+                    className="text-gray-700"
+                    placeholder="School Name"
+                    fieldKey={`education-school-${index}`}
+                  />
+                  <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+                    <EditableField
+                      value={edu.startYear || ''}
+                      onChange={(value) => handleFieldChange(value)}
+                      placeholder="Start Year"
+                      fieldKey={`education-startYear-${index}`}
+                    />
+                    <EditableField
+                      value={edu.endYear || ''}
+                      onChange={(value) => handleFieldChange(value)}
+                      placeholder="End Year"
+                      fieldKey={`education-endYear-${index}`}
+                    />
+                  </div>
+                  {edu.gpa && (
+                    <EditableField
+                      value={`GPA: ${edu.gpa}`}
+                      onChange={(value) => {
+                        const gpa = value.replace('GPA: ', '')
+                        const newData = { ...data }
+                        newData.education[index].gpa = gpa
+                        onChange(newData)
+                      }}
+                      placeholder="GPA: 3.8"
+                      fieldKey={`education-gpa-${index}`}
+                    />
+                  )}
+                </div>
+              ))}
+            </div>
+          )
+
+          const Skills = (
+            <div className="mb-8">
+              <h3 className="text-lg font-bold mb-3 uppercase pb-1" style={{ color: primaryColor }}>
+                Technical Skills
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                <EditableField
+                  value={data.skills.map(s => s.name).join(', ')}
+                  onChange={(value) => handleFieldChange(value)}
+                  className="text-gray-800"
+                  placeholder="Skill 1, Skill 2, Skill 3, ..."
+                  fieldKey="skills-skills"
+                />
+              </div>
+              {isEditMode && (
+                <p className="text-xs text-gray-500 mt-2">Separate skills with commas</p>
+              )}
+            </div>
+          )
+
+          const Projects = (data.projects && data.projects.length > 0) ? (
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold uppercase pb-1" style={{ color: primaryColor }}>
+                  Notable Projects
+                </h3>
+                {isEditMode && (
+                  <Button onClick={addProject} size="sm" variant="outline">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Project
+                  </Button>
+                )}
+              </div>
+
+              {data.projects.map((project, index) => (
+                <div key={project.id || index} className="mb-6 relative group">
+                  {isEditMode && (
+                    <Button
+                      onClick={() => removeProject(index)}
+                      size="sm"
+                      variant="ghost"
+                      className="absolute -right-2 -top-2 opacity-0 group-hover:opacity-100 text-red-600 hover:text-red-700"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  )}
+                  
+                  <EditableField
+                    value={project.name}
+                    onChange={(value) => handleFieldChange(value)}
+                    className="font-bold text-gray-800 mb-2"
+                    placeholder="Project Name"
+                    fieldKey={`projects-name-${index}`}
+                  />
+                  <EditableField
+                    value={project.description || ''}
+                    onChange={(value) => handleFieldChange(value)}
+                    className="text-gray-800 leading-relaxed mb-2"
+                    multiline
+                    placeholder="Project description highlighting your role and impact..."
+                    fieldKey={`projects-description-${index}`}
+                  />
+                  <div className="text-gray-600 text-sm">
+                    <strong>Technologies: </strong>
+                    <EditableField
+                      value={(project.technologies || []).join(', ')}
+                      onChange={(value) => handleFieldChange(value)}
+                      placeholder="Technology 1, Technology 2, ..."
+                      fieldKey={`projects-technologies-${index}`}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : null
+
+          if (isTwoColumn) {
+            return (
+              <div className="grid grid-cols-12 gap-6">
+                <div className="col-span-12 lg:col-span-4">
+                  {Skills}
+                </div>
+                <div className="col-span-12 lg:col-span-8">
+                  {Summary}
+                  {Experience}
+                  {Education}
+                  {Projects}
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+            )
+          }
 
-        {/* Add Projects Section if none exist */}
-        {isEditMode && (!data.projects || data.projects.length === 0) && (
-          <div className="mb-8 border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-            <h3 className="text-lg font-medium text-gray-600 mb-2">Add Projects Section</h3>
-            <p className="text-gray-500 mb-4">Showcase your notable projects and side work</p>
-            <Button onClick={addProject} variant="outline">
-              <Plus className="w-4 h-4 mr-2" />
-              Add First Project
-            </Button>
-          </div>
-        )}
+          return (
+            <>
+              {Summary}
+              {Experience}
+              {Education}
+              {Skills}
+              {Projects}
+            </>
+          )
+        })()}
       </div>
     </div>
   )

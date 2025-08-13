@@ -12,7 +12,7 @@ interface DeluluModeTemplateProps {
 export const DeluluModeTemplate: React.FC<DeluluModeTemplateProps> = ({
   data,
   customization = {
-    color: '#FF4DA6',
+    primaryColor: '#FF4DA6',
     fontSize: 'default',
     fontFamily: 'Helvetica',
     sectionSpacing: 18,

@@ -51,7 +51,7 @@ export function BlogPostHeader({ post }: BlogPostHeaderProps) {
       )}
 
       {/* Title */}
-      <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6 leading-tight font-mattone">
+      <h1 className="text-2xl md:text-4xl font-bold text-gray-800 mb-6 leading-tight font-mattone">
         {post.title}
       </h1>
 

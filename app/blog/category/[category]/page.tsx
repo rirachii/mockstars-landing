@@ -22,16 +22,16 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
 function CategoryHeroSection({ categoryName, posts }: { categoryName: string, posts: any[] }) {
   return (
-    <section className="py-16 md:py-24">
+    <section className="py-8 md:py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto text-center">
           <div className="text-2xs uppercase tracking-widest text-teal-600 mb-2 font-mattone">CATEGORY</div>
-          <h1 className="text-2xl md:text-5xl font-bold tracking-tight mb-8 font-mattone">
+          <h1 className="text-2xl md:text-5xl font-bold tracking-tight font-mattone">
             <span className="gradient-text">{categoryName}</span>
           </h1>
           
           <div className="mb-8">
-            <p className="text-lg mb-4 font-outfit">Expert insights for your career journey</p>
+            {/* <p className="text-lg mb-4 font-outfit">Expert insights for your career journey</p> */}
             {/* <p className="text-gray-600 font-outfit max-w-2xl mx-auto">
               Explore our collection of {postCount} article{postCount !== 1 ? 's' : ''} about {categoryName.toLowerCase()} 
               for interview preparation and career advice.
