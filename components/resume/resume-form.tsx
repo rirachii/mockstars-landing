@@ -4,9 +4,10 @@ import React from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Plus, Trash2, User, Briefcase, GraduationCap, Code2, FileText } from 'lucide-react'
+import { Plus, Trash2, User, Briefcase, GraduationCap, Code2, FileText, ArrowLeft } from 'lucide-react'
 import { ResumeData } from '@/lib/resume/resume-data'
 import { Section } from '@/lib/resume/template-types'
+import router from 'next/router'
 
 interface ResumeFormProps {
   data: ResumeData
@@ -716,14 +717,6 @@ export const ResumeForm: React.FC<ResumeFormProps> = ({
             onChange={(e) => updateInterests(e.target.value)}
             rows={2}
           />
-        </div>
-      )}
-
-      {isLastSection && (
-        <div className="flex justify-end">
-          <Button onClick={onPreview} className="bg-blue hover:bg-blue/90 text-white px-4 py-2 rounded-lg">
-            See my resume
-          </Button>
         </div>
       )}
     </div>

@@ -1,5 +1,7 @@
 // components/resume/TemplatePreview.tsx
 import React from 'react';
+import Image from 'next/image';
+import { getTemplate, TemplateId } from '@/lib/resume/template-types';
 
 interface TemplatePreviewProps {
   templateId: string;
@@ -10,9 +12,11 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
   templateId, 
   color = '#1d4ed8' // default blue
 }) => {
-  const renderPreview = () => {
+  const info = getTemplate(templateId as TemplateId);
+
+  const renderPlaceholder = () => {
     switch (templateId) {
-      case 'elegant':
+      case 'owen':
         return (
           <div className="h-full">
             <div className="border-gray-200 pb-2 mb-3">
@@ -43,8 +47,7 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
             </div>
           </div>
         );
-      
-      case 'chicago':
+      case 'world-best-resume':
         return (
           <div className="h-full">
             <div className="text-center border-gray-300 pb-2 mb-3">
@@ -66,8 +69,7 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
             </div>
           </div>
         );
-      
-      case 'clean':
+      case 'paul-allen':
         return (
           <div className="h-full">
             <div className="bg-orange-400 text-white p-2 mb-3">
@@ -91,7 +93,6 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
             </div>
           </div>
         );
-      
       case 'taj-mahal':
         return (
           <div className="h-full">
@@ -113,7 +114,6 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
             </div>
           </div>
         );
-      
       case '2025':
         return (
           <div className="h-full">
@@ -140,7 +140,6 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
             </div>
           </div>
         );
-      
       case 'corporate':
         return (
           <div className="h-full">
@@ -169,8 +168,7 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
             </div>
           </div>
         );
-      
-      case 'advanced':
+      case 'mockstars':
         return (
           <div className="h-full">
             <div className="text-right mb-3">
@@ -194,19 +192,34 @@ export const TemplatePreview: React.FC<TemplatePreviewProps> = ({
             </div>
           </div>
         );
-      
       default:
+        if (info?.preview) {
+          return (
+            <div className="h-full w-full relative">
+              <Image
+                src={info.preview}
+                alt={`${info.name} preview`}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-contain"
+                priority={false}
+              />
+            </div>
+          );
+        } else {  
         return (
+          
           <div className="h-full flex items-center justify-center">
             <div className="text-xs text-gray-400">{templateId} Preview</div>
           </div>
         );
+      }
     }
   };
 
   return (
     <div className="h-full bg-white shadow-sm">
-      {renderPreview()}
+      {renderPlaceholder()}
     </div>
   );
 };

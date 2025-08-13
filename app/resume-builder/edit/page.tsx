@@ -49,7 +49,8 @@ export default function EditPage() {
     if (hasUnsavedChanges) {
       handleSave()
     }
-    router.push('/resume-builder/live-edit')
+    const templateId = ResumeStorage.loadTemplate()
+    router.push(`/resume-builder/templates/preview?template=${encodeURIComponent(templateId)}`)
   }
 
   const goPrev = () => {
@@ -179,7 +180,7 @@ export default function EditPage() {
         />
 
         {/* Navigation */}
-        <div className="flex justify-between items-center mt-12 pt-8 border-gray-200">
+        <div className="flex justify-between items-center mt-12 pt-8 border-t border-gray-200">
           <Button 
             onClick={() => router.push('/resume-builder/templates')}
             variant="outline"
@@ -188,7 +189,9 @@ export default function EditPage() {
             <ArrowLeft className="w-4 h-4" />
             Back to Templates
           </Button>
-          
+          <Button onClick={handlePreview} className="bg-blue hover:bg-blue/90 text-white px-4 py-2 rounded-lg">
+            See my resume
+          </Button>
         </div>
       </div>
     </div>

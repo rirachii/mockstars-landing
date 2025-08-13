@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { resumeTemplates, getTemplatesByCategory, TemplateCategories, TemplateInfo } from '@/lib/resume/template-types';
 import { TemplateCard } from '@/components/resume/TemplateCard';
 import CTA from '@/components/common/CTA';
+import { ResumeStorage } from '@/lib/resume/resume-storage';
 
 export default function TemplatesPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
@@ -28,8 +29,8 @@ export default function TemplatesPage() {
 
   const handleTemplateSelect = (templateId: string) => {
     setSelectedTemplate(templateId);
-    // Navigate to resume builder with selected template
-    console.log('Selected template:', templateId);
+    ResumeStorage.saveTemplate(templateId);
+    router.push(`/resume-builder/templates/preview?template=${encodeURIComponent(templateId)}`);
   };
 
   return (
@@ -93,17 +94,6 @@ export default function TemplatesPage() {
               }}
             />
           </div>
-          {/* <div className="mt-12 text-center bg-white rounded-xl p-8 shadow-lg">
-            <h3 className="text-2xl font-bold mb-4 font-mattone">
-              Ready to build your professional resume?
-            </h3>
-            <p className="text-gray-600 mb-6 font-outfit">
-              Get started with our AI-powered resume builder and create a job-winning resume in minutes.
-            </p>
-            <button className="bg-blue text-white px-8 py-3 rounded-lg font-mattone hover:bg-blue/90 transition-colors">
-              Start Building Your Resume
-            </button>
-          </div> */}
         </div>
       </div>
     </div>
