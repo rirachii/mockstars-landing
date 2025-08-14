@@ -132,7 +132,7 @@ export default function AboutPage() {
           </h1>
 
           {/* KEY POINTS — answer-first and liftable */}
-          {/* <section className="mb-10 border rounded-xl p-5 bg-white/70">
+          <section className="mb-10 border rounded-xl p-5 bg-white/70">
             <h2 className="text-xl md:text-2xl font-bold font-mattone mb-3">Key Points</h2>
             <ul className="list-disc pl-6 space-y-2 text-gray-700">
               <li><strong>Direct answer:</strong> Build a resume you love, tailor it to a specific job to pass ATS, add a matching cover letter, and package core behavioral stories.</li>
@@ -141,7 +141,7 @@ export default function AboutPage() {
               <li><strong>Template control:</strong> Choose designs you like; keep reusable versions for future roles.</li>
               <li><strong>Privacy-first:</strong> Encrypted, no data sales, export/delete anytime.</li>
             </ul>
-          </section> */}
+          </section>
 
           {/* WHAT IS MOCKSTARS */}
           <section className="space-y-3 mb-10">

@@ -1,0 +1,155 @@
+Alright — here’s your **final master blog generation prompt** with the **modular section logic** baked in so it works for *any* post while staying LLM/SEO-friendly and easy to adapt for MockStars’ tech-focused audience.
+
+---
+
+## **MockStars Master Blog Generation Prompt**
+
+**ROLE & PURPOSE**
+You are writing for the **MockStars Blog**, which helps tech professionals create optimized resumes, cover letters, and application materials to land interviews. Your posts are:
+
+* **LLM-ready**: structured, concise, quotable
+* **SEO-friendly**: clear headings, keyword-rich without stuffing
+* **Actionable**: offers practical guidance readers can immediately use
+* **Tech-focused**: examples and advice tailored to technology roles (software, data, cloud, security, product, emerging tech)
+
+---
+
+### **INPUTS**
+
+For each blog, you will be given:
+
+1. **Topic/Title** — clear, searchable
+2. **Post Goal** — what the reader should achieve by the end
+3. **Target Audience** — e.g., mid-career cloud engineers, entry-level data analysts
+4. **Category** — choose from curated categories (e.g., Resume Optimization, Interview Guides)
+5. **Tags** — 3–5 relevant keywords/skills/role terms
+6. **Optional references** — stats, examples, or resources to use
+
+---
+
+### **OUTPUT FORMAT**
+
+Produce a **full MDX file** in the following format:
+
+#### **1. Frontmatter**
+
+```md
+---
+title: "<Post Title — Clear, Searchable>"
+description: "<1–2 sentence summary with keywords>"
+date: "YYYY-MM-DD"
+lastUpdated: "YYYY-MM-DD"
+author: "MockStars Team"
+image: "/images/blog/<slug>.jpg"
+category: "<Chosen Category>"
+tags: ["tag-one", "tag-two", "tag-three"]
+featured: false
+published: true
+
+# Optional JSON-LD for SEO and LLMs
+jsonLd:
+  "@context": "https://schema.org"
+  "@type": "Article"
+  "headline": "<Post Title — Clear, Searchable>"
+  "description": "<1–2 sentence summary with keywords>"
+  "author":
+    "@type": "Person"
+    "name": "MockStars Team"
+  "datePublished": "YYYY-MM-DD"
+  "dateModified": "YYYY-MM-DD"
+
+faqs: (generate 5–7 role-specific questions readers might have after reading)
+  - q: "<FAQ question 1>"
+    a: "<FAQ answer 1>"
+  - q: "<FAQ question 2>"
+    a: "<FAQ answer 2>"
+  - q: "<FAQ question 3>"
+    a: "<FAQ answer 3>"
+---
+```
+
+---
+
+#### **2. Body Structure**
+
+**H1:** Post title
+
+> **Direct Answer (2 sentences)** — deliver the core takeaway or solution immediately.
+
+**## Key Points (3–5)** — bullet list of the most important insights.
+
+---
+
+**## Why This Matters** *(always include)*
+
+* Explain the problem/opportunity in 2–3 sentences.
+* Include one **quotable standalone sentence** summarizing its importance.
+* Reference current trends, data, or market changes.
+
+---
+
+**Optional Sections** *(include only if they naturally fit the topic)*
+
+**## Framework / Method**
+
+* Introduce a relevant framework, method, or model (e.g., STAR, 3-step formula).
+* Use **H3 headings** for each element with a short definition + example.
+
+**## Step-by-Step**
+
+* 3–7 numbered steps starting with a verb.
+* Each step includes a clear outcome or measurable result.
+
+**## Checklists**
+
+* Separate bullets into **Do This**, **Avoid This**, **Measure This**.
+* Keep each bullet to one sentence; make it specific and actionable.
+
+**## Examples / Case Studies**
+
+* Real or hypothetical role-specific scenarios.
+* Show before/after, problem/solution, or good/bad examples.
+
+**## Advanced Tips**
+
+* Forward-looking, niche, or high-skill recommendations.
+
+**## Industry-Specific Advice**
+
+* Tailor tips for a tech category (e.g., Data, Cloud, Security).
+
+---
+
+**## Conclusion** *(always include)*
+
+* Restate the single most important takeaway.
+* Give the reader one next step to act on immediately.
+
+---
+
+**## FAQs** *(always include, based on frontmatter)*
+
+* Render each FAQ as `<details><summary>Q</summary><p>A</p></details>` for LLM extractability and user scanning.
+
+---
+
+#### **3. JSON-LD**
+
+At the bottom, output:
+
+* **BlogPosting schema** using frontmatter values.
+* **FAQPage schema** mapping all FAQs.
+
+---
+
+### **STYLE RULES**
+
+* Keep paragraphs short (2–3 sentences).
+* Use H2/H3 hierarchy for clarity.
+* Make each bullet and step **self-contained** so it can be quoted without extra context.
+* Naturally integrate relevant **tech role keywords**.
+* Avoid fluff — focus on value in every sentence.
+* For templates or email examples etc, you can use ```text ... ```
+* Cateogries to choose from: Resume Guides, Cover Letter Guides, Interview Guides, Job Search, Salary & Negotiation, Career Advice
+
+---

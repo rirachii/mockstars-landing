@@ -3,10 +3,10 @@ import { HeroSearchBar } from "./hero-search-bar";
 
 const navigationCategories = [
     { name: 'Home', href: '/blog', slug: 'home' },
+    { name: 'Resume Guides', href: '/blog/category/resume-guides', slug: 'resume-guides' },
+    { name: 'Cover Letter Guides', href: '/blog/category/cover-letter-guides', slug: 'cover-letter-guides' },
     { name: 'Interview Guides', href: '/blog/category/interview-guides', slug: 'interview-guides' },
-    { name: 'Industry Focus', href: '/blog/category/industry-focus', slug: 'industry-focus' },
-    { name: 'Soft Skills', href: '/blog/category/soft-skills', slug: 'soft-skills' },
-    { name: 'Behavioral Interview', href: '/blog/category/behavioral-interview', slug: 'behavioral-interview' },
+    { name: 'Job Search', href: '/blog/category/job-search', slug: 'job-search' },
     { name: 'Salary & Negotiation', href: '/blog/category/salary-negotiation', slug: 'salary-negotiation' },
     { name: 'Career Advice', href: '/blog/category/career-advice', slug: 'career-advice' },
 ]

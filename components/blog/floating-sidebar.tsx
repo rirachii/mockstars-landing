@@ -15,47 +15,103 @@ interface FloatingSidebarProps {
   relatedPosts: BlogPost[]
 }
 
+interface TocItem {
+  id: string
+  text: string
+  level: number
+}
+
 export function FloatingSidebar({ popularPosts, relatedPosts }: FloatingSidebarProps) {
-  const [sidebarStyle, setSidebarStyle] = useState({
-    position: 'fixed' as const,
-    top: '50%',
-    transform: 'translateY(-50%)',
-    bottom: 'auto'
-  })
+  const [tocItems, setTocItems] = useState<TocItem[]>([])
+  const [activeId, setActiveId] = useState<string | null>(null)
 
   useEffect(() => {
-    function updateSidebarPosition() {
-      const sidebar = document.querySelector('#floating-sidebar')
-
-      if (!sidebar) return
-
-      setSidebarStyle({
-        position: 'fixed',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        bottom: 'auto'
-      })
+    // Collect h2/h3 headings from the markdown content
+    const headingNodes = Array.from(document.querySelectorAll('.prose h2, .prose h3')) as HTMLElement[]
+    if (headingNodes.length === 0) {
+      setTocItems([])
+      return
     }
-    
-    window.addEventListener('scroll', updateSidebarPosition)
-    window.addEventListener('resize', updateSidebarPosition)
-    
-    const timer = setTimeout(updateSidebarPosition, 100)
-    
-    return () => {
-      window.removeEventListener('scroll', updateSidebarPosition)
-      window.removeEventListener('resize', updateSidebarPosition)
-      clearTimeout(timer)
-    }
+
+    const slugCounts: Record<string, number> = {}
+
+    const slugify = (value: string) =>
+      value
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+
+    const items: TocItem[] = headingNodes.map((el) => {
+      const text = el.innerText || el.textContent || ''
+      let slug = el.id || slugify(text)
+      if (slugCounts[slug] != null) {
+        slugCounts[slug] += 1
+        slug = `${slug}-${slugCounts[slug]}`
+      } else {
+        slugCounts[slug] = 0
+      }
+      if (!el.id) el.id = slug
+      // Ensure headings account for sticky header on anchor jump
+      el.classList.add('scroll-mt-24')
+      const level = el.tagName.toLowerCase() === 'h3' ? 3 : 2
+      return { id: slug, text, level }
+    })
+
+    setTocItems(items)
+
+    // Scrollspy via IntersectionObserver
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Choose the top-most visible heading
+        const visible = entries.filter((e) => e.isIntersecting)
+        if (visible.length === 0) return
+        const topMost = visible.reduce((prev, curr) =>
+          curr.boundingClientRect.top < prev.boundingClientRect.top ? curr : prev
+        )
+        setActiveId((topMost.target as HTMLElement).id)
+      },
+      {
+        // Offset top for sticky header; treat middle of viewport as active region
+        root: null,
+        rootMargin: '-120px 0px -60% 0px',
+        threshold: 0.1,
+      }
+    )
+
+    headingNodes.forEach((el) => observer.observe(el))
+
+    return () => observer.disconnect()
   }, [])
 
   return (
-    <aside 
-      id="floating-sidebar"
-      className="hidden xl:block fixed right-8 w-80 z-20"
-      style={sidebarStyle}
-    >
-      <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 max-h-[80vh] overflow-y-auto">
+    <aside className="hidden xl:block fixed right-8 pt-4 w-80 z-20 ">
+      <div className="backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 max-h-[80vh] overflow-y-auto scrollbar-hide">
+        {/* Table of Contents */}
+        {tocItems.length > 0 && (
+          <nav aria-label="Table of contents" className="mb-8">
+            <div className="text-2xs uppercase tracking-widest text-teal-600 mb-4 font-mattone">On this page</div>
+            <ul className="space-y-2">
+              {tocItems.map((item) => (
+                <li key={item.id} className={item.level === 3 ? 'ml-4' : ''}>
+                  <a
+                    href={`#${item.id}`}
+                    aria-current={activeId === item.id ? 'true' : undefined}
+                    className={`block text-sm transition-colors font-outfit line-clamp-2 ${
+                      activeId === item.id
+                        ? 'text-blue font-semibold'
+                        : 'text-gray-700 hover:text-blue'
+                    }`}
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+
+        {/* Popular Articles Section */}
         <div className="mb-8">
           <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">POPULAR ARTICLES</div>
           <h3 className="text-lg font-bold mb-4 font-mattone text-gray-800">Trending Now</h3>
@@ -71,7 +127,7 @@ export function FloatingSidebar({ popularPosts, relatedPosts }: FloatingSidebarP
                     {index + 1}
                   </span>
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-semibold text-gray-800 group-hover:text-blue transition-colors line-clamp-2 font-mattone">
+                    <h4 className="text-sm font-semibold group-hover:text-blue transition-colors line-clamp-2 font-mattone">
                       {popularPost.title}
                     </h4>
                     <p className="text-xs text-gray-500 mt-1 font-outfit">
@@ -87,7 +143,6 @@ export function FloatingSidebar({ popularPosts, relatedPosts }: FloatingSidebarP
         {/* Related Articles Section */}
         {relatedPosts.length > 0 && (
           <div>
-            <div className="text-2xs uppercase tracking-widest text-teal-600 mb-4 font-mattone">RELATED ARTICLES</div>
             <h3 className="text-lg font-bold mb-4 font-mattone text-gray-800">More Like This</h3>
             <div className="space-y-4">
               {relatedPosts.map((relatedPost) => (

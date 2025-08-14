@@ -6,6 +6,8 @@ import { RelatedPosts } from '@/components/blog/related-posts'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import CTA from '@/components/common/CTA'
+import JsonLd from '@/components/JsonLd'
+import { FloatingSidebar } from '@/components/blog/floating-sidebar'
 
 
 interface BlogPostPageProps {
@@ -35,19 +37,26 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     }
   }
 
+  const description = post.description || post.directAnswer || post.llm?.oneLiner
+  const keywords = [
+    ...(post.tags || []),
+    ...(post.llm?.entities || []),
+    ...(post.audience || []),
+  ].join(', ')
+
   return {
     title: `${post.title} | Mockstars Blog`,
-    description: post.description,
-    keywords: post.tags?.join(', '),
+    description,
+    keywords,
     openGraph: {
       title: post.title,
-      description: post.description,
+      description,
       images: post.image ? [{ url: post.image }] : [],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
-      description: post.description,
+      description,
       images: post.image ? [post.image] : [],
     },
   }
@@ -101,6 +110,23 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         }
       : null
 
+    const articleJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": post.title,
+      "description": post.description || post.directAnswer || post.llm?.oneLiner,
+      "datePublished": post.date,
+      "dateModified": post.lastUpdated || post.date,
+      "image": post.image ? [post.image] : undefined,
+      "keywords": [
+        ...(post.tags || []),
+        ...(post.llm?.entities || []),
+        ...(post.audience || []),
+      ].join(', '),
+      "about": (post.llm?.entities || []).map((e: string) => ({ "@type": "Thing", name: e })),
+      "audience": (post.audience || []).map((a: string) => ({ "@type": "Audience", audienceType: a })),
+    }
+
   return (
     <div className="flex flex-col min-h-screen font-outfit relative z-10">
       {/* Main Content with Sidebar */}
@@ -113,6 +139,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               <div className="bg-white/80 text-gray-800 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 mb-8">
                 <BlogPostHeader post={post} />
               </div>
+              {post.jsonLd && <JsonLd data={post.jsonLd} />}
+              <JsonLd data={articleJsonLd} />
+              {faqJsonLd && <JsonLd data={faqJsonLd} />}
               
               {/* Article Content */}
               <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 md:p-12 mb-8">
@@ -120,7 +149,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
 
               {/* FAQ Section (visible content) */}
-              {/* {hasFaqs && (
+              {hasFaqs && (
                 <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-8 md:p-10 mb-8">
                   <h2 className="text-2xl font-bold mb-4 font-mattone text-gray-900">FAQs</h2>
                   <div className="space-y-3 text-gray-700">
@@ -137,8 +166,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                     ))}
                   </div>
                 </div>
-              )} */}
-
+              )}
               
               {/* Navigation */}
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-gray-200 p-6">
@@ -149,82 +177,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </article>
         
         {/* Floating Sidebar */}
-        <aside className="hidden xl:block fixed right-8 pt-4 w-80 z-20 ">
-          <div className="backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200 p-6 max-h-[80vh] overflow-y-auto scrollbar-hide">
-            {/* Popular Articles Section */}
-            <div className="mb-8">
-              <div className="text-2xs uppercase tracking-widest text-blue mb-4 font-mattone">POPULAR ARTICLES</div>
-              <h3 className="text-lg font-bold mb-4 font-mattone text-gray-800">Trending Now</h3>
-              <div className="space-y-4">
-                {popularPosts.map((popularPost, index) => (
-                  <a
-                    key={popularPost.slug}
-                    href={popularPost.url}
-                    className="block group hover:bg-gray-50 rounded-lg p-3 transition-colors"
-                  >
-                    <div className="flex items-start gap-3">
-                      <span className="text-blue font-bold text-sm bg-blue/10 rounded-full w-6 h-6 flex items-center justify-center flex-shrink-0 font-mattone">
-                        {index + 1}
-                      </span>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-semibold group-hover:text-blue transition-colors line-clamp-2 font-mattone">
-                          {popularPost.title}
-                        </h4>
-                        <p className="text-xs text-gray-500 mt-1 font-outfit">
-                          {popularPost.readingTime} min read
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            {/* Related Articles Section */}
-            {relatedPosts.length > 0 && (
-              <div>
-                <h3 className="text-lg font-bold mb-4 font-mattone text-gray-800">More Like This</h3>
-                <div className="space-y-4">
-                  {relatedPosts.map((relatedPost) => (
-                    <a
-                      key={relatedPost.slug}
-                      href={relatedPost.url}
-                      className="block group hover:bg-gray-50 rounded-lg p-3 transition-colors"
-                    >
-                      <div className="flex items-start gap-3">
-                        <div className="w-12 h-12 bg-gradient-to-br from-teal-100 to-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                          <span className="text-teal-600 font-bold text-xs font-mattone">
-                            {relatedPost.category?.charAt(0) || 'A'}
-                          </span>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h4 className="text-sm font-semibold text-gray-800 group-hover:text-blue transition-colors line-clamp-2 font-mattone">
-                            {relatedPost.title}
-                          </h4>
-                          <div className="flex items-center gap-2 mt-1">
-                            <span className="text-xs text-gray-500 font-outfit">
-                              {relatedPost.readingTime} min read
-                            </span>
-                            {relatedPost.category && (
-                              <>
-                                <span className="text-xs text-gray-400">•</span>
-                                <span className="text-xs text-teal-600 font-outfit">
-                                  {relatedPost.category}
-                                </span>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </aside>
+        <FloatingSidebar popularPosts={popularPosts} relatedPosts={relatedPosts} />
       </div>
-      
+       
       {/* Related Posts Section for Mobile */}
       {relatedPosts.length > 0 && (
         <section className="py-16 bg-white/30 backdrop-blur-sm xl:hidden">

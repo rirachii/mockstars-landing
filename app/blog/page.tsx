@@ -1,10 +1,11 @@
-import { getAllBlogPosts, getFeaturedBlogPosts, getAllCategories, getAllTags } from '@/lib/blog'
+import { getAllBlogPosts, getFeaturedBlogPosts } from '@/lib/blog'
 import CTA from '@/components/common/CTA'
 import { HorizontalNavigation } from '@/components/layout/HorizontalNavigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import Image from 'next/image'
 import { BookOpen, Clock, User } from 'lucide-react'
+import React from 'react'
 
 export const metadata: Metadata = {
   title: 'Blog | Mockstars - Interview Preparation & Career Advice',
@@ -52,63 +53,65 @@ function FeaturedArticleSection({ post }: { post: any }) {
           </div>
 
           {/* Featured Article */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden multi-color-border shadow-xl">
-            <div className="lg:flex">
-              <div className="lg:w-1/2 relative h-64 lg:h-96">
-                <Image
-                  src={post.image || '/images/blog/interview-featured.jpg'}
-                  alt={post.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-              </div>
-              <div className="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
-                <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-4 font-mattone leading-tight">
-                  {post.title}
-                </h3>
-                
-                <p className="text-gray-200 mb-6 font-outfit leading-relaxed text-lg">
-                  {post.description}
-                </p>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4 text-sm text-gray-300 font-outfit">
-                    {post.author && (
-                      <div className="flex items-center">
-                        <User className="w-4 h-4 mr-1" />
-                        {post.author}
-                      </div>
-                    )}
-                    <div className="flex items-center">
-                      <Clock className="w-4 h-4 mr-1" />
-                      {post.readingTime} min read
-                    </div>
-                  </div>
+          {/* Make entire card clickable */}
+          <Link href={post.url} className="block group">
+            <div className="bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden multi-color-border shadow-xl cursor-pointer">
+              <div className="lg:flex">
+                <div className="lg:w-1/2 relative h-64 lg:h-96">
+                  <Image
+                    src={post.image || '/images/blog/interview-featured.jpg'}
+                    alt={post.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
+                <div className="lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
+                  <h3 className="text-2xl lg:text-3xl font-bold text-gray-800 mb-4 font-mattone leading-tight">
+                    {post.title}
+                  </h3>
                   
-                  <Link 
-                    href={post.url}
-                    className="bg-blue hover:bg-blue/90 text-white font-semibold px-6 py-3 rounded-full transition-colors font-mattone"
-                  >
-                    Read Guide
-                  </Link>
+                  <p className="text-gray-200 mb-6 font-outfit leading-relaxed text-lg">
+                    {post.description}
+                  </p>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4 text-sm text-gray-300 font-outfit">
+                      {post.author && (
+                        <div className="flex items-center">
+                          <User className="w-4 h-4 mr-1" />
+                          {post.author}
+                        </div>
+                      )}
+                      <div className="flex items-center">
+                        <Clock className="w-4 h-4 mr-1" />
+                        {post.readingTime} min read
+                      </div>
+                    </div>
+                    {/* Replace inner link with a styled span to avoid nested links */}
+                    <span 
+                      className="bg-blue group-hover:bg-blue/90 text-white font-semibold px-6 py-3 rounded-full transition-colors font-mattone"
+                    >
+                      Read Guide
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </section>
   )
 }
 
-function ArticleGrid({ posts, title }: { posts: any[], title: string }) {
+function ArticleGrid({ posts, title, limit = 6 }: { posts: any[], title: string, limit?: number }) {
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <div className="text-2xs uppercase tracking-widest text-teal-600 mb-2 font-mattone">LATEST INSIGHTS</div>
+            <div className="text-2xs uppercase tracking-widest text-teal-600 mb-2 font-mattone">Mockstars Blog</div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 font-mattone">{title}</h2>
             <p className="text-gray-600 font-outfit max-w-2xl mx-auto">
               Discover expert insights and practical tips for interview success
@@ -116,7 +119,7 @@ function ArticleGrid({ posts, title }: { posts: any[], title: string }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {posts.slice(0, 6).map((post) => (
+            {posts.slice(0, limit).map((post) => (
               <div key={post.slug} className="bg-white/80 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg border border-gray-200 hover:shadow-xl transition-all duration-300 group">
                 <div className="relative h-48 overflow-hidden">
                   <Image
@@ -163,13 +166,13 @@ function ArticleGrid({ posts, title }: { posts: any[], title: string }) {
             ))}
           </div>
 
-          {/* View All Button */}
-          <div className="text-center mt-12">
+          {/* All Articles Button */}
+          <div className="container flex justify-center pt-8" >   
             <Link
-              href="/blog"
+              href="/blog/category/all"
               className="bg-white/80 backdrop-blur-sm text-blue border-2 border-blue font-semibold px-8 py-4 rounded-full hover:bg-blue hover:text-white transition-colors font-mattone shadow-lg"
             >
-              View All Articles
+              All Articles
             </Link>
           </div>
         </div>
@@ -182,13 +185,9 @@ export default function BlogPage() {
   try {
     const allPosts = getAllBlogPosts()
     const featuredPosts = getFeaturedBlogPosts()
-    const categories = getAllCategories()
-    const tags = getAllTags()
-    const regularPosts = allPosts.filter(post => !post.featured)
 
     // Get the main featured post
     const mainFeaturedPost = featuredPosts[0] || allPosts[0]
-    const gridPosts = featuredPosts.length > 1 ? featuredPosts.slice(1).concat(regularPosts) : regularPosts
 
     return (
       <div className="flex flex-col min-h-screen text-gray-800 font-outfit relative z-10">
@@ -203,8 +202,8 @@ export default function BlogPage() {
           <FeaturedArticleSection post={mainFeaturedPost} />
         )}
         
-        {/* Articles Grid */}
-        <ArticleGrid posts={gridPosts} title="Latest Interview Guides" />
+        {/* Articles Grid - 9 latest interview guides */}
+        <ArticleGrid posts={allPosts} title="Latest Guides" limit={9} />
         
         {/* CTA Section */}
         <section className="py-16">

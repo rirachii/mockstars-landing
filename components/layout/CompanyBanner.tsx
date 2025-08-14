@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 
 const companies = [
-  { name: 'McDonalds', logo: '/logos/mcdonalds.png' },
   { name: 'Chipotle', logo: '/logos/chipotle.png' },
   { name: 'Amazon', logo: '/logos/amazon.png' }, 
   { name: 'Starbucks', logo: '/logos/starbucks.png' },
@@ -12,7 +11,7 @@ const companies = [
   { name: 'Microsoft', logo: '/logos/logos.png' },
   { name: 'Trader Joes', logo: '/logos/chickfila.png' },
   { name: 'Chick-fil-A', logo: '/logos/chickfila.png' },
-
+  { name: 'Oracle', logo: '/logos/oracle.png' },
 ];
 
 interface CompanyBannerProps {

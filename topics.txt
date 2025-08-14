@@ -1,0 +1,18 @@
+Senior Software Engineer Resume Template Guide; category=Resume Guides; tags=resume,software,senior
+Data Scientist Resume Keywords 2025; category=Resume Guides; tags=resume,data,keywords
+Product Manager Resume Metrics; category=Resume Guides; tags=resume,pm,metrics
+Cover Letter for Career Change into Tech; category=Cover Letter Guides; tags=cover-letter,career-change,tech
+Entry-Level Cover Letter With No Experience; category=Cover Letter Guides; tags=cover-letter,entry-level,no-experience
+Behavioral Interview STAR Examples for PMs; category=Interview Guides; tags=behavioral,star,product
+System Design Interview for Startup Scale; category=Interview Guides; tags=system-design,startup,scalability
+Machine Learning Engineer Interview Questions; category=Interview Guides; tags=ml,interview,questions
+Job Search Strategy for 2025 Tech Market; category=Job Search; tags=job-search,tech,2025
+How to Use LinkedIn to Land Interviews; category=Job Search; tags=linkedin,networking,outreach
+Salary Negotiation for Senior Engineers; category=Salary & Negotiation; tags=salary,negotiation,senior
+Counter-Offer Scripts That Work; category=Salary & Negotiation; tags=counter-offer,scripts,compensation
+Career Ladder: IC vs Manager; category=Career Advice; tags=career,ic,manager
+Breaking Into AI Product Management; category=Career Advice; tags=ai,product,career
+ATS Optimization Myths vs Reality; category=Resume Guides; tags=ats,optimization,myths
+Portfolio Tips for Frontend Developers; category=Career Advice; tags=portfolio,frontend,react
+Tech Interview Anxiety: Coaching Playbook; category=Career Advice; tags=anxiety,coaching,interview
+FAANG Behavioral Interview Questions; category=Interview Guides; tags=faang,behavioral,examples 

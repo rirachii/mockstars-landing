@@ -19,13 +19,26 @@ export interface BlogPost {
   readingTime: number
   url: string
   faqs?: { q: string; a: string }[]
+  lastUpdated?: string
+  jsonLd?: Record<string, any>
+  directAnswer?: string
+  keyPoints?: string[]
+  audience?: string[]
+  llm?: {
+    oneLiner?: string
+    keyPoints?: string[]
+    summary?: string
+    steps?: string[]
+    entities?: string[]
+    intent?: 'guide' | 'how-to' | 'opinion' | 'news' | 'list' | 'faq'
+  }
 }
 
 export function getAllBlogPosts(): BlogPost[] {
   const fileNames = fs.readdirSync(contentDirectory)
   
   const allPostsData = fileNames
-    .filter(fileName => fileName.endsWith('.mdx') || fileName.endsWith('.md'))
+    .filter(fileName => (fileName.endsWith('.mdx') || fileName.endsWith('.md')) && !fileName.startsWith('_'))
     .map(fileName => {
       const slug = fileName.replace(/\.(mdx|md)$/, '')
       const fullPath = path.join(contentDirectory, fileName)
@@ -65,8 +78,12 @@ export function getFeaturedBlogPosts(): BlogPost[] {
 }
 
 export function getBlogPostsByCategory(category: string): BlogPost[] {
+  const normalized = category.trim().toLowerCase()
+  if (normalized === 'all' || normalized === 'all articles') {
+    return getAllBlogPosts()
+  }
   return getAllBlogPosts().filter(post => 
-    post.category?.toLowerCase() === category.toLowerCase()
+    post.category?.toLowerCase() === normalized
   )
 }
 
