@@ -2,6 +2,7 @@ import { Suspense } from 'react'
 import { getAllBlogPosts, getAllCategories, getAllTags } from '@/lib/blog'
 import SearchClient from './search-client'
 import { SearchIcon } from 'lucide-react'
+import { HorizontalNavigation } from '@/components/layout/HorizontalNavigation'
 
 export default function SearchPage() {
   const allPosts = getAllBlogPosts()
@@ -17,6 +18,7 @@ export default function SearchPage() {
         </div>
       </div>
     }>
+      <HorizontalNavigation />
       <SearchClient 
         allPosts={allPosts}
         categories={categories}
