@@ -43,7 +43,7 @@ export default function Footer() {
                 <Link href="/terms" className="text-zinc-500 hover:text-pink transition-colors">Terms</Link>
               </li>
               <li>
-                <a href="mailto:michelle@veloraai.com" className="text-zinc-500 hover:text-orange transition-colors">Contact</a>
+                <a href="mailto:hello@mockstars.app" className="text-zinc-500 hover:text-orange transition-colors">Contact</a>
               </li>
             </ul>
           </div>
@@ -72,7 +72,7 @@ export default function Footer() {
           <div className="flex gap-6 flex-wrap justify-center text-sm">
             <Link href="/privacy" className="text-zinc-500 hover:text-teal transition-colors">Privacy</Link>
             <Link href="/terms" className="text-zinc-500 hover:text-pink transition-colors">Terms</Link>
-            <a href="mailto:michelle@veloraai.com" className="text-zinc-500 hover:text-orange transition-colors">Contact</a>
+            <a href="mailto:hello@mockstars.app" className="text-zinc-500 hover:text-orange transition-colors">Contact</a>
           </div>
         </div>
       </div>

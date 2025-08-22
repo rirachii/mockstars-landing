@@ -57,7 +57,7 @@ export default function Terms() {
             <section className="space-y-4">
               <h2 className="text-2xl font-bold text-gray-800 font-sora">7. Contact</h2>
               <p>For any questions regarding these Terms of Service, please contact us at:</p>
-              <p><a href="mailto:michelle@veloraai.com" className="text-teal hover:underline">michelle@veloraai.com</a></p>
+              <p><a href="mailto:hello@mockstars.app" className="text-teal hover:underline">hello@mockstars.app</a></p>
             </section>
           </div>
         </div>

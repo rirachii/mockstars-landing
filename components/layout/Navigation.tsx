@@ -69,133 +69,146 @@ export default function Navigation() {
 
           {/* Desktop navigation using shadcn NavigationMenu */}
           <div className="hidden lg:flex lg:items-center lg:gap-x-8">
-            <NavigationMenu viewport={false}>
-              <NavigationMenuList>
-                {/* Resumes */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Resumes</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <a
-                            className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
-                            href="/templates"
-                          >
-                            <div className="mt-4 mb-2 text-lg font-medium ">Templates</div>
-                            <p className="text-muted-foreground text-sm leading-tight text-outfit">
-                              Browse ATS-friendly resume templates built for results.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                      <ListItem href="/resume-builder/upload" title="Build a Resume">
-                        Start from scratch or upload your existing resume.
-                      </ListItem>
-                      <ListItem href="/resume-builder/templates" title="Choose Template">
-                        Preview your data in any template instantly.
-                      </ListItem>
-                      <ListItem href="/blog/category/resume" title="Resume Guides">
-                        Learn best practices to stand out to recruiters.
-                      </ListItem>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
+          <NavigationMenu className="relative z-[60]">
+            <NavigationMenuList className="!justify-start">
+              
+              {/* Resumes */}
+              <NavigationMenuItem className="relative">
+                <NavigationMenuTrigger>Resumes</NavigationMenuTrigger>
+                  <NavigationMenuContent className="absolute left-1/2 top-full -translate-x-1/2 mt-2 w-[400px] md:w-[500px] rounded-md border bg-white shadow-xl">
+                  <ul className="grid gap-2 lg:grid-cols-[.75fr_1fr]">
+                    <li className="row-span-3">
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
+                          href="/templates"
+                        >
+                          <div className="mt-4 mb-2 text-lg font-medium">Templates</div>
+                          <p className="text-muted-foreground text-sm leading-tight text-outfit">
+                            Browse ATS-friendly resume templates built for results.
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <ListItem href="/resume-builder/upload" title="Build a Resume">
+                      Start from scratch or upload your existing resume.
+                    </ListItem>
+                    <ListItem href="/resume-builder/templates" title="Choose Template">
+                      Preview your data in any template instantly.
+                    </ListItem>
+                    <ListItem href="/blog/category/resume" title="Resume Guides">
+                      Learn best practices to stand out to recruiters.
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
 
-                {/* Cover Letters */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Cover Letters</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <a
-                            className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
-                            href="/resources/cover-letters"
-                          >
-                            <div className="mt-4 mb-2 text-lg font-medium ">Examples</div>
-                            <p className="text-muted-foreground text-sm leading-tight">
-                              See what great cover letters look like.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                      <ListItem href="/resources/cover-letters/how-to" title="How to Write">
-                        Step-by-step instructions with tips and checklists.
-                      </ListItem>
-                      <ListItem href="/resources/cover-letters/templates" title="Templates">
-                        Professional formats you can adapt quickly.
-                      </ListItem>
-                      <ListItem href="/blog/search?query=cover%20letter" title="More Resources">
-                        Browse additional guides and examples.
-                      </ListItem>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
+              {/* Cover Letters */}
+              <NavigationMenuItem className="relative">
+                <NavigationMenuTrigger>Cover Letters</NavigationMenuTrigger>
+                  <NavigationMenuContent className="absolute left-1/2 top-full -translate-x-1/2 mt-2 w-[400px] md:w-[500px] rounded-md border bg-white shadow-xl">
+                  <ul className="grid gap-2 lg:grid-cols-[.75fr_1fr]">
+                    <li className="row-span-3">
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
+                          href="/resources/cover-letters"
+                        >
+                          <div className="mt-4 mb-2 text-lg font-medium">Examples</div>
+                          <p className="text-muted-foreground text-sm leading-tight">
+                            See what great cover letters look like.
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <ListItem href="/resources/cover-letters/how-to" title="How to Write">
+                      Step-by-step instructions with tips and checklists.
+                    </ListItem>
+                    <ListItem href="/resources/cover-letters/templates" title="Templates">
+                      Professional formats you can adapt quickly.
+                    </ListItem>
+                    <ListItem
+                      href="/blog/search?query=cover%20letter"
+                      title="More Resources"
+                    >
+                      Browse additional guides and examples.
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
 
-                {/* Interview Questions */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Interview Questions</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <a
-                            className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
-                            href="/blog/category/interview"
-                          >
-                            <div className="mt-4 mb-2 text-lg font-medium">Guides</div>
-                            <p className="text-muted-foreground text-sm leading-tight">
-                              Prepare with curated questions and expert answers.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                      <ListItem href="/blog/search?query=behavioral" title="Behavioral">
-                        Master STAR stories with real examples.
-                      </ListItem>
-                      <ListItem href="/blog/search?query=system%20design" title="System Design">
-                        Practice architecture and trade-off questions.
-                      </ListItem>
-                      <ListItem href="/blog/search?query=salary%20negotiation" title="Negotiation">
-                        Get confident discussing compensation.
-                      </ListItem>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
+              {/* Interview Questions */}
+              <NavigationMenuItem className="relative">
+                <NavigationMenuTrigger>Interview Questions</NavigationMenuTrigger>
+                <NavigationMenuContent className="absolute left-1/2 top-full -translate-x-1/2 mt-2 w-[400px] md:w-[500px] rounded-md border bg-white shadow-xl">
+                  <ul className="grid gap-2 lg:grid-cols-[.75fr_1fr]">
+                    <li className="row-span-3">
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
+                          href="/blog/category/interview"
+                        >
+                          <div className="mt-4 mb-2 text-lg font-medium">Guides</div>
+                          <p className="text-muted-foreground text-sm leading-tight">
+                            Prepare with curated questions and expert answers.
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <ListItem href="/blog/search?query=behavioral" title="Behavioral">
+                      Master STAR stories with real examples.
+                    </ListItem>
+                    <ListItem
+                      href="/blog/search?query=system%20design"
+                      title="System Design"
+                    >
+                      Practice architecture and trade-off questions.
+                    </ListItem>
+                    <ListItem
+                      href="/blog/search?query=salary%20negotiation"
+                      title="Negotiation"
+                    >
+                      Get confident discussing compensation.
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
 
-                {/* Resources (was Blog) */}
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
-                  <NavigationMenuContent>
-                    <ul className="grid gap-2 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                      <li className="row-span-3">
-                        <NavigationMenuLink asChild>
-                          <a
-                            className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
-                            href="/blog"
-                          >
-                            <div className="mt-4 mb-2 text-lg font-medium">All Articles</div>
-                            <p className="text-muted-foreground text-sm leading-tight">
-                              Career, resume, and interview resources.
-                            </p>
-                          </a>
-                        </NavigationMenuLink>
-                      </li>
-                      <ListItem href="/blog/category/career" title="Career Advice">
-                        Curated guidance to navigate your next step.
-                      </ListItem>
-                      <ListItem href="/blog/search" title="Search">
-                        Find resources by topic or keyword.
-                      </ListItem>
-                      <ListItem href="/templates" title="Popular Templates">
-                        Explore trending resume formats.
-                      </ListItem>
-                    </ul>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+              {/* Resources */}
+              <NavigationMenuItem className="relative">
+                <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+                  <NavigationMenuContent className="absolute left-1/2 top-full -translate-x-1/2 mt-2 w-[400px] md:w-[500px] rounded-md border bg-white shadow-xl">
+                  <ul className="grid gap-2 lg:grid-cols-[.75fr_1fr]">
+                    <li className="row-span-3">
+                      <NavigationMenuLink asChild>
+                        <a
+                          className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
+                          href="/blog"
+                        >
+                          <div className="mt-4 mb-2 text-lg font-medium">All Articles</div>
+                          <p className="text-muted-foreground text-sm leading-tight">
+                            Career, resume, and interview resources.
+                          </p>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                    <ListItem href="/blog/category/career" title="Career Advice">
+                      Curated guidance to navigate your next step.
+                    </ListItem>
+                    <ListItem href="/blog/search" title="Search">
+                      Find resources by topic or keyword.
+                    </ListItem>
+                    <ListItem href="/templates" title="Popular Templates">
+                      Explore trending resume formats.
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+            </NavigationMenuList>
+
+          </NavigationMenu>
+
           </div>
 
           {/* CTA Button */}
@@ -318,13 +331,18 @@ export default function Navigation() {
   )
 }
 
-function ListItem({ title, children, href, ...props }: React.ComponentPropsWithoutRef<'li'> & { href: string; title: string }) {
+function ListItem(
+  { title, children, href, ...props }: 
+  React.ComponentPropsWithoutRef<'li'> & { href: string; title: string }
+) {
   return (
     <li {...props}>
       <NavigationMenuLink asChild>
-        <Link href={href} className="no-underline">
+        <Link href={href}>
           <div className="text-sm leading-none font-medium">{title}</div>
-          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">{children}</p>
+          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
+            {children}
+          </p>
         </Link>
       </NavigationMenuLink>
     </li>
