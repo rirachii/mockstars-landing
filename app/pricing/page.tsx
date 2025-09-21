@@ -63,6 +63,45 @@ export default function PricingPage() {
           offers: [
             {
               "@type": "Offer",
+              name: "Weekly Pro",
+              price: "9.99",
+              priceCurrency: "USD",
+              priceValidUntil: "2025-12-31",
+              availability: "https://schema.org/InStock",
+              hasMerchantReturnPolicy: {
+                "@type": "MerchantReturnPolicy",
+                applicableCountry: "US",
+                returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                merchantReturnDays: 7,
+                returnMethod: "https://schema.org/ReturnByMail",
+                returnFees: "https://schema.org/FreeReturn"
+              },
+              shippingDetails: {
+                "@type": "OfferShippingDetails",
+                shippingRate: {
+                  "@type": "MonetaryAmount",
+                  value: "0",
+                  currency: "USD"
+                },
+                deliveryTime: {
+                  "@type": "ShippingDeliveryTime",
+                  handlingTime: {
+                    "@type": "QuantitativeValue",
+                    minValue: 0,
+                    maxValue: 0,
+                    unitCode: "DAY"
+                  },
+                  transitTime: {
+                    "@type": "QuantitativeValue",
+                    minValue: 0,
+                    maxValue: 0,
+                    unitCode: "DAY"
+                  }
+                }
+              }
+            },
+            {
+              "@type": "Offer",
               name: "Monthly Pro",
               price: "19.99",
               priceCurrency: "USD",
@@ -102,8 +141,8 @@ export default function PricingPage() {
             },
             {
               "@type": "Offer", 
-              name: "Annual Pro",
-              price: "114.99",
+              name: "6-Month Pro",
+              price: "29.99",
               priceCurrency: "USD",
               priceValidUntil: "2025-12-31",
               availability: "https://schema.org/InStock",
@@ -149,38 +188,10 @@ export default function PricingPage() {
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl font-bold font-mattone">Mockstars Pricing</h1>
             <p className="text-xl text-gray-600 font-outfit max-w-3xl">
-              AI-Powered Interview Preparation That Fits Your Budget. Choose between monthly or annual billing, with significant savings for annual subscribers.
+              AI-Powered Interview Preparation That Fits Your Budget. Choose between weekly, monthly, or 6-month billing options to match your needs.
             </p>
           </div>
 
-          {/* Free Trial Highlight */}
-          <div className="bg-blue/10 border border-blue/20 rounded-2xl p-8">
-            <div className="flex items-center gap-3 mb-4">
-              <Star className="h-6 w-6 text-blue" />
-              <h2 className="text-2xl font-bold font-mattone text-blue">3-Day Free Trial</h2>
-            </div>
-            <p className="text-gray-700 font-outfit mb-6">
-              All plans come with a 3-day free trial. Try Mockstars Pro Risk-Free with no credit card required. Get full feature access and cancel anytime before your trial ends.
-            </p>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-blue" />
-                  <span className="font-outfit text-gray-700">No Credit Card Required</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-blue" />
-                  <span className="font-outfit text-gray-700">Full Feature Access</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-blue" />
-                  <span className="font-outfit text-gray-700">Cancel Anytime</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <Check className="h-5 w-5 text-blue" />
-                  <span className="font-outfit text-gray-700">Instant Access</span>
-                </div>
-              </div>
-          </div>
 
           {/* Pricing Plans */}
           <div className="space-y-8">
@@ -193,7 +204,7 @@ export default function PricingPage() {
                   <div>
                     <h3 className="text-2xl font-bold font-mattone mb-2">Weekly Pro</h3>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-4xl font-bold text-blue font-mattone">$6.99</span>
+                      <span className="text-4xl font-bold text-blue font-mattone">$9.99</span>
                       <span className="text-gray-600 font-outfit">/ week</span>
                     </div>
                     <p className="text-sm text-gray-600 font-outfit mt-2">
@@ -258,27 +269,26 @@ export default function PricingPage() {
                 </div>
               </div>
 
-              {/* Annual Plan - Best Value */}
+              {/* 6-Month Plan - Best Value */}
               <div className="bg-white/60 backdrop-blur-sm border-2 border-blue rounded-2xl p-8 relative shadow-lg">
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <span className="bg-blue text-white px-4 py-1 rounded-full text-sm font-mattone">
-                    Save 52%
+                    Best Value
                   </span>
                 </div>
                 
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-2xl font-bold font-mattone mb-2">Annual Pro</h3>
+                    <h3 className="text-2xl font-bold font-mattone mb-2">6-Month Pro</h3>
                     <div className="flex items-baseline gap-2">
-                      <span className="text-4xl font-bold text-blue font-mattone">$9.58</span>
-                      <span className="text-gray-600 font-outfit">/ month</span>
+                      <span className="text-4xl font-bold text-blue font-mattone">$29.99</span>
+                      <span className="text-gray-600 font-outfit">/ 6 months</span>
                     </div>
                     <p className="text-sm text-gray-600 font-outfit mt-1">
-                      
-                      Billed annually at $114.99
+                      Billed every 6 months
                     </p>
                     <p className="text-sm text-blue font-outfit mt-1">
-                      Save 52% • Web Special: $80.49/year
+                      Best value for long-term prep
                     </p>
                   </div>
                   
@@ -376,8 +386,8 @@ export default function PricingPage() {
                     <span className="text-gray-600">$500-2,000</span>
                   </div>
                   <div className="flex justify-between border-t border-white/10 pt-3">
-                    <span className="font-bold">Mockstars Pro Annual</span>
-                                            <span className="text-blue font-bold">Less than $10/month</span>
+                    <span className="font-bold">Mockstars Pro 6-Month</span>
+                    <span className="text-blue font-bold">$5/month</span>
                   </div>
                 </div>
               </div>
@@ -397,12 +407,6 @@ export default function PricingPage() {
                   </p>
                 </div>
                 
-                <div>
-                  <h3 className="text-lg font-bold font-mattone mb-2">What happens after my free trial ends?</h3>
-                  <p className="text-zinc-400 font-outfit">
-                    After your 3-day free trial, you'll be charged for your selected plan unless you cancel before the trial period ends.
-                  </p>
-                </div>
                 
                 <div>
                   <h3 className="text-lg font-bold font-mattone mb-2">Do you offer refunds?</h3>
@@ -441,7 +445,7 @@ export default function PricingPage() {
           <div className="bg-gradient-to-r from-blue/10 to-blue/20 border border-blue/20 rounded-2xl p-8 text-center">
             <h2 className="text-3xl font-bold font-mattone mb-4">Ready to Ace Your Next Interview?</h2>
             <p className="text-xl text-gray-700 font-outfit mb-8">
-              Start your 3-day free trial today and experience the power of AI-driven interview preparation.
+              Choose your plan today and experience the power of AI-driven interview preparation.
             </p>
             
             <p className="text-sm text-gray-600 font-outfit mt-4">
