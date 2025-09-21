@@ -93,8 +93,14 @@ export default function Navigation() {
                     <ListItem href="/resume-builder/upload" title="Build a Resume">
                       Start from scratch or upload your existing resume.
                     </ListItem>
+                    <ListItem href="/resume-builder/text" title="Text to Resume">
+                      Paste your text and we'll format it automatically.
+                    </ListItem>
                     <ListItem href="/resume-builder/templates" title="Choose Template">
                       Preview your data in any template instantly.
+                    </ListItem>
+                    <ListItem href="/creator-program" title="Creator Program">
+                      Earn $2 per 1k views by featuring Mockstars in your content.
                     </ListItem>
                     <ListItem href="/blog/category/resume" title="Resume Guides">
                       Learn best practices to stand out to recruiters.
@@ -201,6 +207,9 @@ export default function Navigation() {
                     <ListItem href="/templates" title="Popular Templates">
                       Explore trending resume formats.
                     </ListItem>
+                    <ListItem href="/crew" title="Join Our Crew">
+                      Become an affiliate and earn money helping others.
+                    </ListItem>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -269,8 +278,14 @@ export default function Navigation() {
                     <Link href="/resume-builder/upload" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
                       Build a Resume
                     </Link>
+                    <Link href="/resume-builder/text" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
+                      Text to Resume
+                    </Link>
                     <Link href="/resume-builder/templates" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
                       Choose Template
+                    </Link>
+                    <Link href="/creator-program" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
+                      Creator Program
                     </Link>
                   </div>
                 </div>
@@ -310,6 +325,9 @@ export default function Navigation() {
                     </Link>
                     <Link href="/blog/category/career" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
                       Career Advice
+                    </Link>
+                    <Link href="/crew" onClick={closeMobileMenu} className="block text-sm text-gray-600 hover:text-gray-900">
+                      Join Our Crew
                     </Link>
                   </div>
                 </div>

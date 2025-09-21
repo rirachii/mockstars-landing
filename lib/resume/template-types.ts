@@ -74,7 +74,7 @@ export const DEFAULT_CUSTOMIZATION: TemplateCustomization = {
   fontSize: 'default',
   fontFamily: 'Helvetica',
   sectionSpacing: 16,
-  paragraphSpacing: 8,
+  paragraphSpacing: 12,
   lineSpacing: 1.4,
   sectionOrder: ['summary', 'experience', 'projects', 'education', 'skills', 'certifications', 'publications', 'volunteering', 'interests'],
   page: {

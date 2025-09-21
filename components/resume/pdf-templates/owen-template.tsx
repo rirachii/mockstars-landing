@@ -38,14 +38,14 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Helvetica-Bold',
     color: '#2C3E50',
-    marginBottom: 10,
-    marginTop: 20,
+    marginBottom: 14,
+    marginTop: 32,
   },
   firstSectionTitle: {
     fontSize: 12,
     fontFamily: 'Helvetica-Bold',
     color: '#2C3E50',
-    marginBottom: 10,
+    marginBottom: 14,
     marginTop: 0,
   },
   summary: {
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   experienceItem: {
-    marginBottom: 18,
+    marginBottom: 22,
   },
   jobHeader: {
     marginBottom: 8,
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   bulletPoint: {
     flexDirection: 'row',
-    marginBottom: 4,
+    marginBottom: 6,
     alignItems: 'flex-start',
   },
   bullet: {

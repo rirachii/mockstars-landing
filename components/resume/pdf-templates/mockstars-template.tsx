@@ -38,13 +38,11 @@ export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({
       fontSize: getFontSize(24),
       fontWeight: 'bold',
       color: customization.primaryColor,
-      marginBottom: 5,
       lineHeight: customization.lineSpacing,
     },
     title: {
       fontSize: getFontSize(14),
       color: '#666666',
-      marginBottom: 10,
       lineHeight: customization.lineSpacing,
     },
     contact: {
@@ -55,14 +53,13 @@ export const MockstarsTemplate: React.FC<MockstarsTemplateProps> = ({
       lineHeight: customization.lineSpacing,
     },
     section: {
-      marginTop: customization.sectionSpacing,
-      marginBottom: customization.paragraphSpacing,
+      marginTop: customization.sectionSpacing - 4,
     },
     sectionTitle: {
       fontSize: getFontSize(14),
       fontWeight: 'bold',
       color: customization.primaryColor,
-      marginBottom: customization.paragraphSpacing,
+      marginBottom: customization.paragraphSpacing - 4,
       textTransform: 'uppercase',
       borderBottom: 1,
       borderBottomColor: customization.primaryColor,

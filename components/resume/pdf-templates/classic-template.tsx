@@ -40,22 +40,23 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   section: {
-    marginTop: 20,
-    marginBottom: 15,
+    marginTop: 24,
+    marginBottom: 18,
   },
   sectionTitle: {
     fontSize: 12,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 14,
+    marginTop: 32,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     textAlign: 'left',
     borderBottom: 0.5,
     borderBottomColor: '#000',
-    paddingBottom: 3,
+    paddingBottom: 5,
   },
   experienceItem: {
-    marginBottom: 15,
+    marginBottom: 18,
   },
   jobHeader: {
     flexDirection: 'row',
@@ -82,8 +83,9 @@ const styles = StyleSheet.create({
   },
   bulletPoint: {
     fontSize: 10,
-    marginBottom: 2,
+    marginBottom: 5,
     paddingLeft: 10,
+    lineHeight: 1.4,
   },
   skillsGrid: {
     flexDirection: 'row',
