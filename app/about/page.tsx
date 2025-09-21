@@ -4,6 +4,9 @@ export const metadata = {
   title: "About Mockstars — AI Resume, ATS Match, Cover Letters, Behavioral Stories",
   description:
     "Mockstars helps you generate a resume you love, tailor it to a specific job to pass ATS, create a matching cover letter, and craft core behavioral stories—all fast and privacy-first.",
+  alternates: {
+    canonical: "https://mockstars.app/about"
+  }
 }
 
 const aboutJsonLd = {

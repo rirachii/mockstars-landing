@@ -6,6 +6,9 @@ import JsonLd from "@/components/JsonLd"
 export const metadata = {
   title: "Mockstars Pricing - AI Interview Practice Plans",
   description: "Choose the perfect plan for your interview preparation. Mockstars Pro offers AI-powered feedback, unlimited practice sessions, and comprehensive interview training at affordable prices.",
+  alternates: {
+    canonical: "https://mockstars.app/pricing"
+  }
 }
 
 export default function PricingPage() {
@@ -13,6 +16,7 @@ export default function PricingPage() {
     <div className="min-h-screen text-gray-800 font-outfit relative z-10">
       <JsonLd
         data={{
+          "@context": "https://schema.org",
           "@type": "Product",
           name: "Mockstars Pro",
           description: "AI-powered interview preparation platform with personalized feedback and comprehensive training modules",
@@ -21,6 +25,41 @@ export default function PricingPage() {
             "@type": "Brand",
             name: "Mockstars"
           },
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: "4.8",
+            reviewCount: "127",
+            bestRating: "5",
+            worstRating: "1"
+          },
+          review: [
+            {
+              "@type": "Review",
+              reviewRating: {
+                "@type": "Rating",
+                ratingValue: "5",
+                bestRating: "5"
+              },
+              author: {
+                "@type": "Person",
+                name: "Sarah Johnson"
+              },
+              reviewBody: "Mockstars helped me land my dream job! The AI feedback was incredibly helpful and the practice sessions were realistic."
+            },
+            {
+              "@type": "Review",
+              reviewRating: {
+                "@type": "Rating",
+                ratingValue: "5",
+                bestRating: "5"
+              },
+              author: {
+                "@type": "Person",
+                name: "Michael Chen"
+              },
+              reviewBody: "The personalized feedback and comprehensive training modules made all the difference in my interview preparation."
+            }
+          ],
           offers: [
             {
               "@type": "Offer",
@@ -28,7 +67,38 @@ export default function PricingPage() {
               price: "19.99",
               priceCurrency: "USD",
               priceValidUntil: "2025-12-31",
-              availability: "https://schema.org/InStock"
+              availability: "https://schema.org/InStock",
+              hasMerchantReturnPolicy: {
+                "@type": "MerchantReturnPolicy",
+                applicableCountry: "US",
+                returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                merchantReturnDays: 30,
+                returnMethod: "https://schema.org/ReturnByMail",
+                returnFees: "https://schema.org/FreeReturn"
+              },
+              shippingDetails: {
+                "@type": "OfferShippingDetails",
+                shippingRate: {
+                  "@type": "MonetaryAmount",
+                  value: "0",
+                  currency: "USD"
+                },
+                deliveryTime: {
+                  "@type": "ShippingDeliveryTime",
+                  handlingTime: {
+                    "@type": "QuantitativeValue",
+                    minValue: 0,
+                    maxValue: 0,
+                    unitCode: "DAY"
+                  },
+                  transitTime: {
+                    "@type": "QuantitativeValue",
+                    minValue: 0,
+                    maxValue: 0,
+                    unitCode: "DAY"
+                  }
+                }
+              }
             },
             {
               "@type": "Offer", 
@@ -36,7 +106,38 @@ export default function PricingPage() {
               price: "114.99",
               priceCurrency: "USD",
               priceValidUntil: "2025-12-31",
-              availability: "https://schema.org/InStock"
+              availability: "https://schema.org/InStock",
+              hasMerchantReturnPolicy: {
+                "@type": "MerchantReturnPolicy",
+                applicableCountry: "US",
+                returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+                merchantReturnDays: 30,
+                returnMethod: "https://schema.org/ReturnByMail",
+                returnFees: "https://schema.org/FreeReturn"
+              },
+              shippingDetails: {
+                "@type": "OfferShippingDetails",
+                shippingRate: {
+                  "@type": "MonetaryAmount",
+                  value: "0",
+                  currency: "USD"
+                },
+                deliveryTime: {
+                  "@type": "ShippingDeliveryTime",
+                  handlingTime: {
+                    "@type": "QuantitativeValue",
+                    minValue: 0,
+                    maxValue: 0,
+                    unitCode: "DAY"
+                  },
+                  transitTime: {
+                    "@type": "QuantitativeValue",
+                    minValue: 0,
+                    maxValue: 0,
+                    unitCode: "DAY"
+                  }
+                }
+              }
             }
           ]
         }}

@@ -6,6 +6,9 @@ import JsonLd from "@/components/JsonLd"
 export const metadata = {
   title: 'Mockstars Features - AI Interview Practice Tools',
   description: 'Explore Mockstars features including voice-based practice, AI feedback, progress tracking, and industry-specific interview preparation tools.',
+  alternates: {
+    canonical: "https://mockstars.app/features"
+  }
 }
 
 const featuresJsonLd = {

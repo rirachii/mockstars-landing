@@ -12,6 +12,9 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: "Mockstars - AI Interview Practice",
   description: "Practice interviews with AI-powered feedback. Get personalized coaching and improve your interview skills.",
+  alternates: {
+    canonical: "https://mockstars.app"
+  },
   openGraph: {
     title: 'Mockstars - AI Interview Practice',
     description: 'Practice interviews with AI-powered feedback. Get personalized coaching and improve your interview skills.',

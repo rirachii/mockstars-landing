@@ -10,7 +10,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/contact',
     '/pricing',
     '/privacy',
-    '/terms'
+    '/terms',
+    '/creator-program',
+    '/creator-program/guidelines'
   ]
 
   const commonRoutes = routes.map((route) => ({

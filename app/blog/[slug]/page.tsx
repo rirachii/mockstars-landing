@@ -48,6 +48,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     title: `${post.title} | Mockstars Blog`,
     description,
     keywords,
+    alternates: {
+      canonical: `https://mockstars.app/blog/${slug}`
+    },
     openGraph: {
       title: post.title,
       description,

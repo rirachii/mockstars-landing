@@ -4,6 +4,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge'
 import { CheckCircle, XCircle, AlertTriangle, ArrowLeft, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Mockstars Creator Guidelines - Content Requirements & Best Practices',
+  description: 'Learn the content requirements, tagging guidelines, and best practices for the Mockstars Creator Program to maximize your earning potential.',
+  alternates: {
+    canonical: "https://mockstars.app/creator-program/guidelines"
+  }
+}
 
 export default function CreatorGuidelinesPage() {
   return (

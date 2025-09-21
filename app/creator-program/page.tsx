@@ -3,6 +3,15 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { CheckCircle, DollarSign, Users, TrendingUp, Star, ArrowRight, Play, Copy, ExternalLink } from 'lucide-react'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Mockstars Creator Program - Earn $2 per 1k Views',
+  description: 'Join the Mockstars Creator Program and earn $2 per 1,000 views by featuring our resume builder in your TikTok and Instagram Reels content.',
+  alternates: {
+    canonical: "https://mockstars.app/creator-program"
+  }
+}
 
 export default function CreatorProgramPage() {
   return (
