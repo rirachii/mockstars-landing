@@ -60,7 +60,7 @@ export async function testAIParser() {
       console.log('Experience entries:', result.data.experience.length)
       console.log('Education entries:', result.data.education.length)
       console.log('Skills:', result.data.skills.length)
-      console.log('Projects:', result.data.projects?.length || 0)
+      console.log('Projects:', result.data.projects && result.data.projects.length > 0 ? result.data.projects.length : 0)
       
       if (result.warnings && result.warnings.length > 0) {
         console.log('⚠️ Warnings:', result.warnings)
@@ -74,7 +74,7 @@ export async function testAIParser() {
         experienceCount: templateData.experience.length,
         educationCount: templateData.education.length,
         skillsCount: templateData.skills.length,
-        projectsCount: templateData.projects?.length || 0
+        projectsCount: templateData.projects && templateData.projects.length > 0 ? templateData.projects.length : 0
       })
       
     } else {

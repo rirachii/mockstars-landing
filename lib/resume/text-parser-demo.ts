@@ -58,7 +58,7 @@ export function testTextParser() {
     console.log('Experience entries:', result.data.experience.length)
     console.log('Education entries:', result.data.education.length)
     console.log('Skills:', result.data.skills.length)
-    console.log('Projects:', result.data.projects.length)
+    console.log('Projects:', result.data.projects && result.data.projects.length > 0 ? result.data.projects.length : 0)
     
     if (result.warnings && result.warnings.length > 0) {
       console.log('⚠️ Warnings:', result.warnings)
