@@ -25,7 +25,7 @@ export default function CrewPage() {
       <JsonLd
         data={{
           "@type": "WebPage",
-          name: "Join the Mockstars Crew - Affiliate Program",
+          name: "Constellation Crew - Mockstars Affiliate Program",
           description: "Join our affiliate program and earn money by helping others land their dream jobs with Mockstars",
           url: "https://mockstars.app/crew"
         }}
@@ -37,7 +37,7 @@ export default function CrewPage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="text-2xs uppercase tracking-widest text-blue-600 mb-4 font-mattone">Join Our Mission</div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 lg:mb-8 font-mattone leading-tight">
-              Join the Mockstars Crew
+              Constellation Crew
             </h1>
             <p className="text-xl md:text-2xl text-gray-600 font-outfit mb-8 max-w-3xl mx-auto">
               Help others land their dream jobs while earning money. Be part of a community that's transforming how people prepare for interviews.

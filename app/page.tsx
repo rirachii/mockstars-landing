@@ -11,7 +11,12 @@ export default function Home() {
 
   const handleDownloadClick = () => {
     // Handle app download
-    console.log('Download app clicked')
+    window.open('https://apps.apple.com/my/app/job-interview-ai-mockstars/id6752570431', '_blank')
+  }
+
+  const handleGooglePlayClick = () => {
+    // Google Play coming soon
+    alert('Google Play version coming soon! Stay tuned for updates.')
   }
 
   const handleCreateResumeClick = () => {
@@ -48,10 +53,10 @@ export default function Home() {
                 </Button>
                 <Button 
                   className="bg-white hover:bg-gray-100 text-blue text-sm sm:text-base py-4 sm:py-6 px-6 sm:px-8 rounded-full font-mattone border border-blue/20 flex items-center justify-center w-full sm:w-auto max-w-xs mx-auto sm:mx-0"
-                  onClick={handleDownloadClick}
+                  onClick={handleGooglePlayClick}
                 >
                   <Download className="h-5 w-5 mr-2" />
-                   Google Play
+                   Google Play - Coming Soon
                 </Button> 
               </div>
             </div>
@@ -545,7 +550,7 @@ export default function Home() {
                     </svg>
                   ))}
                 </div>
-                <span className="text-sm text-gray-600 font-outfit">App Store & Google Play</span>
+                <span className="text-sm text-gray-600 font-outfit">App Store (Google Play Coming Soon)</span>
               </div>
             </div>
 
@@ -711,10 +716,10 @@ export default function Home() {
                   </Button>
                   <Button 
                     className="w-full bg-gray-100 text-gray-800 hover:bg-gray-200 font-mattone py-3 rounded-xl flex items-center justify-center"
-                    onClick={handleDownloadClick}
+                    onClick={handleGooglePlayClick}
                   >
                     <Download className="h-5 w-5 mr-2" />
-                    Google Play
+                    Google Play - Coming Soon
                   </Button>
                 </div>
               </div>
@@ -765,10 +770,10 @@ export default function Home() {
                   </Button>
                   <Button 
                     className="w-full bg-white text-blue hover:bg-gray-100 font-mattone py-3 rounded-xl flex items-center justify-center"
-                    onClick={handleDownloadClick}
+                    onClick={handleGooglePlayClick}
                   >
                     <Download className="h-5 w-5 mr-2" />
-                     Google Play
+                     Google Play - Coming Soon
                   </Button>
                 </div>
                 <p className="text-center text-sm mt-4 text-blue-100">Download Free - Upgrade Anytime</p>
@@ -888,10 +893,10 @@ export default function Home() {
               </Button>
               <Button 
                 className="bg-white text-blue px-8 py-4 rounded-2xl font-mattone hover:bg-gray-100 transition-colors text-lg flex items-center justify-center"
-                onClick={handleDownloadClick}
+                onClick={handleGooglePlayClick}
               >
                 <Download className="h-5 w-5 mr-2" />
-                 Google Play
+                 Google Play - Coming Soon
               </Button>
             </div>
           </div>

@@ -389,7 +389,7 @@ export default function Home() {
                     </svg>
                   ))}
                 </div>
-                <span className="text-sm text-gray-600 font-outfit">App Store & Google Play</span>
+                <span className="text-sm text-gray-600 font-outfit">App Store (Google Play Coming Soon)</span>
               </div>
             </div>
 

@@ -36,7 +36,7 @@ export default function CTA({
       onSecondaryClick()
     } else {
       // Default behavior - open app store
-      window.open('https://apps.apple.com/app/mockstars/id6746141593', '_blank')
+      window.open('https://apps.apple.com/my/app/job-interview-ai-mockstars/id6752570431', '_blank')
     }
   }
 
