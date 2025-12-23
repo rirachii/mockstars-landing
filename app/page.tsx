@@ -11,7 +11,7 @@ export default function Home() {
 
   const handleDownloadClick = () => {
     // Handle app download
-    window.open('https://apps.apple.com/my/app/job-interview-ai-mockstars/id6752570431', '_blank')
+    window.open('https://apps.apple.com/us/app/job-interview-ai-mockstars/id6752570431', '_blank')
   }
 
   const handleGooglePlayClick = () => {
@@ -31,15 +31,15 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-16 max-w-6xl mx-auto">
             {/* Left Column */}
             <div className="max-w-2xl mx-auto md:mx-0 text-center md:text-left">
-              <div className="text-2xs uppercase tracking-widest text-red-600 mb-2 font-mattone">Stop Wasting Time</div>
+              <div className="text-2xs uppercase tracking-widest text-red-600 mb-2 font-mattone">Preparing for interviews?</div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 lg:mb-8 font-mattone leading-tight">
-                Stop Wasting 100+ Hours on Interview Prep That Doesn't Work
+                Mockstars Turns Anxiety into Offers 
               </h1>
 
               <div className="mb-6 lg:mb-8">
                 <p className="text-lg sm:text-xl mb-4 font-outfit font-semibold">Land your dream job 3x faster with AI-powered practice that actually prepares you for YOUR specific interview.</p>
                 <p className="text-gray-600 font-outfit text-base sm:text-lg">
-                  Save $500+ on coaching and months of guesswork.
+                  Save time and money on coaching and guessing.
                 </p>
               </div>
 
